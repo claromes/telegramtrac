@@ -248,7 +248,7 @@ for channel in req_input:
 			offset_id = min([i['id'] for i in data['messages']])
 
 			while len(posts.messages) > 0:
-				
+
 				if args['min_id']:
 					posts = loop.run_until_complete(
 						get_posts(
@@ -257,7 +257,7 @@ for channel in req_input:
 							min_id=min_id,
 							offset_id=offset_id
 						)
-					)	
+					)
 				else:
 					posts = loop.run_until_complete(
 						get_posts(
@@ -316,7 +316,7 @@ for channel in req_input:
 				ensure_ascii=False,
 				separators=(',',':')
 			)
-			
+
 			# writer
 			writer = open(file_path, mode='w', encoding='utf-8')
 			writer.write(obj)

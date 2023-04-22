@@ -24,7 +24,7 @@ def get_config_attrs():
 	'''
 	'''
 	path = './config/config.ini'
-	
+
 	# config parser
 	config = ConfigParser()
 	config.read(path)
@@ -32,7 +32,6 @@ def get_config_attrs():
 	# Telegram API credentials
 	attrs = config['Telegram API credentials']
 	return dict(attrs)
-
 
 # event loop
 loop = asyncio.get_event_loop()
@@ -58,7 +57,7 @@ def create_dirs(root, subfolders=None):
 	root = root if subfolders == None else f'{root}/{subfolders}/'
 	if not os.path.exists(root):
 		os.makedirs(f'{root}', exist_ok=True)
-	
+
 	return
 
 # Get user-console request
@@ -145,7 +144,7 @@ def write_collected_chats(
 
 						channel_request = channel_request.to_dict()
 						collected_chats = channel_request['chats']
-					
+
 						for ch in collected_chats:
 							if ch['id'] == channel_request['full_chat']['id']:
 								ch['participants_count'] = \
@@ -182,7 +181,7 @@ def write_collected_chats(
 						metadata.extend(
 							[
 								i for i in collected_chats
-								if i['username'] != None 
+								if i['username'] != None
 							]
 						)
 					except ValueError:
@@ -357,7 +356,7 @@ def get_url_attrs(media, res):
 
 	Source: https://core.telegram.org/constructor/messageMediaWebPage
 	Telethon: https://tl.telethon.dev/constructors/web_page.html
-	
+
 	'''
 	has_url = 0
 	url = None
@@ -390,10 +389,10 @@ def get_url_attrs(media, res):
 def get_document_attrs(media, res):
 	'''
 	Type Document
-	
+
 	Source: https://core.telegram.org/constructor/messageMediaDocument
 	Telethon: https://tl.telethon.dev/constructors/document.html
-	
+
 	'''
 	if res['media_type'] == 'MessageMediaDocument':
 		res['document_id'] = media['document']['id']
@@ -404,7 +403,7 @@ def get_document_attrs(media, res):
 		for i in attrs:
 			if i['_'] == 'DocumentAttributeVideo':
 				res['document_video_duration'] = i['duration']
-			
+
 			if i['_'] == 'DocumentAttributeFilename':
 				res['document_filename'] = i['file_name']
 
@@ -415,10 +414,10 @@ def get_poll_attrs(media, res):
 	'''
 
 	Type Poll
-	
+
 	Source: https://core.telegram.org/constructor/messageMediaPoll
 	Telethon: https://tl.telethon.dev/constructors/poll.html
-	
+
 	'''
 	if res['media_type'] == 'MessageMediaPoll':
 		res['poll_id'] = media['poll']['id']
@@ -461,7 +460,7 @@ def get_geo_attrs(media, res):
 			res['geo_type'] = media['_']
 			res['lat'] = media['geo']['lat']
 			res['lng'] = media['geo']['long']
-		
+
 		if 'venue_id' in media.keys():
 			res['venue_id'] = media['venue_id']
 			res['venue_type'] = media['venue_type']
@@ -581,5 +580,5 @@ def normalize_values(data):
 
 	return [
 		int((i - (min_v)) / (max_v - min_v) * 450) + 50
-		for l, i in data 
+		for l, i in data
 	]

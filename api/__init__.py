@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import configparser
 
 # import Telethon API modules
 from telethon import TelegramClient, types
@@ -10,12 +11,20 @@ from telethon.tl.functions.users import GetFullUserRequest
 from telethon.tl.functions.photos import GetUserPhotosRequest
 from telethon.tl.functions.stats import GetBroadcastStatsRequest
 
-
 '''
 
 Client-side
 
 '''
+
+def get_sign_in_code():
+	path = './config/config_sign_in_code.ini'
+	config_sign_in_***REMOVED*** configparser.ConfigParser()
+	config_sign_in_code.read(path)
+
+	attr = config_sign_in_code['Sign in code']
+
+	return attr['code']
 
 # get connection
 async def get_connection(session_file, api_id, api_hash, phone):
@@ -31,7 +40,7 @@ async def get_connection(session_file, api_id, api_hash, phone):
 		await client.send_code_request(phone)
 		await client.sign_in(
 			phone,
-			input('Enter the code: ')
+			get_sign_in_code()
 		)
 
 	return client
@@ -43,7 +52,7 @@ Channels
 
 '''
 
-# get telegram channel main attrs 
+# get telegram channel main attrs
 async def get_entity_attrs(client, source):
 	'''
 	Source: entity (str | int | Peer | InputPeer)
@@ -58,7 +67,7 @@ async def get_entity_attrs(client, source):
 		value = await client.get_entity(source)
 	except ValueError:
 		value = False
-	
+
 	return value
 
 # get channel request
