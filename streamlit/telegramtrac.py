@@ -3,19 +3,7 @@ import subprocess
 import json
 import configparser
 
-st.markdown("<h1 style='text-align: center;'>telegramtrac</h1>", unsafe_allow_html=True)
-
-st.markdown("""
-<style>
-input[class] {
-color: black;
-}
-
-input {
-  caret-color: black !important;
-}
-</style>
-""", unsafe_allow_html=True)
+st.title('telegramtrac')
 
 with st.expander('[ ¿ ]'):
     st.caption("Telegram channel tracker for non-technical researchers.")
