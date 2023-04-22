@@ -1,4 +1,4 @@
-# Telegramtrac
+# telegramtrac
 
 ## Team Members
 [claromes](https://claromes.gitlab.io/)

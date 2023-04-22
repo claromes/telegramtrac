@@ -5,7 +5,7 @@ import json
 import configparser
 from pandas import read_csv
 
-#vars
+#components variables
 title_component = st.empty()
 expander_component = st.empty()
 form_component = st.empty()
@@ -15,8 +15,9 @@ center_running()
 
 trac = ''
 
+#states
 if 'channel_name' not in st.session_state:
-    st.session_state['channel_name'] = 'literaturese'
+    st.session_state['channel_name'] = ''
 
 if 'code_state' not in st.session_state:
     st.session_state['code_state'] = False
@@ -29,7 +30,7 @@ title_component.title('telegramtrac')
 
 #expander
 with expander_component.expander('[ ¿ ]'):
-    st.caption("Telegram channel tracker for non-programmers.")
+    st.caption("Telegram public channels tracker for non-programmers.")
     st.divider()
     st.caption('### How to')
     st.caption('[How to create an API ID and API hash](https://core.telegram.org/api/obtaining_api_id)')
@@ -56,14 +57,23 @@ with form_component.form(key='config_form'):
 
     send_credentials = st.form_submit_button('send credentials', type='primary')
 
-if send_credentials:
+if send_credentials and api_id != '' and api_hash != '' and phone != '':
     center_running()
     st.session_state.code_state = True
+
+    try:
+        cmd_connect = 'python connect.py'
+
+        output = subprocess.check_output(cmd_connect.split())
+    except subprocess.CalledProcessError as e:
+        pass
+    except Exception as e:
+        pass
 
 #sign in code
 with sign_in_component.form(key='config_sign_in_form'):
     if st.session_state.code_state:
-        code_sign_in = st.text_input('code', placeholder="Leave empty and click 'sign in' to receive a sign in code", disabled=False)
+        code_sign_in = st.text_input('code', disabled=False)
     else:
         code_sign_in = st.text_input('code', disabled=True)
 
@@ -90,7 +100,7 @@ with sign_in_component.form(key='config_sign_in_form'):
 
 #channel name
 with channel_component.form(key='channel_form'):
-    if sign_in and not st.session_state.code_value == 0:
+    if sign_in and not st.session_state.code_value == 0 or st.session_state.channel_name != '':
         channel_name = st.text_input('channel name', placeholder="https://t.me/CHANNEL_NAME_IS_HERE", disabled=False, key='channel_name')
         trac = st.form_submit_button('trac', disabled=False, type='primary')
         send_credentials = True
@@ -100,7 +110,7 @@ with channel_component.form(key='channel_form'):
         send_credentials = True
 
 #data tabs
-if trac:
+if trac and st.session_state.channel_name != '':
     center_running()
     tab1, tab2, tab3, tab4 = st.tabs(['json', 'dataset', 'metadata', 'new trac'])
 
@@ -109,15 +119,23 @@ if trac:
     sign_in_component.empty()
     channel_component.empty()
 
-    #SEC ISSUE: New login message not being sent
-    # try:
-    #     cmd = 'python main.py --telegram-channel {}'.format(st.session_state.channel_name)
+    try:
+        cmd_main = 'python main.py --telegram-channel {}'.format(st.session_state.channel_name)
 
-    #     output = subprocess.check_output(cmd.split())
-    # except subprocess.CalledProcessError as e:
-    #     pass
-    # except Exception as e:
-    #     pass
+        output = subprocess.check_output(cmd_main.split())
+    except subprocess.CalledProcessError as e:
+        pass
+    except Exception as e:
+        pass
+
+    try:
+        cmd_dataset = 'python build-datasets.py'
+
+        output = subprocess.check_output(cmd_dataset.split())
+    except subprocess.CalledProcessError as e:
+        pass
+    except Exception as e:
+        pass
 
     #json - main file
     with tab1:
@@ -126,9 +144,9 @@ if trac:
             st.subheader('{} messages (.json)'.format(st.session_state.channel_name))
 
             data = json.load(file)
-            st.download_button('Download {}_messages.json'.format(st.session_state.channel_name), file_name=json_file, data=file, mime="application/json")
+            st.download_button('{} Messages'.format(st.session_state.channel_name), help='Download {}_messages.json'.format(st.session_state.channel_name), file_name=json_file, data=file, mime='application/json')
 
-            st.json(data)
+            st.json(data, expanded=False)
 
     #dataset
     with tab2:
@@ -136,7 +154,7 @@ if trac:
         dataset_csv_file = 'output/data/msgs_dataset.csv'
 
         with open(dataset_csv_file, 'rb') as file:
-            st.download_button("Download msgs_dataset.csv", file_name=dataset_csv_file, data=file, mime="text/csv")
+            st.download_button('Dataset', help='Download msgs_dataset.csv', file_name=dataset_csv_file, data=file, mime='text/csv')
             df = read_csv(dataset_csv_file)
 
             st.dataframe(df)
@@ -150,13 +168,13 @@ if trac:
 
         st.subheader('{} metadata'.format(st.session_state.channel_name))
         with open(metadata_json_file, 'rb') as file:
-            st.download_button('Download {}.json'.format(st.session_state.channel_name), file_name=metadata_json_file, data=file, mime="application/json")
+            st.download_button('{}'.format(st.session_state.channel_name), help='Download {}.json'.format(st.session_state.channel_name), file_name=metadata_json_file, data=file, mime="application/json")
         with open(metadata_txt_file, 'rb') as file:
-            st.download_button("Download chats.txt", file_name=metadata_txt_file, data=file, mime="text/plain")
+            st.download_button('Chats', help='Download chats.txt', file_name=metadata_txt_file, data=file, mime='text/plain')
         with open(metadata_chats_csv_file, 'rb') as file:
-            st.download_button("Download collected_chats.csv", file_name=metadata_chats_csv_file, data=file, mime="text/csv")
+            st.download_button('Collected Chats', help='Download collected_chats.csv', file_name=metadata_chats_csv_file, data=file, mime='text/csv')
         with open(metadata_counter_csv_file, 'rb') as file:
-            st.download_button("Download counter.csv", file_name=metadata_counter_csv_file, data=file, mime="text/csv")
+            st.download_button('Counter', help='Download counter.csv', file_name=metadata_counter_csv_file, data=file, mime='text/csv')
 
     #restart
     with tab4:

@@ -17,14 +17,14 @@ Client-side
 
 '''
 
-def get_sign_in_code():
+def sign_in_code():
 	path = './config/config_sign_in_code.ini'
 	config_sign_in_***REMOVED*** configparser.ConfigParser()
 	config_sign_in_code.read(path)
 
-	attr = config_sign_in_code['Sign in code']
+	attr_sign_in_***REMOVED*** config_sign_in_code['Sign in code']
 
-	return attr['code']
+	return attr_sign_in_code['code']
 
 # get connection
 async def get_connection(session_file, api_id, api_hash, phone):
@@ -40,7 +40,7 @@ async def get_connection(session_file, api_id, api_hash, phone):
 		await client.send_code_request(phone)
 		await client.sign_in(
 			phone,
-			get_sign_in_code()
+			sign_in_code()
 		)
 
 	return client
