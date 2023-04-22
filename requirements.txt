@@ -7,3 +7,4 @@ matplotlib==3.6.3
 python-louvain==0.16
 openai==0.27.2
 streamlit==1.21.0
+streamlit-extras==0.2.7
