@@ -19,10 +19,10 @@ Client-side
 
 def sign_in_code():
 	path = './config/config_sign_in_code.ini'
-	config_sign_in_***REMOVED*** configparser.ConfigParser()
+	config_sign_in_code = configparser.ConfigParser()
 	config_sign_in_code.read(path)
 
-	attr_sign_in_***REMOVED*** config_sign_in_code['Sign in code']
+	attr_sign_in_code = config_sign_in_code['Sign in code']
 
 	return attr_sign_in_code['code']
 

@@ -12,9 +12,9 @@ config_attrs = get_config_attrs()
 args = {**args, **config_attrs}
 
 sfile = 'session_file'
-***REMOVED*** args['api_id']
-***REMOVED*** args['api_hash']
-***REMOVED*** args['phone']
+api_id = args['api_id']
+api_hash = args['api_hash']
+phone = args['phone']
 
 loop = asyncio.get_event_loop()
 
