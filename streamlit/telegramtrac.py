@@ -9,7 +9,7 @@ import base64
 #page config
 st.set_page_config(
     page_title="telegramtrac",
-    page_icon="💬",
+    page_icon="👣",
     layout="centered",
     initial_sidebar_state="collapsed",
     menu_items={
