@@ -66,14 +66,23 @@ with form_component.form(key='config_form'):
 
     send_credentials = st.form_submit_button('send credentials', type='primary')
 
+try:
+    cmd_pip = 'pip install -r requirements.txt'
+
+    output = subprocess.check_output(cmd_pip.split())
+except subprocess.CalledProcessError:
+    pass
+except Exception:
+    pass
+
 if send_credentials and api_id != '' and api_hash != '' and phone != '':
     center_running()
     st.session_state.code_state = True
 
     try:
-        cmd_pip = 'pip install -r requirements.txt'
+        # cmd_pip = 'pip install -r requirements.txt'
 
-        output = subprocess.check_output(cmd_pip.split())
+        # output = subprocess.check_output(cmd_pip.split())
 
         cmd_connect = 'python connect.py'
 
