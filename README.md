@@ -60,6 +60,9 @@ Streamlit will be served at http://localhost:8501
 <p align="center">
     <img src="assets/4.png" width="700">
 </p>
+<p align="center">
+    <img src="assets/4-1.png" width="700">
+</p>
 
 <br>
 
