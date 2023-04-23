@@ -87,6 +87,8 @@ Streamlit will be served at http://localhost:8501
 
 - A message will be send to your Telegram app about the authentication
 
+- It may take a few minutes...
+
 5. Switch tabs to preview or download the data
 
 6. To track another channel, switch to last tab (`trac`) and click `restart`
