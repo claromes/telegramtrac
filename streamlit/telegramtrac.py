@@ -36,7 +36,7 @@ trac = ''
 
 #states
 if 'channel_name' not in st.session_state:
-    st.session_state['channel_name'] = 'literaturese'
+    st.session_state['channel_name'] = ''
 
 if 'code_state' not in st.session_state:
     st.session_state['code_state'] = False
@@ -166,7 +166,6 @@ if trac and st.session_state.channel_name != '':
         dataset_csv_file = 'output/data/msgs_dataset.csv'
 
         with open(dataset_csv_file, 'rb') as file:
-            #st.download_button('Dataset', help='Download msgs_dataset.csv', file_name=dataset_csv_file, data=file, mime='text/csv')
             df = read_csv(dataset_csv_file)
 
             csv = df.to_csv(index=False)
