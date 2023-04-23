@@ -66,14 +66,14 @@ with form_component.form(key='config_form'):
 
     send_credentials = st.form_submit_button('send credentials', type='primary')
 
-try:
-    cmd_pip = 'pip install -r requirements.txt'
+#dependencies error
+cmd_tele = 'pip -m pip install --upgrade telethon'
 
-    output = subprocess.check_output(cmd_pip.split())
-except subprocess.CalledProcessError:
-    pass
-except Exception:
-    pass
+output = subprocess.check_output(cmd_tele.split())
+
+cmd_pd = 'pip -m pip install --upgrade pandas'
+
+output = subprocess.check_output(cmd_pd.split())
 
 if send_credentials and api_id != '' and api_hash != '' and phone != '':
     center_running()
