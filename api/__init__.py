@@ -36,12 +36,16 @@ async def get_connection(session_file, api_id, api_hash, phone):
 	if await client.is_user_authorized():
 		print ('> Authorized!')
 	else:
-		print ('> Not Authorized! Sending code request...')
-		await client.send_code_request(phone)
-		await client.sign_in(
-			phone,
-			sign_in_code()
-		)
+		try:
+			print ('> Not Authorized! Sending code request...')
+			await client.send_code_request(phone)
+			await client.sign_in(
+				phone,
+				sign_in_code()
+			)
+		except Exception:
+			pass
+
 
 	return client
 

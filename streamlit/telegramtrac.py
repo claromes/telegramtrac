@@ -74,9 +74,9 @@ if send_credentials and api_id != '' and api_hash != '' and phone != '':
         cmd_connect = 'python connect.py'
 
         output = subprocess.check_output(cmd_connect.split())
-    except subprocess.CalledProcessError as e:
+    except subprocess.CalledProcessError:
         pass
-    except Exception as e:
+    except Exception:
         pass
 
 #sign in code
@@ -131,18 +131,18 @@ if trac and st.session_state.channel_name != '':
         cmd_main = 'python main.py --telegram-channel {}'.format(st.session_state.channel_name)
 
         output = subprocess.check_output(cmd_main.split())
-    except subprocess.CalledProcessError as e:
+    except subprocess.CalledProcessError:
         pass
-    except Exception as e:
+    except Exception:
         pass
 
     try:
         cmd_dataset = 'python build-datasets.py'
 
         output = subprocess.check_output(cmd_dataset.split())
-    except subprocess.CalledProcessError as e:
+    except subprocess.CalledProcessError:
         pass
-    except Exception as e:
+    except Exception:
         pass
 
     #json - main file
