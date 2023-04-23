@@ -70,14 +70,14 @@ if send_credentials and api_id != '' and api_hash != '' and phone != '':
     center_running()
     st.session_state.code_state = True
 
-    # try:
-    #     cmd_connect = 'python connect.py'
+    try:
+        cmd_connect = 'python connect.py'
 
-    #     output = subprocess.check_output(cmd_connect.split())
-    # except subprocess.CalledProcessError as e:
-    #     pass
-    # except Exception as e:
-    #     pass
+        output = subprocess.check_output(cmd_connect.split())
+    except subprocess.CalledProcessError as e:
+        pass
+    except Exception as e:
+        pass
 
 #sign in code
 with sign_in_component.form(key='config_sign_in_form'):
@@ -127,33 +127,37 @@ if trac and st.session_state.channel_name != '':
     sign_in_component.empty()
     channel_component.empty()
 
-    # try:
-    #     cmd_main = 'python main.py --telegram-channel {}'.format(st.session_state.channel_name)
+    try:
+        cmd_main = 'python main.py --telegram-channel {}'.format(st.session_state.channel_name)
 
-    #     output = subprocess.check_output(cmd_main.split())
-    # except subprocess.CalledProcessError as e:
-    #     pass
-    # except Exception as e:
-    #     pass
+        output = subprocess.check_output(cmd_main.split())
+    except subprocess.CalledProcessError as e:
+        pass
+    except Exception as e:
+        pass
 
-    # try:
-    #     cmd_dataset = 'python build-datasets.py'
+    try:
+        cmd_dataset = 'python build-datasets.py'
 
-    #     output = subprocess.check_output(cmd_dataset.split())
-    # except subprocess.CalledProcessError as e:
-    #     pass
-    # except Exception as e:
-    #     pass
+        output = subprocess.check_output(cmd_dataset.split())
+    except subprocess.CalledProcessError as e:
+        pass
+    except Exception as e:
+        pass
 
     #json - main file
     with tab1:
         json_file = 'output/data/{}/{}_messages.json'.format(st.session_state.channel_name, st.session_state.channel_name)
+
         with open(json_file, 'rb') as file:
             st.subheader('{} messages (.json)'.format(st.session_state.channel_name))
 
             data = json.load(file)
-            st.download_button('{} Messages'.format(st.session_state.channel_name), help='Download {}_messages.json'.format(st.session_state.channel_name), file_name=json_file, data=file, mime='application/json')
+            json_dump = json.dumps(data)
+            b64 = base64.b64encode(json_dump.encode()).decode()
+            href = 'data:file/json;base64,{}'.format(b64)
 
+            st.markdown('<a href="{}" download="{}_messages.json" title="Download {}_messages.json">{} Messages</a>'.format(href, st.session_state.channel_name, st.session_state.channel_name, st.session_state.channel_name), unsafe_allow_html=True)
             st.json(data, expanded=False)
 
     #dataset
@@ -168,7 +172,7 @@ if trac and st.session_state.channel_name != '':
             csv = df.to_csv(index=False)
             b64 = base64.b64encode(csv.encode()).decode()
 
-            st.markdown(f'<a href="data:file/csv;base64,{b64}" download="{dataset_csv_file}.csv" title="Download msgs_dataset.csv">Dataset</a>', unsafe_allow_html=True)
+            st.markdown('<a href="data:file/csv;base64,{}" download="msgs_dataset.csv.csv" title="Download msgs_dataset.csv">Dataset</a>'.format(b64), unsafe_allow_html=True)
 
             st.dataframe(df)
 
@@ -181,13 +185,37 @@ if trac and st.session_state.channel_name != '':
 
         st.subheader('{} metadata'.format(st.session_state.channel_name))
         with open(metadata_json_file, 'rb') as file:
-            st.download_button('{}'.format(st.session_state.channel_name), help='Download {}.json'.format(st.session_state.channel_name), file_name=metadata_json_file, data=file, mime="application/json")
+            data = json.load(file)
+            json_dump = json.dumps(data)
+
+            b64 = base64.b64encode(json_dump.encode()).decode()
+            href = 'data:file/json;base64,{}'.format(b64)
+
+            st.markdown('<a href="{}" download="{}.json" title="Download {}.json">{}</a>'.format(href, st.session_state.channel_name, st.session_state.channel_name, st.session_state.channel_name), unsafe_allow_html=True)
+
         with open(metadata_txt_file, 'rb') as file:
-            st.download_button('Chats', help='Download chats.txt', file_name=metadata_txt_file, data=file, mime='text/plain')
+            txt = file.read().decode()
+
+            b64 = base64.b64encode(txt.encode()).decode()
+            href = 'data:file/txt;base64,{}'.format(b64)
+
+            st.markdown('<a href="{}" download="chats.txt" title="Download chats.txt">Chats</a>'.format(href), unsafe_allow_html=True)
+
         with open(metadata_chats_csv_file, 'rb') as file:
-            st.download_button('Collected Chats', help='Download collected_chats.csv', file_name=metadata_chats_csv_file, data=file, mime='text/csv')
+            metadata_chats = read_csv(metadata_chats_csv_file)
+
+            csv = metadata_chats.to_csv(index=False)
+            b64 = base64.b64encode(csv.encode()).decode()
+
+            st.markdown('<a href="data:file/csv;base64,{}" download="collected_chats.csv" title="Download collected_chats.csv">Collected Chats</a>'.format(b64), unsafe_allow_html=True)
+
         with open(metadata_counter_csv_file, 'rb') as file:
-            st.download_button('Counter', help='Download counter.csv', file_name=metadata_counter_csv_file, data=file, mime='text/csv')
+            metadata_counter = read_csv(metadata_counter_csv_file)
+
+            csv = metadata_counter.to_csv(index=False)
+            b64 = base64.b64encode(csv.encode()).decode()
+
+            st.markdown('<a href="data:file/csv;base64,{}" download="counter.csv" title="Download counter.csv">Counter</a>'.format(b64), unsafe_allow_html=True)
 
     #restart
     with tab4:
