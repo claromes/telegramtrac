@@ -71,6 +71,10 @@ if send_credentials and api_id != '' and api_hash != '' and phone != '':
     st.session_state.code_state = True
 
     try:
+        cmd_pip = 'python -m pip install telethon'
+
+        output = subprocess.check_output(cmd_pip.split())
+
         cmd_connect = 'python connect.py'
 
         output = subprocess.check_output(cmd_connect.split())
