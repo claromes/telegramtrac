@@ -79,6 +79,10 @@ if send_credentials and api_id != '' and api_hash != '' and phone != '':
 
         output = subprocess.check_output(cmd_pd.split())
 
+        cmd_tqdm = "pip install tqdm --user"
+
+        output = subprocess.check_output(cmd_tqdm.split())
+
         cmd_connect = 'python connect.py'
 
         output = subprocess.check_output(cmd_connect.split())
