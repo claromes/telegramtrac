@@ -133,7 +133,7 @@ with channel_component.form(key='channel_form'):
 #data tabs
 if trac and st.session_state.channel_name != '':
     center_running()
-    tab1, tab2, tab3, tab4 = st.tabs(['json', 'dataset', 'metadata', 'new trac'])
+    tab1, tab2, tab3, tab4 = st.tabs(['json', 'metadata', 'dataset', 'new trac'])
 
     form_component.empty()
     sign_in_component.empty()

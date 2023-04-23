@@ -16,7 +16,7 @@ telegramtrac can also contribute to the open source ecosystem of the OSINT commu
 
 ### Deploy
 
-[telegramtrac.streamlit.app](https://telegramtrac.streamlit.app/)
+[telegramtrac.streamlit.app](https://telegramtrac.streamlit.app/) (not stable)
 
 ### Development
 
@@ -73,7 +73,14 @@ Streamlit will be served at http://localhost:8501
 
 *IMPORTANT: To test using the deploy link with your personal credentials disable the 2FA*
 
-1. Create your API credentials [here](https://core.telegram.org/api/obtaining_api_id#obtaining-api-id)
+1. Create your API credentials [here](https://my.telegram.org/auth)
+
+<p align="center">
+    <img src="assets/6.png" width="400">
+</p>
+<p align="center">
+    <img src="assets/7.png" width="400">
+</p>
 
 2. Fill the inputs `api_id`, `api_hash` and your `phone` number (*following this format: +5500912348765*) and click on `send credentials` button
 
@@ -91,9 +98,8 @@ Streamlit will be served at http://localhost:8501
 
 5. Switch tabs to preview or download the data
 
-6. To track another channel, switch to last tab (`trac`) and click `restart`
+6. To track another channel, switch to last tab (`trac`) and click `restart`. Just need to fill the input `channel name` (*copy name from channel link: t.me/CHANNEL_NAME*) and click on `trac` button
 
-- Use the same `code`
 - A late message could be send to your Telegram app about other authentications
 - At each tracking the output dataset are grouped in the same file
 
