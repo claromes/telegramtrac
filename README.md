@@ -101,10 +101,10 @@ Streamlit will be served at http://localhost:8501
 
 5. Switch tabs to preview or download the data
 
-6. To track another channel, switch to last tab (`trac`) and click `restart`. Just need to fill the input `channel name` (*copy name from channel link: t.me/CHANNEL_NAME*) and click on `trac` button
+6. To track another channel, switch to last tab (`trac`) and click `restart`.
 
+- To restart, send the same credentials and send de same `code`
 - A late message could be send to your Telegram app about other authentications
-- At each tracking the output dataset are grouped in the same file
 
 ## Additional Information
 
@@ -120,6 +120,7 @@ Mostly limited to Streamlit options. The form and tabs were chosen due to common
 
 ### Roadmap
 
+- [ ] Fix dataset tab
 - [ ] Log for users
 - [ ] Docs telegramtrac/ API credentials (how to)
 - [ ] Refactor the code
