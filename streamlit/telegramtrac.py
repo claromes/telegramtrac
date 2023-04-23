@@ -6,9 +6,27 @@ import configparser
 from pandas import read_csv
 import base64
 
+#page config
+st.set_page_config(
+    page_title="telegramtrac",
+    page_icon="💬",
+    layout="centered",
+    initial_sidebar_state="collapsed",
+    menu_items={
+        'Get Help': 'https://core.telegram.org/api/obtaining_api_id',
+        'Report a bug': "https://github.com/claromes/telegramtrac",
+        'About': """
+        telegramtrac is Telegram public channels tracker for non-programmers by [claromes](https://claromes.gitlab.io).
+
+        This project is a fork of DFRLab's Telegram Tracker.
+
+        -------
+        """
+    }
+)
+
 #components variables
 title_component = st.empty()
-expander_component = st.empty()
 form_component = st.empty()
 sign_in_component = st.empty()
 channel_component = st.empty()
@@ -27,17 +45,7 @@ if 'code_value' not in st.session_state:
     st.session_state['code_value'] = 0
 
 #title
-title_component.title('telegramtrac')
-
-#expander
-with expander_component.expander('[ ¿ ]'):
-    st.caption("Telegram public channels tracker for non-programmers.")
-    st.divider()
-    st.caption('### How to')
-    st.caption('[How to create an API ID and API hash](https://core.telegram.org/api/obtaining_api_id)')
-    st.divider()
-    st.caption('### Credits')
-    st.caption("telegramtrac by [claromes](https://claromes.gitlab.io) is a fork of DFRLab's Telegram Tracker.")
+title_component.title('telegramtrac', anchor=False)
 
 #credentials
 with form_component.form(key='config_form'):
@@ -115,7 +123,6 @@ if trac and st.session_state.channel_name != '':
     center_running()
     tab1, tab2, tab3, tab4 = st.tabs(['json', 'dataset', 'metadata', 'new trac'])
 
-    expander_component.empty()
     form_component.empty()
     sign_in_component.empty()
     channel_component.empty()
