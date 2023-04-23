@@ -45,7 +45,7 @@ if 'code_value' not in st.session_state:
     st.session_state['code_value'] = 0
 
 #title
-title_component.title('telegramtrac', anchor=False)
+title_component.title('telegramtrac', help="not stable", anchor=False)
 
 #credentials
 with form_component.form(key='config_form'):
