@@ -55,6 +55,14 @@ Streamlit will be served at http://localhost:8501
     <img src="assets/3.png" width="700">
 </p>
 
+<br>
+
+> Restart tab: to track another channel
+<br>
+<p align="center">
+    <img src="assets/7.png" width="700">
+</p>
+
 ### Workflow
 
 *IMPORTANT: To test using the deploy link with your personal credentials disable the 2FA*
@@ -67,13 +75,16 @@ Streamlit will be served at http://localhost:8501
 
 3. Fill the input `code` and click on `sign in` button
 
-- A message will be send to your Telegram app about the authentication
-
 4. Fill the input `channel name` (*copy name from channel link: t.me/CHANNEL_NAME*) and click on `trac` button
+
+- A message will be send to your Telegram app about the authentication
 
 5. Switch tabs to preview or download the data
 
 6. To track another channel, switch to last tab (`trac`) and click `restart`
+
+- Use the same `code`
+- At each tracking the output data are grouped in the same file (option for separate files will be implemented)
 
 ## Additional Information
 
@@ -81,6 +92,7 @@ Streamlit will be served at http://localhost:8501
 
 - Unable to use with 2FA
 - Only one channel per track
+- Only grouped data
 
 ### Design decisions
 
@@ -88,6 +100,12 @@ Mostly limited to Streamlit options. The form and tabs were chosen due to common
 
 ### Roadmap
 
+- [ ] Docs telegramtrac/ API credentials (how to)
+- [ ] Refactor the code
 - [ ] Improve About section
+- [ ] Allow other package options
 - [ ] Check API limitations
 - [ ] Add batch file upload
+- [ ] Output options
+- [ ] SignInRequest error
+- [ ] Sec issues
