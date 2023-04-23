@@ -52,7 +52,13 @@ Streamlit will be served at http://localhost:8501
 > Data screen: tabs and download links
 <br>
 <p align="center">
+    <img src="assets/2.png" width="700">
+</p>
+<p align="center">
     <img src="assets/3.png" width="700">
+</p>
+<p align="center">
+    <img src="assets/4.png" width="700">
 </p>
 
 <br>
@@ -60,14 +66,14 @@ Streamlit will be served at http://localhost:8501
 > Restart tab: to track another channel
 <br>
 <p align="center">
-    <img src="assets/7.png" width="700">
+    <img src="assets/5.png" width="700">
 </p>
 
 ### Workflow
 
 *IMPORTANT: To test using the deploy link with your personal credentials disable the 2FA*
 
-1. Create your API credentials [here](https://core.telegram.org/api/obtaining_api_id#obtaining-api-id) or use [this fake credentials](fake_credentials.txt) with mockup data
+1. Create your API credentials [here](https://core.telegram.org/api/obtaining_api_id#obtaining-api-id)
 
 2. Fill the inputs `api_id`, `api_hash` and your `phone` number (*following this format: +5500912348765*) and click on `send credentials` button
 
@@ -84,6 +90,7 @@ Streamlit will be served at http://localhost:8501
 6. To track another channel, switch to last tab (`trac`) and click `restart`
 
 - Use the same `code`
+- A late message could be send to your Telegram app about other authentications
 - At each tracking the output data are grouped in the same file (option for separate files will be implemented)
 
 ## Additional Information
