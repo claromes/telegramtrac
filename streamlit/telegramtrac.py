@@ -75,17 +75,17 @@ if send_credentials and api_id != '' and api_hash != '' and phone != '':
 
         output = subprocess.check_output(cmd_tele.split())
 
-        cmd_pd = "pip install pandas --user"
+        # cmd_pd = "pip install pandas --user"
 
-        output = subprocess.check_output(cmd_pd.split())
+        # output = subprocess.check_output(cmd_pd.split())
 
-        cmd_tqdm = "pip install tqdm --user"
+        # cmd_tqdm = "pip install tqdm --user"
 
-        output = subprocess.check_output(cmd_tqdm.split())
+        # output = subprocess.check_output(cmd_tqdm.split())
 
-        cmd_open = "pip install openpyxl --user"
+        # cmd_open = "pip install openpyxl --user"
 
-        output = subprocess.check_output(cmd_open.split())
+        # output = subprocess.check_output(cmd_open.split())
 
         cmd_connect = 'python connect.py'
 
