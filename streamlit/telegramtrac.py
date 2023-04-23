@@ -75,9 +75,9 @@ if send_credentials and api_id != '' and api_hash != '' and phone != '':
 
         output = subprocess.check_output(cmd_tele.split())
 
-        # cmd_pd = "pip install pandas --user"
+        cmd_pd = "pip install pandas --user"
 
-        # output = subprocess.check_output(cmd_pd.split())
+        output = subprocess.check_output(cmd_pd.split())
 
         # cmd_tqdm = "pip install tqdm --user"
 
