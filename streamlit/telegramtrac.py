@@ -71,11 +71,11 @@ if send_credentials and api_id != '' and api_hash != '' and phone != '':
     st.session_state.code_state = True
 
     try:
-        cmd_tele = 'pip install --upgrade telethon'
+        cmd_tele = "pip install telethon --user"
 
         output = subprocess.check_output(cmd_tele.split())
 
-        cmd_pd = 'pip install --upgrade pandas'
+        cmd_pd = "pip install pandas --user"
 
         output = subprocess.check_output(cmd_pd.split())
 
