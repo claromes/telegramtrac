@@ -83,6 +83,10 @@ if send_credentials and api_id != '' and api_hash != '' and phone != '':
 
         output = subprocess.check_output(cmd_tqdm.split())
 
+        cmd_open = "pip install openpyxl --user"
+
+        output = subprocess.check_output(cmd_open.split())
+
         cmd_connect = 'python connect.py'
 
         output = subprocess.check_output(cmd_connect.split())
