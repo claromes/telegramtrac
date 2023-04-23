@@ -16,7 +16,7 @@ telegramtrac can also contribute to the open source ecosystem of the OSINT commu
 
 ### Deploy
 
-[streamlit.app](https://claromes-telegramtrac-streamlittelegramtrac-dev-h3kbxy.streamlit.app/)
+[streamlit.app](https://claromes-telegramtrac-streamlittelegramtrac-dev-mqroml.streamlit.app/)
 
 ### Development
 
