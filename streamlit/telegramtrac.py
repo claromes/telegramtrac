@@ -71,7 +71,7 @@ if send_credentials and api_id != '' and api_hash != '' and phone != '':
     st.session_state.code_state = True
 
     try:
-        cmd_connect = 'python3 connect.py'
+        cmd_connect = 'python3 -m pip install --upgrade telethon; python3 connect.py'
 
         output = subprocess.check_output(cmd_connect.split())
     except subprocess.CalledProcessError:
