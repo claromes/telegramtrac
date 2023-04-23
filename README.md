@@ -4,27 +4,90 @@
 [claromes](https://claromes.gitlab.io/)
 
 ## Tool Description
-This sections discusses the purpose and motivation for the tool, and how it addresses a tool need you've identified.
+telegramtrac is a Telegram public channels tracker designed for non-programmers. It is a web version of Telegram Tracker, a Python package that allows users to track a channel messages. The original tool facilitates channel tracking and includes features such as visualizing a network graph and metadata.
+
+I discovered the original package during a DFRLab's Digital Sherlocks workshop. It is already being used by experienced researchers, and an accessible version would allow researchers of different skill and experience levels to track Telegram.
+
+The package was developed by researcher Esteban Ponce de León as part of the Digital Sherlocks community, and as a member of this community, I want to contribute!
+
+telegramtrac can also contribute to the open source ecosystem of the OSINT community.
 
 ## Installation
-This section includes detailed instructions for installing the tool, including any terminal commands that need to be executed and dependencies that need to be installed. Instructions should be understandable by non-technical users (e.g. someone who knows how to open a terminal and run commands, but isn't necessarily a programmer), for example:
 
-1. Make sure you have Python version 3.8 or greater installed
+### Deploy
 
-2. Download the tool's repository using the command:
+streamlit_url
 
-        git clone https://github.com/bellingcat/hackathon-submission-template.git
+### Development
 
-3. Move to the tool's directory and install the tool
+#### Requirements
 
-        cd hackathon-submission-template
-        pip install .
+- Python 3.8+
+
+#### Build
+
+$ `git clone git@github.com:claromes/telegramtrac.git`
+
+$ `cd telegramtrac`
+
+$ `pip install -r requirements.txt`
+
+$ `streamlit run streamlit\telegramtrac.py`
+
+Streamlit will be served at http://localhost:8501
 
 ## Usage
-This sections includes detailed instructions for using the tool. If the tool has a command-line interface, include common commands and arguments, and some examples of commands and a description of the expected output. If the tool has a graphical user interface or a browser interface, include screenshots and describe a common workflow.
+### Browser interface
+
+<br>
+
+> Initial screen: credentials, sign in and channel input
+<br>
+<p align="center">
+    <img src="assets/1.png" width="700">
+</p>
+
+<br>
+
+> Data screen: tabs and download links
+<br>
+<p align="center">
+    <img src="assets/3.png" width="700">
+</p>
+
+### Workflow
+
+*IMPORTANT: To test using the deploy link with your personal credentials disable the 2FA*
+
+1. Create your API credentials [here](https://core.telegram.org/api/obtaining_api_id#obtaining-api-id) or use [this fake credentials](fake_credentials.txt) with mockup data
+
+2. Fill the inputs `api_id`, `api_hash` and your `phone` number (*following this format: +5500912348765*) and click on `send credentials` button
+
+- A 5-digit code will be send to your Telegram app
+
+3. Fill the input `code` and click on `sign in` button
+
+- A message will be send to your Telegram app about the authentication
+
+4. Fill the input `channel name` (*copy name from channel link: t.me/CHANNEL_NAME*) and click on `trac` button
+
+5. Switch tabs to preview or download the data
+
+6. To track another channel, switch to last tab (`trac`) and click `restart`
 
 ## Additional Information
-This section includes any additional information that you want to mention about the tool, including:
-- Potential next steps for the tool (i.e. what you would implement if you had more time)
-- Any limitations of the current implementation of the tool
-- Motivation for design/architecture decisions
+
+### Limitations
+
+- Unable to use with 2FA
+- Only one channel per track
+
+### Design decisions
+
+Mostly limited to Streamlit options. The form and tabs were chosen due to common use in web apps.
+
+### Roadmap
+
+- [ ] Improve About section
+- [ ] Check API limitations
+- [ ] Add batch file upload
