@@ -16,7 +16,7 @@ telegramtrac can also contribute to the open source ecosystem of the OSINT commu
 
 ### Deploy
 
-[streamlit.app](https://claromes-telegramtrac-streamlittelegramtrac-dev-mqroml.streamlit.app/)
+[telegramtrac.streamlit.app](https://telegramtrac.streamlit.app/)
 
 ### Development
 
@@ -77,6 +77,8 @@ Streamlit will be served at http://localhost:8501
 
 2. Fill the inputs `api_id`, `api_hash` and your `phone` number (*following this format: +5500912348765*) and click on `send credentials` button
 
+- It may take a few minutes...
+
 - A 5-digit code will be send to your Telegram app
 
 3. Fill the input `code` and click on `sign in` button
@@ -91,7 +93,7 @@ Streamlit will be served at http://localhost:8501
 
 - Use the same `code`
 - A late message could be send to your Telegram app about other authentications
-- At each tracking the output data are grouped in the same file (option for separate files will be implemented)
+- At each tracking the output dataset are grouped in the same file
 
 ## Additional Information
 
@@ -107,12 +109,11 @@ Mostly limited to Streamlit options. The form and tabs were chosen due to common
 
 ### Roadmap
 
+- [ ] Log for users
 - [ ] Docs telegramtrac/ API credentials (how to)
 - [ ] Refactor the code
 - [ ] Improve About section
 - [ ] Allow other package options
 - [ ] Check API limitations
 - [ ] Add batch file upload
-- [ ] Output options
-- [ ] SignInRequest error
 - [ ] Sec issues

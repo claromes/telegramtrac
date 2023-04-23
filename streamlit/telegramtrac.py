@@ -164,23 +164,8 @@ if trac and st.session_state.channel_name != '':
             st.markdown('<a href="{}" download="{}_messages.json" title="Download {}_messages.json">{} Messages</a>'.format(href, st.session_state.channel_name, st.session_state.channel_name, st.session_state.channel_name), unsafe_allow_html=True)
             st.json(data, expanded=False)
 
-    #dataset
-    with tab2:
-        st.subheader('{} dataset (.csv)'.format(st.session_state.channel_name))
-        dataset_csv_file = 'output/data/msgs_dataset.csv'
-
-        with open(dataset_csv_file, 'rb') as file:
-            df = read_csv(dataset_csv_file)
-
-            csv = df.to_csv(index=False)
-            b64 = base64.b64encode(csv.encode()).decode()
-
-            st.markdown('<a href="data:file/csv;base64,{}" download="msgs_dataset.csv.csv" title="Download msgs_dataset.csv">Dataset</a>'.format(b64), unsafe_allow_html=True)
-
-            st.dataframe(df)
-
     #metadata
-    with tab3:
+    with tab2:
         metadata_json_file = 'output/data/{}/{}.json'.format(st.session_state.channel_name, st.session_state.channel_name)
         metadata_txt_file = 'output/data/chats.txt'
         metadata_chats_csv_file = 'output/data/collected_chats.csv'
@@ -219,6 +204,21 @@ if trac and st.session_state.channel_name != '':
             b64 = base64.b64encode(csv.encode()).decode()
 
             st.markdown('<a href="data:file/csv;base64,{}" download="counter.csv" title="Download counter.csv">Counter</a>'.format(b64), unsafe_allow_html=True)
+
+    #dataset
+    with tab3:
+        st.subheader('dataset (.csv)')
+        dataset_csv_file = 'output/data/msgs_dataset.csv'
+
+        with open(dataset_csv_file, 'rb') as file:
+            df = read_csv(dataset_csv_file)
+
+            csv = df.to_csv(index=False)
+            b64 = base64.b64encode(csv.encode()).decode()
+
+            st.markdown('<a href="data:file/csv;base64,{}" download="msgs_dataset.csv.csv" title="Download msgs_dataset.csv">Dataset</a>'.format(b64), unsafe_allow_html=True)
+
+            st.dataframe(df)
 
     #restart
     with tab4:
