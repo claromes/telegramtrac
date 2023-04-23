@@ -137,7 +137,7 @@ with channel_component.form(key='channel_form'):
 #data tabs
 if trac and st.session_state.channel_name != '':
     center_running()
-    tab1, tab2, tab3, tab4 = st.tabs(['json', 'metadata', 'dataset', 'new trac'])
+    tab1, tab2, tab3 = st.tabs(['json', 'metadata', 'new trac'])
 
     form_component.empty()
     sign_in_component.empty()
@@ -152,14 +152,14 @@ if trac and st.session_state.channel_name != '':
     except Exception:
         pass
 
-    try:
-        cmd_dataset = 'python build-datasets.py'
+    # try:
+    #     cmd_dataset = 'python build-datasets.py'
 
-        output = subprocess.check_output(cmd_dataset.split())
-    except subprocess.CalledProcessError:
-        pass
-    except Exception:
-        pass
+    #     output = subprocess.check_output(cmd_dataset.split())
+    # except subprocess.CalledProcessError:
+    #     pass
+    # except Exception:
+    #     pass
 
     #json - main file
     with tab1:
@@ -218,22 +218,22 @@ if trac and st.session_state.channel_name != '':
             st.markdown('<a href="data:file/csv;base64,{}" download="counter.csv" title="Download counter.csv">Counter</a>'.format(b64), unsafe_allow_html=True)
 
     #dataset
-    with tab3:
-        st.subheader('dataset (.csv)')
-        dataset_csv_file = 'output/data/msgs_dataset.csv'
+    # with tab3:
+    #     st.subheader('dataset (.csv)')
+    #     dataset_csv_file = 'output/data/msgs_dataset.csv'
 
-        with open(dataset_csv_file, 'rb') as file:
-            df = read_csv(dataset_csv_file)
+    #     with open(dataset_csv_file, 'rb') as file:
+    #         df = read_csv(dataset_csv_file)
 
-            csv = df.to_csv(index=False)
-            b64 = base64.b64encode(csv.encode()).decode()
+    #         csv = df.to_csv(index=False)
+    #         b64 = base64.b64encode(csv.encode()).decode()
 
-            st.markdown('<a href="data:file/csv;base64,{}" download="msgs_dataset.csv" title="Download msgs_dataset.csv">Dataset</a>'.format(b64), unsafe_allow_html=True)
+    #         st.markdown('<a href="data:file/csv;base64,{}" download="msgs_dataset.csv" title="Download msgs_dataset.csv">Dataset</a>'.format(b64), unsafe_allow_html=True)
 
-            st.dataframe(df)
+    #         st.dataframe(df)
 
     #restart
-    with tab4:
+    with tab3:
         restart = st.button('restart', type='primary')
 
         if restart:
