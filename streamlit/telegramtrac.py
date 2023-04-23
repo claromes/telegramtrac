@@ -224,7 +224,7 @@ if trac and st.session_state.channel_name != '':
             csv = df.to_csv(index=False)
             b64 = base64.b64encode(csv.encode()).decode()
 
-            st.markdown('<a href="data:file/csv;base64,{}" download="msgs_dataset.csv.csv" title="Download msgs_dataset.csv">Dataset</a>'.format(b64), unsafe_allow_html=True)
+            st.markdown('<a href="data:file/csv;base64,{}" download="msgs_dataset.csv" title="Download msgs_dataset.csv">Dataset</a>'.format(b64), unsafe_allow_html=True)
 
             st.dataframe(df)
 

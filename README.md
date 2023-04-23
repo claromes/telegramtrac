@@ -127,4 +127,5 @@ Mostly limited to Streamlit options. The form and tabs were chosen due to common
 - [ ] Allow other package options
 - [ ] Check API limitations
 - [ ] Add batch file upload
+- [ ] Logout users
 - [ ] Sec issues
