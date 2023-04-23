@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import configparser
+import telethon
 
 # import Telethon API modules
 from telethon import TelegramClient, types
