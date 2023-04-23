@@ -49,9 +49,9 @@ title_component.title('telegramtrac', help="not stable", anchor=False)
 
 #credentials
 with form_component.form(key='config_form'):
-    ***REMOVED*** st.text_input('api_id')
-    ***REMOVED*** st.text_input('api_hash')
-    ***REMOVED*** st.text_input('phone')
+    api_id = st.text_input('api_id')
+    api_hash = st.text_input('api_hash')
+    phone = st.text_input('phone')
 
     config = {
         'api_id': api_id,
@@ -105,7 +105,7 @@ with sign_in_component.form(key='config_sign_in_form'):
     if code_sign_in == '':
         code_sign_in = st.session_state.code_value
 
-    config_sign_in_***REMOVED*** {
+    config_sign_in_code = {
         'code': code_sign_in
     }
 

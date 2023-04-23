@@ -99,9 +99,9 @@ Variables
 FILL API KEYS
 '''
 sfile = 'session_file'
-***REMOVED*** args['api_id']
-***REMOVED*** args['api_hash']
-***REMOVED*** args['phone']
+api_id = args['api_id']
+api_hash = args['api_hash']
+phone = args['phone']
 
 # event loop
 loop = asyncio.get_event_loop()
