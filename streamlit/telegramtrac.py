@@ -4,6 +4,7 @@ import subprocess
 import json
 import configparser
 from pandas import read_csv
+import base64
 
 #components variables
 title_component = st.empty()
@@ -17,7 +18,7 @@ trac = ''
 
 #states
 if 'channel_name' not in st.session_state:
-    st.session_state['channel_name'] = ''
+    st.session_state['channel_name'] = 'literaturese'
 
 if 'code_state' not in st.session_state:
     st.session_state['code_state'] = False
@@ -61,14 +62,14 @@ if send_credentials and api_id != '' and api_hash != '' and phone != '':
     center_running()
     st.session_state.code_state = True
 
-    try:
-        cmd_connect = 'python connect.py'
+    # try:
+    #     cmd_connect = 'python connect.py'
 
-        output = subprocess.check_output(cmd_connect.split())
-    except subprocess.CalledProcessError as e:
-        pass
-    except Exception as e:
-        pass
+    #     output = subprocess.check_output(cmd_connect.split())
+    # except subprocess.CalledProcessError as e:
+    #     pass
+    # except Exception as e:
+    #     pass
 
 #sign in code
 with sign_in_component.form(key='config_sign_in_form'):
@@ -119,23 +120,23 @@ if trac and st.session_state.channel_name != '':
     sign_in_component.empty()
     channel_component.empty()
 
-    try:
-        cmd_main = 'python main.py --telegram-channel {}'.format(st.session_state.channel_name)
+    # try:
+    #     cmd_main = 'python main.py --telegram-channel {}'.format(st.session_state.channel_name)
 
-        output = subprocess.check_output(cmd_main.split())
-    except subprocess.CalledProcessError as e:
-        pass
-    except Exception as e:
-        pass
+    #     output = subprocess.check_output(cmd_main.split())
+    # except subprocess.CalledProcessError as e:
+    #     pass
+    # except Exception as e:
+    #     pass
 
-    try:
-        cmd_dataset = 'python build-datasets.py'
+    # try:
+    #     cmd_dataset = 'python build-datasets.py'
 
-        output = subprocess.check_output(cmd_dataset.split())
-    except subprocess.CalledProcessError as e:
-        pass
-    except Exception as e:
-        pass
+    #     output = subprocess.check_output(cmd_dataset.split())
+    # except subprocess.CalledProcessError as e:
+    #     pass
+    # except Exception as e:
+    #     pass
 
     #json - main file
     with tab1:
@@ -154,8 +155,13 @@ if trac and st.session_state.channel_name != '':
         dataset_csv_file = 'output/data/msgs_dataset.csv'
 
         with open(dataset_csv_file, 'rb') as file:
-            st.download_button('Dataset', help='Download msgs_dataset.csv', file_name=dataset_csv_file, data=file, mime='text/csv')
+            #st.download_button('Dataset', help='Download msgs_dataset.csv', file_name=dataset_csv_file, data=file, mime='text/csv')
             df = read_csv(dataset_csv_file)
+
+            csv = df.to_csv(index=False)
+            b64 = base64.b64encode(csv.encode()).decode()
+
+            st.markdown(f'<a href="data:file/csv;base64,{b64}" download="{dataset_csv_file}.csv" title="Download msgs_dataset.csv">Dataset</a>', unsafe_allow_html=True)
 
             st.dataframe(df)
 
