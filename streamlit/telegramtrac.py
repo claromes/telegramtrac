@@ -71,7 +71,7 @@ if send_credentials and api_id != '' and api_hash != '' and phone != '':
     st.session_state.code_state = True
 
     try:
-        cmd_connect = 'python3 -m pip install --upgrade telethon; python3 connect.py'
+        cmd_connect = 'python -m pip install --upgrade telethon; python3 connect.py'
 
         output = subprocess.check_output(cmd_connect.split())
     except subprocess.CalledProcessError:
@@ -128,7 +128,7 @@ if trac and st.session_state.channel_name != '':
     channel_component.empty()
 
     try:
-        cmd_main = 'python3 main.py --telegram-channel {}'.format(st.session_state.channel_name)
+        cmd_main = 'python main.py --telegram-channel {}'.format(st.session_state.channel_name)
 
         output = subprocess.check_output(cmd_main.split())
     except subprocess.CalledProcessError:
@@ -137,7 +137,7 @@ if trac and st.session_state.channel_name != '':
         pass
 
     try:
-        cmd_dataset = 'python3 build-datasets.py'
+        cmd_dataset = 'python build-datasets.py'
 
         output = subprocess.check_output(cmd_dataset.split())
     except subprocess.CalledProcessError:
