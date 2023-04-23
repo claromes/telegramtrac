@@ -1,4 +1,4 @@
-telethon==1.26.1
+Telethon==1.26.1
 pandas==1.5.3
 openpyxl==3.0.10
 tqdm==4.64.1
