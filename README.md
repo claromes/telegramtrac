@@ -1,3 +1,5 @@
+*After the event the tool will be under development*
+
 # telegramtrac
 
 ## Team Members
@@ -108,6 +110,7 @@ Streamlit will be served at http://localhost:8501
 
 - To restart, send the same credentials and send de same `code`
 - A late message could be send to your Telegram app about other authentications
+- At each tracking the dataset are grouped in the same file to allow network analysis
 
 ## Additional Information
 
