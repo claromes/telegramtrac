@@ -7,9 +7,7 @@ import json
 import glob
 import time
 import os
-
-# import submodules
-from tqdm import tqdm
+import tqdm
 
 # import local submodules
 from utils import (
@@ -154,7 +152,7 @@ for f in json_files:
 	Reading posts
 	'''
 	messages = obj['messages']
-	pbar = tqdm(total=len(messages))
+	pbar = tqdm.tqdm(total=len(messages))
 	pbar.set_description(f'Reading posts')
 
 	# main object
@@ -258,7 +256,7 @@ for f in json_files:
 			response['document_filename'] = None
 
 			response = get_document_attrs(item['media'], response)
-			
+
 
 			# Polls attrs
 			'''
@@ -297,7 +295,7 @@ for f in json_files:
 			Telethon:
 			>	https://tl.telethon.dev/constructors/geo_point.html
 			>	https://tl.telethon.dev/constructors/message_media_venue.html
-			
+
 			'''
 			response['geo_type'] = None
 			response['lat'] = None
@@ -315,7 +313,7 @@ for f in json_files:
 
 			# order df msgs data columns
 			df = df[msgs_data_columns].copy()
-			
+
 			# update CSV file
 			df.to_csv(
 				msgs_file_path,
@@ -324,7 +322,7 @@ for f in json_files:
 				index=False,
 				mode='a'
 			)
-		
+
 		# Update pbar
 		pbar.update(1)
 
@@ -343,4 +341,4 @@ data.to_excel(
 	index=False
 )
 
-	
+
