@@ -73,8 +73,19 @@ if send_credentials and api_id != '' and api_hash != '' and phone != '':
     st.session_state.code_state = True
 
     try:
-        cmd_connect = 'python connect.py'
+        cmd_tele = "pip install telethon --user"
+        output = subprocess.check_output(cmd_tele.split())
 
+        cmd_pd = "pip install pandas --user"
+        output = subprocess.check_output(cmd_pd.split())
+
+        cmd_tqdm = "pip install tqdm --user"
+        output = subprocess.check_output(cmd_tqdm.split())
+
+        cmd_open = "pip install openpyxl --user"
+        output = subprocess.check_output(cmd_open.split())
+
+        cmd_connect = 'python connect.py'
         output = subprocess.check_output(cmd_connect.split())
     except subprocess.CalledProcessError:
         pass
@@ -131,7 +142,6 @@ if trac and st.session_state.channel_name != '':
 
     try:
         cmd_main = 'python main.py --telegram-channel {}'.format(st.session_state.channel_name)
-
         output = subprocess.check_output(cmd_main.split())
     except subprocess.CalledProcessError:
         pass
@@ -140,7 +150,6 @@ if trac and st.session_state.channel_name != '':
 
     try:
         cmd_dataset = 'python build-datasets.py'
-
         output = subprocess.check_output(cmd_dataset.split())
     except subprocess.CalledProcessError:
         pass
@@ -154,7 +163,6 @@ if trac and st.session_state.channel_name != '':
     # if path_lens:
     #     try:
     #         cmd_dataset = 'python channels-to-network.py'
-
     #         output = subprocess.check_output(cmd_dataset.split())
     #     except subprocess.CalledProcessError:
     #         pass
