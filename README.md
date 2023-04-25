@@ -137,3 +137,11 @@ Mostly limited to Streamlit options. The form and tabs were chosen due to common
 - [ ] Add batch file upload
 - [ ] Logout users
 - [ ] Sec issues
+
+### Changelog
+
+- [v0.2.0](https://github.com/claromes/telegramtrac/releases/tag/v0.2.0)
+    - Fix dataset tab
+    - Fix imports
+- [v0.1.0](https://github.com/claromes/telegramtrac/releases/tag/v0.1.0)
+    - Bellingcat Accessiblilty Hackathon submission
