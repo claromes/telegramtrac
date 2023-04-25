@@ -126,7 +126,7 @@ Mostly limited to Streamlit options. The form and tabs were chosen due to common
 
 ### Roadmap
 
-- [ ] Fix dataset tab
+- [x] Fix dataset tab
 - [ ] Log for users
 - [ ] Docs telegramtrac/ API credentials (how to)
 - [ ] Refactor the code
