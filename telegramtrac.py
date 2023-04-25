@@ -5,11 +5,12 @@ import json
 import configparser
 from pandas import read_csv
 import base64
+import os
 
 #page config
 st.set_page_config(
     page_title="telegramtrac",
-    page_icon="👣",
+    page_icon="🟦",
     layout="centered",
     initial_sidebar_state="collapsed",
     menu_items={
@@ -30,6 +31,7 @@ title_component = st.empty()
 form_component = st.empty()
 sign_in_component = st.empty()
 channel_component = st.empty()
+channel_component_new = st.empty()
 center_running()
 
 trac = ''
@@ -71,22 +73,6 @@ if send_credentials and api_id != '' and api_hash != '' and phone != '':
     st.session_state.code_state = True
 
     try:
-        cmd_tele = "pip install telethon --user"
-
-        output = subprocess.check_output(cmd_tele.split())
-
-        cmd_pd = "pip install pandas --user"
-
-        output = subprocess.check_output(cmd_pd.split())
-
-        cmd_tqdm = "pip install tqdm --user"
-
-        output = subprocess.check_output(cmd_tqdm.split())
-
-        cmd_open = "pip install openpyxl --user"
-
-        output = subprocess.check_output(cmd_open.split())
-
         cmd_connect = 'python connect.py'
 
         output = subprocess.check_output(cmd_connect.split())
@@ -137,7 +123,7 @@ with channel_component.form(key='channel_form'):
 #data tabs
 if trac and st.session_state.channel_name != '':
     center_running()
-    tab1, tab2, tab3 = st.tabs(['json', 'metadata', 'new trac'])
+    tab1, tab2, tab3, tab4, tab5 = st.tabs(['messages', 'metadata', 'dataset', 'network', 'new trac'])
 
     form_component.empty()
     sign_in_component.empty()
@@ -152,28 +138,42 @@ if trac and st.session_state.channel_name != '':
     except Exception:
         pass
 
-    # try:
-    #     cmd_dataset = 'python build-datasets.py'
+    try:
+        cmd_dataset = 'python build-datasets.py'
 
-    #     output = subprocess.check_output(cmd_dataset.split())
-    # except subprocess.CalledProcessError:
-    #     pass
-    # except Exception:
-    #     pass
+        output = subprocess.check_output(cmd_dataset.split())
+    except subprocess.CalledProcessError:
+        pass
+    except Exception:
+        pass
+
+    path = 'output/data'
+    subdirectories = [entry for entry in os.scandir(path) if entry.is_dir()]
+    path_lens = len(subdirectories) > 1
+
+    # if path_lens:
+    #     try:
+    #         cmd_dataset = 'python channels-to-network.py'
+
+    #         output = subprocess.check_output(cmd_dataset.split())
+    #     except subprocess.CalledProcessError:
+    #         pass
+    #     except Exception:
+    #         pass
 
     #json - main file
     with tab1:
         json_file = 'output/data/{}/{}_messages.json'.format(st.session_state.channel_name, st.session_state.channel_name)
 
         with open(json_file, 'rb') as file:
-            st.subheader('{} messages (.json)'.format(st.session_state.channel_name))
+            st.subheader('{} messages'.format(st.session_state.channel_name), anchor=False)
 
             data = json.load(file)
             json_dump = json.dumps(data)
             b64 = base64.b64encode(json_dump.encode()).decode()
             href = 'data:file/json;base64,{}'.format(b64)
 
-            st.markdown('<a href="{}" download="{}_messages.json" title="Download {}_messages.json">{} Messages</a>'.format(href, st.session_state.channel_name, st.session_state.channel_name, st.session_state.channel_name), unsafe_allow_html=True)
+            st.markdown('<a href="{}" download="{}_messages.json" title="Download {}_messages.json">{}_messages.json</a>'.format(href, st.session_state.channel_name, st.session_state.channel_name, st.session_state.channel_name), unsafe_allow_html=True)
             st.json(data, expanded=False)
 
     #metadata
@@ -183,7 +183,7 @@ if trac and st.session_state.channel_name != '':
         metadata_chats_csv_file = 'output/data/collected_chats.csv'
         metadata_counter_csv_file = 'output/data/counter.csv'
 
-        st.subheader('{} metadata'.format(st.session_state.channel_name))
+        st.subheader('{} metadata'.format(st.session_state.channel_name), anchor=False)
         with open(metadata_json_file, 'rb') as file:
             data = json.load(file)
             json_dump = json.dumps(data)
@@ -191,7 +191,7 @@ if trac and st.session_state.channel_name != '':
             b64 = base64.b64encode(json_dump.encode()).decode()
             href = 'data:file/json;base64,{}'.format(b64)
 
-            st.markdown('<a href="{}" download="{}.json" title="Download {}.json">{}</a>'.format(href, st.session_state.channel_name, st.session_state.channel_name, st.session_state.channel_name), unsafe_allow_html=True)
+            st.markdown('<a href="{}" download="{}.json" title="Download {}.json">{}.json</a>'.format(href, st.session_state.channel_name, st.session_state.channel_name, st.session_state.channel_name), unsafe_allow_html=True)
 
         with open(metadata_txt_file, 'rb') as file:
             txt = file.read().decode()
@@ -199,7 +199,7 @@ if trac and st.session_state.channel_name != '':
             b64 = base64.b64encode(txt.encode()).decode()
             href = 'data:file/txt;base64,{}'.format(b64)
 
-            st.markdown('<a href="{}" download="chats.txt" title="Download chats.txt">Chats</a>'.format(href), unsafe_allow_html=True)
+            st.markdown('<a href="{}" download="chats.txt" title="Download chats.txt">chats.txt</a>'.format(href), unsafe_allow_html=True)
 
         with open(metadata_chats_csv_file, 'rb') as file:
             metadata_chats = read_csv(metadata_chats_csv_file)
@@ -207,7 +207,7 @@ if trac and st.session_state.channel_name != '':
             csv = metadata_chats.to_csv(index=False)
             b64 = base64.b64encode(csv.encode()).decode()
 
-            st.markdown('<a href="data:file/csv;base64,{}" download="collected_chats.csv" title="Download collected_chats.csv">Collected Chats</a>'.format(b64), unsafe_allow_html=True)
+            st.markdown('<a href="data:file/csv;base64,{}" download="collected_chats.csv" title="Download collected_chats.csv">collected_chats.csv</a>'.format(b64), unsafe_allow_html=True)
 
         with open(metadata_counter_csv_file, 'rb') as file:
             metadata_counter = read_csv(metadata_counter_csv_file)
@@ -215,25 +215,33 @@ if trac and st.session_state.channel_name != '':
             csv = metadata_counter.to_csv(index=False)
             b64 = base64.b64encode(csv.encode()).decode()
 
-            st.markdown('<a href="data:file/csv;base64,{}" download="counter.csv" title="Download counter.csv">Counter</a>'.format(b64), unsafe_allow_html=True)
+            st.markdown('<a href="data:file/csv;base64,{}" download="counter.csv" title="Download counter.csv">counter.csv</a>'.format(b64), unsafe_allow_html=True)
 
     #dataset
-    # with tab3:
-    #     st.subheader('dataset (.csv)')
-    #     dataset_csv_file = 'output/data/msgs_dataset.csv'
+    with tab3:
+        st.subheader('dataset', anchor=False)
+        #st.caption('Channels: {}'.format(st.session_state.channel_name))
+        dataset_csv_file = 'output/data/msgs_dataset.csv'
 
-    #     with open(dataset_csv_file, 'rb') as file:
-    #         df = read_csv(dataset_csv_file)
+        with open(dataset_csv_file, 'rb') as file:
+            df = read_csv(dataset_csv_file)
 
-    #         csv = df.to_csv(index=False)
-    #         b64 = base64.b64encode(csv.encode()).decode()
+            csv = df.to_csv(index=False)
+            b64 = base64.b64encode(csv.encode()).decode()
 
-    #         st.markdown('<a href="data:file/csv;base64,{}" download="msgs_dataset.csv" title="Download msgs_dataset.csv">Dataset</a>'.format(b64), unsafe_allow_html=True)
+            st.markdown('<a href="data:file/csv;base64,{}" download="msgs_dataset.csv" title="Download msgs_dataset.csv">msgs_dataset.csv</a>'.format(b64), unsafe_allow_html=True)
 
-    #         st.dataframe(df)
+            st.dataframe(df)
+
+    with tab4:
+        if path_lens:
+            st.info('Under development')
+        else:
+            st.info('There is only one channel.')
+            #st.info('There is only one channel.')
 
     #restart
-    with tab3:
+    with tab5:
         restart = st.button('restart', type='primary')
 
         if restart:
