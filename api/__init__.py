@@ -1,15 +1,6 @@
 # -*- coding: utf-8 -*-
 import configparser
-
-# import Telethon API modules
-from telethon import TelegramClient, types
-from telethon.tl.functions.channels import GetChannelsRequest, \
-	GetFullChannelRequest, GetParticipantsRequest
-from telethon.tl.functions.messages import GetHistoryRequest, \
-	GetDiscussionMessageRequest, GetWebPageRequest
-from telethon.tl.functions.users import GetFullUserRequest
-from telethon.tl.functions.photos import GetUserPhotosRequest
-from telethon.tl.functions.stats import GetBroadcastStatsRequest
+import telethon
 
 '''
 
@@ -31,7 +22,7 @@ async def get_connection(session_file, api_id, api_hash, phone):
 	'''
 	Connects to Telegram API
 	'''
-	client = TelegramClient(session_file, api_id, api_hash)
+	client = telethon.TelegramClient(session_file, api_id, api_hash)
 	await client.connect()
 	if await client.is_user_authorized():
 		print ('> Authorized!')
@@ -87,7 +78,7 @@ async def get_channel_req(client, source):
 		source = [source]
 
 	return await client(
-		GetChannelsRequest(source)
+		telethon.tl.functions.channels.GetChannelsRequest(source)
 	)
 
 # get full channel request
@@ -101,7 +92,7 @@ async def full_channel_req(client, source):
 	'''
 
 	return await client(
-		GetFullChannelRequest(source)
+		telethon.tl.functions.channels.GetFullChannelRequest(source)
 	)
 
 # get participants request
@@ -109,9 +100,9 @@ async def get_participants_request(client, source):
 	'''
 	'''
 	return await client(
-		GetParticipantsRequest(
+		telethon.tl.functions.channels.GetParticipantsRequest(
 			channel=source,
-			filter=types.ChannelParticipantsRecent(),
+			filter=telethon.types.ChannelParticipantsRecent(),
 			offset=1,
 			limit=10,
 			hash=0
@@ -137,7 +128,7 @@ async def get_posts(client, source, min_id=0, offset_id=0):
 	'''
 
 	return await client(
-		GetHistoryRequest(
+		telethon.tl.functions.messages.GetHistoryRequest(
 			peer=source,
 			hash=0,
 			limit=100,
@@ -162,7 +153,7 @@ async def get_discussion_message(client, source, msg_id):
 	'''
 
 	return await client(
-		GetDiscussionMessageRequest(
+		telethon.tl.functions.messages.GetDiscussionMessageRequest(
 			peer=source,
 			msg_id=msg_id
 		)
@@ -179,7 +170,7 @@ async def get_web_page(client, url, hash):
 		Output attrs: https://core.telegram.org/constructor/webPage
 	'''
 	return await client(
-		GetWebPageRequest(url, hash)
+		telethon.tl.functions.messages.GetWebPageRequest(url, hash)
 	)
 
 
@@ -200,7 +191,7 @@ async def full_user_req(client, source, channel):
 	'''
 	try:
 		user = await client(
-			GetFullUserRequest(source)
+			telethon.tl.functions.users.GetFullUserRequest(source)
 		)
 
 		return user
@@ -220,7 +211,7 @@ async def photos_request(client, user_input):
 	'''
 	'''
 	return await client(
-		GetUserPhotosRequest(
+		telethon.tl.functions.photos.GetUserPhotosRequest(
 			user_id=user_input,
 			offset=0,
 			max_id=0,
@@ -245,7 +236,7 @@ async def broadcast_stats_req(client, source):
 		Output attrs: https://core.telegram.org/constructor/stats.broadcastStats
 	'''
 	return await client(
-		GetBroadcastStatsRequest(
+		telethon.tl.functions.stats.GetBroadcastStatsRequest(
 			channel=source
 		)
 	)

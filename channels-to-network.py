@@ -6,13 +6,8 @@ import time
 import argparse
 import pandas as pd
 import networkx as nx
-
-# import submodules
-from community import community_louvain
-
-# Plot - Graph dependencies
-import matplotlib.cm as cm
-import matplotlib.pyplot as plt
+import community
+import matplotlib
 
 # import local modules
 from utils import (
@@ -116,16 +111,16 @@ G_louvain = nx.from_pandas_edgelist(
 	network_data,
 	create_using=nx.Graph()
 )
-partition = community_louvain.best_partition(G_louvain)
+partition = community.community_louvain.best_partition(G_louvain)
 
 # Pos -> Graph
 pos = nx.spring_layout(G)
 
 # Color the nodes according to their partition
-cmap = cm.get_cmap('viridis', max(partition.values()) + 1)
+cmap = matplotlib.cm.get_cmap('viridis', max(partition.values()) + 1)
 
 # plt fig size
-plt.figure(figsize=(16, 10), frameon=False)
+matplotlib.pyplot.figure(figsize=(16, 10), frameon=False)
 
 # Draw network
 nx.draw_networkx_edges(G, pos, alpha=0.3)
@@ -149,4 +144,4 @@ nx.draw_networkx_labels(
 )
 
 # Save image
-plt.savefig(f'{main_path}/network.png')
+matplotlib.pyplot.savefig(f'{main_path}/network.png')
