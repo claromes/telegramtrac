@@ -1,6 +1,6 @@
-*After the event the tool will be under development*
-
 # telegramtrac
+
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_red.svg)](https://telegramtrac.streamlit.app/)
 
 ## Team Members
 [claromes](https://claromes.gitlab.io/)
@@ -16,17 +16,11 @@ telegramtrac can also contribute to the open source ecosystem of the OSINT commu
 
 ## Installation
 
-### Deploy
-
-[telegramtrac.streamlit.app](https://telegramtrac.streamlit.app/) (not stable)
-
-### Development
-
-#### Requirements
+### Requirements
 
 - Python 3.8+
 
-#### Build
+### Build
 
 $ `git clone git@github.com:claromes/telegramtrac.git`
 
@@ -39,11 +33,12 @@ $ `streamlit run streamlit\telegramtrac.py`
 Streamlit will be served at http://localhost:8501
 
 ## Usage
+
 ### Browser interface
 
 <br>
 
-> Initial screen: credentials, sign in and channel input
+> Initial screen: credentials, sign in and channel inputs
 <br>
 <p align="center">
     <img src="assets/1.png" width="700">
@@ -51,7 +46,7 @@ Streamlit will be served at http://localhost:8501
 
 <br>
 
-> Data screen: tabs and download links
+> Data screens: tabs and download links
 <br>
 <p align="center">
     <img src="assets/2.png" width="700">
@@ -60,13 +55,18 @@ Streamlit will be served at http://localhost:8501
     <img src="assets/3.png" width="700">
 </p>
 
-**dataset tab is under repair*
-
 <p align="center">
     <img src="assets/4.png" width="700">
 </p>
 <p align="center">
-    <img src="assets/4-1.png" width="700">
+    <img src="assets/5.png" width="700">
+</p>
+
+**network tab is under development*
+<br>
+
+<p align="center">
+    <img src="assets/6.png" width="700">
 </p>
 
 <br>
@@ -74,7 +74,7 @@ Streamlit will be served at http://localhost:8501
 > Restart tab: to track another channel
 <br>
 <p align="center">
-    <img src="assets/5.png" width="700">
+    <img src="assets/6.png" width="700">
 </p>
 
 ### Workflow
@@ -84,10 +84,10 @@ Streamlit will be served at http://localhost:8501
 1. Create your API credentials [here](https://my.telegram.org/auth)
 
 <p align="center">
-    <img src="assets/6.png" width="400">
+    <img src="assets/7.png" width="400">
 </p>
 <p align="center">
-    <img src="assets/7.png" width="400">
+    <img src="assets/8.png" width="400">
 </p>
 
 2. Fill the inputs `api_id`, `api_hash` and your `phone` number (*following this format: +5500912348765*) and click on `send credentials` button
@@ -127,6 +127,7 @@ Mostly limited to Streamlit options. The form and tabs were chosen due to common
 ### Roadmap
 
 - [x] Fix dataset tab
+- [ ] Fix set credentials and code in restart flow
 - [ ] Log for users
 - [ ] Docs telegramtrac/ API credentials (how to)
 - [ ] Refactor the code
