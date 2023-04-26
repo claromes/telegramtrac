@@ -1,18 +1,14 @@
 # telegramtrac
 
-[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_red.svg)](https://telegramtrac.streamlit.app/)
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_red.svg)](https://telegramtrac.streamlit.app/) (not stable)
 
 ## Team Members
 [claromes](https://claromes.gitlab.io/)
 
 ## Tool Description
-telegramtrac is a Telegram public channels tracker designed for non-programmers. It is a web version of Telegram Tracker, a Python package that allows users to track a channel messages. The original tool facilitates channel tracking and includes features such as visualizing a network graph and metadata.
+telegramtrac is a web-based tool designed for tracking public channels on Telegram. It's a fork of the Python package [`telegram-tracker`](https://github.com/estebanpdl/telegram-tracker) developed by Esteban Ponce de León, DFRLab researcher.
 
-I discovered the original package during a DFRLab's Digital Sherlocks workshop. It is already being used by experienced researchers, and an accessible version would allow researchers of different skill and experience levels to track Telegram.
-
-The package was developed by researcher Esteban Ponce de León as part of the Digital Sherlocks community, and as a member of this community, I want to contribute!
-
-telegramtrac can also contribute to the open source ecosystem of the OSINT community.
+I became familiar with the package during the DFRLab's Digital Sherlocks Program and believe that an accessible version would benefit researchers of different skill levels.
 
 ## Installation
 
@@ -108,7 +104,7 @@ Streamlit will be served at http://localhost:8501
 
 6. To track another channel, switch to last tab (`trac`) and click `restart`.
 
-- To restart, send the same credentials and send de same `code`
+- To restart, send the same credentials and `code`
 - A late message could be send to your Telegram app about other authentications
 - At each tracking the dataset are grouped in the same file to allow network analysis
 
@@ -118,7 +114,6 @@ Streamlit will be served at http://localhost:8501
 
 - Unable to use with 2FA
 - Only one channel per track
-- Only grouped data
 
 ### Design decisions
 
