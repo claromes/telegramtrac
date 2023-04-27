@@ -16,7 +16,7 @@ I became familiar with the package during the DFRLab's Digital Sherlocks Program
 
 - Python 3.8+
 
-### Build
+### Dev
 
 $ `git clone git@github.com:claromes/telegramtrac.git`
 
@@ -119,24 +119,29 @@ Streamlit will be served at http://localhost:8501
 
 Mostly limited to Streamlit options. The form and tabs were chosen due to common use in web apps.
 
-### Roadmap
+## Roadmap
 
 - [x] Fix dataset tab
 - [ ] Fix set credentials and code in restart flow
+- [ ] Network tab
+- [ ] Allow 2FA
+- [ ] Add batch file upload
+- [ ] Option without API credentials
 - [ ] Log for users
+- [ ] Logout users
 - [ ] Docs telegramtrac/ API credentials (how to)
 - [ ] Refactor the code
-- [ ] Improve About section
-- [ ] Allow other package options
 - [ ] Check API limitations
-- [ ] Add batch file upload
-- [ ] Logout users
 - [ ] Sec issues
 
-### Changelog
+## Changelog
 
 - [v0.2.0](https://github.com/claromes/telegramtrac/releases/tag/v0.2.0)
     - Fix dataset tab
     - Fix imports
 - [v0.1.0](https://github.com/claromes/telegramtrac/releases/tag/v0.1.0)
     - Bellingcat Accessiblilty Hackathon submission
+
+## Telegram App Bans in Brazil
+
+Due to the blocking of Telegram in Brazil ([NYT article](https://www.nytimes.com/2023/04/26/briefing/brazil-telegram-ban.html)), which has already occurred on other occasions, I decided to expand the development and include in the roadmap an option without API credentials
