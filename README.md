@@ -124,6 +124,8 @@ Mostly limited to Streamlit options. The form and tabs were chosen due to common
 - [x] Fix dataset tab
 - [ ] Fix set credentials and code in restart flow
 - [ ] Network tab
+- [ ] Error msgs
+- [ ] Storage limit alerts
 - [ ] Allow 2FA
 - [ ] Add batch file upload
 - [ ] Option without API credentials

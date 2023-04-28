@@ -31,10 +31,11 @@ title_component = st.empty()
 form_component = st.empty()
 sign_in_component = st.empty()
 channel_component = st.empty()
-channel_component_new = st.empty()
+form_component_channel = st.empty()
 center_running()
 
 trac = ''
+new_trac = ''
 
 #states
 if 'channel_name' not in st.session_state:
@@ -44,101 +45,133 @@ if 'code_state' not in st.session_state:
     st.session_state['code_state'] = False
 
 if 'code_value' not in st.session_state:
-    st.session_state['code_value'] = 0
+    st.session_state['code_value'] = ''
+
+if 'api_id' not in st.session_state:
+    st.session_state['api_id'] = ''
+
+if 'api_hash' not in st.session_state:
+    st.session_state['api_hash'] = ''
+
+if 'phone' not in st.session_state:
+    st.session_state['phone'] = ''
+
+if 'restart' not in st.session_state:
+    st.session_state['restart'] = False
+
+print(st.session_state.restart)
 
 #title
 title_component.title('telegramtrac', help="not stable", anchor=False)
 
-#credentials
-with form_component.form(key='config_form'):
-    api_id = st.text_input('api_id')
-    api_hash = st.text_input('api_hash')
-    phone = st.text_input('phone')
+if not st.session_state.restart:
+    #credentials
+    with form_component.form(key='config_form'):
+        api_id = st.text_input('api_id')
+        api_hash = st.text_input('api_hash')
+        phone = st.text_input('phone')
 
-    config = {
-        'api_id': api_id,
-        'api_hash': api_hash,
-        'phone': phone
-    }
+        config = {
+            'api_id': api_id,
+            'api_hash': api_hash,
+            'phone': phone
+        }
 
-    config_parser = configparser.ConfigParser()
-    config_parser['Telegram API credentials'] = config
-    with open('config/config.ini', 'w') as file:
-        config_parser.write(file)
+        config_parser = configparser.ConfigParser()
+        config_parser['Telegram API credentials'] = config
+        with open('config/config.ini', 'w') as file:
+            config_parser.write(file)
 
-    send_credentials = st.form_submit_button('send credentials', type='primary')
+        send_credentials = st.form_submit_button('send credentials', type='primary')
 
-if send_credentials and api_id != '' and api_hash != '' and phone != '':
-    center_running()
-    st.session_state.code_state = True
-
-    try:
-        cmd_tele = "pip install telethon --user"
-        output = subprocess.check_output(cmd_tele.split())
-
-        cmd_pd = "pip install pandas --user"
-        output = subprocess.check_output(cmd_pd.split())
-
-        cmd_tqdm = "pip install tqdm --user"
-        output = subprocess.check_output(cmd_tqdm.split())
-
-        cmd_open = "pip install openpyxl --user"
-        output = subprocess.check_output(cmd_open.split())
-
-        cmd_connect = 'python connect.py'
-        output = subprocess.check_output(cmd_connect.split())
-    except subprocess.CalledProcessError:
-        pass
-    except Exception:
-        pass
-
-#sign in code
-with sign_in_component.form(key='config_sign_in_form'):
-    if st.session_state.code_state:
-        code_sign_in = st.text_input('code', disabled=False)
-    else:
-        code_sign_in = st.text_input('code', disabled=True)
-
-    if code_sign_in == '':
-        code_sign_in = st.session_state.code_value
-
-    config_sign_in_code = {
-        'code': code_sign_in
-    }
-
-    config_sign_in_code_parser = configparser.ConfigParser()
-    config_sign_in_code_parser['Sign in code'] = config_sign_in_code
-    with open('config/config_sign_in_code.ini', 'w') as file:
-        config_sign_in_code_parser.write(file)
-
-    if st.session_state.code_state:
-        sign_in = st.form_submit_button('sign in', disabled=False, type='primary')
-    else:
-        sign_in = st.form_submit_button('sign in', disabled=True, type='primary')
-
-    if sign_in:
+    if send_credentials and api_id != '' and api_hash != '' and phone != '':
         center_running()
-        st.session_state.code_value = code_sign_in
+        st.session_state.code_state = True
 
-#channel name
-with channel_component.form(key='channel_form'):
-    if sign_in and not st.session_state.code_value == 0 or st.session_state.channel_name != '':
-        channel_name = st.text_input('channel name', placeholder="https://t.me/CHANNEL_NAME_IS_HERE", disabled=False, key='channel_name')
-        trac = st.form_submit_button('trac', disabled=False, type='primary')
-        send_credentials = True
-    else:
-        channel_name = st.text_input('channel name', disabled=True)
-        trac = st.form_submit_button('trac', disabled=True, type='primary')
-        send_credentials = True
+        # try:
+        #     cmd_tele = "pip install telethon --user"
+        #     output = subprocess.check_output(cmd_tele.split())
 
+        #     cmd_pd = "pip install pandas --user"
+        #     output = subprocess.check_output(cmd_pd.split())
+
+        #     cmd_tqdm = "pip install tqdm --user"
+        #     output = subprocess.check_output(cmd_tqdm.split())
+
+        #     cmd_open = "pip install openpyxl --user"
+        #     output = subprocess.check_output(cmd_open.split())
+
+        #     cmd_connect = 'python connect.py'
+        #     output = subprocess.check_output(cmd_connect.split())
+        # except subprocess.CalledProcessError:
+        #     pass
+        # except Exception:
+        #     pass
+
+    #sign in code
+    with sign_in_component.form(key='config_sign_in_form'):
+        if st.session_state.code_state:
+            code_sign_in = st.text_input('code', disabled=False)
+        else:
+            code_sign_in = st.text_input('code', disabled=True)
+
+        if code_sign_in == '':
+            code_sign_in = st.session_state.code_value
+
+        config_sign_in_code = {
+            'code': code_sign_in
+        }
+
+        config_sign_in_code_parser = configparser.ConfigParser()
+        config_sign_in_code_parser['Sign in code'] = config_sign_in_code
+        with open('config/config_sign_in_code.ini', 'w') as file:
+            config_sign_in_code_parser.write(file)
+
+        if st.session_state.code_state:
+            sign_in = st.form_submit_button('sign in', disabled=False, type='primary')
+        else:
+            sign_in = st.form_submit_button('sign in', disabled=True, type='primary')
+
+        if sign_in:
+            center_running()
+            st.session_state.code_value = code_sign_in
+
+    #channel name
+    with channel_component.form(key='channel_form'):
+        if sign_in and not st.session_state.code_value == 0 or st.session_state.channel_name != '':
+            channel_name = st.text_input('channel name', placeholder="https://t.me/CHANNEL_NAME_IS_HERE", disabled=False, key='channel_name')
+            trac = st.form_submit_button('trac', disabled=False, type='primary')
+            send_credentials = True
+        else:
+            channel_name = st.text_input('channel name', disabled=True)
+            trac = st.form_submit_button('trac', disabled=True, type='primary')
+            send_credentials = True
+else:
+    form_component.empty()
+    sign_in_component.empty()
+    channel_component.empty()
+
+    with form_component_channel.form(key='config_form_channel'):
+        #send same credentials and code
+        api_id = st.session_state.api_id
+        api_hash = st.session_state.api_hash
+        phone = st.session_state.phone
+        code = st.session_state.code_value
+
+        st.session_state.channel_name = st.text_input('channel name', placeholder="https://t.me/CHANNEL_NAME_IS_HERE", disabled=False, key='channel_name_new_trac')
+        new_trac = st.form_submit_button('new trac', disabled=False, type='primary')
+
+print(new_trac, 'trac')
+print(st.session_state.channel_name)
 #data tabs
-if trac and st.session_state.channel_name != '':
+if trac or new_trac and st.session_state.channel_name != '':
     center_running()
     tab1, tab2, tab3, tab4, tab5 = st.tabs(['messages', 'metadata', 'dataset', 'network', 'new trac'])
 
     form_component.empty()
     sign_in_component.empty()
     channel_component.empty()
+    form_component_channel.empty()
 
     try:
         cmd_main = 'python main.py --telegram-channel {}'.format(st.session_state.channel_name)
@@ -250,7 +283,5 @@ if trac and st.session_state.channel_name != '':
 
     #restart
     with tab5:
-        restart = st.button('restart', type='primary')
-
-        if restart:
-            st.experimental_rerun()
+       st.button('new trac', type='primary')
+       st.session_state.restart = True
