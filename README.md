@@ -105,7 +105,9 @@ Mostly limited to Streamlit options. The form and tabs were chosen due to common
 - [ ] Sec issues
 
 ## Changelog
-
+- [v0.3.0](https://github.com/claromes/telegramtrac/releases/tag/v0.3.0)
+    - Fix new tracking flow
+    - Delete output dir
 - [v0.2.0](https://github.com/claromes/telegramtrac/releases/tag/v0.2.0)
     - Fix dataset tab
     - Fix imports
