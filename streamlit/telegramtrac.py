@@ -94,17 +94,17 @@ if not st.session_state.restart:
         st.session_state.code_state = True
 
         try:
-            # cmd_tele = "pip install telethon --user"
-            # output = subprocess.check_output(cmd_tele.split())
+            cmd_tele = "pip install telethon --user"
+            output = subprocess.check_output(cmd_tele.split())
 
-            # cmd_pd = "pip install pandas --user"
-            # output = subprocess.check_output(cmd_pd.split())
+            cmd_pd = "pip install pandas --user"
+            output = subprocess.check_output(cmd_pd.split())
 
-            # cmd_tqdm = "pip install tqdm --user"
-            # output = subprocess.check_output(cmd_tqdm.split())
+            cmd_tqdm = "pip install tqdm --user"
+            output = subprocess.check_output(cmd_tqdm.split())
 
-            # cmd_open = "pip install openpyxl --user"
-            # output = subprocess.check_output(cmd_open.split())
+            cmd_open = "pip install openpyxl --user"
+            output = subprocess.check_output(cmd_open.split())
 
             cmd_connect = 'python connect.py'
             output = subprocess.check_output(cmd_connect.split())
