@@ -15,12 +15,9 @@ st.set_page_config(
     layout="centered",
     initial_sidebar_state="collapsed",
     menu_items={
-        'Get Help': 'https://core.telegram.org/api/obtaining_api_id',
-        'Report a bug': "https://github.com/claromes/telegramtrac",
+        'Report a bug': 'https://github.com/claromes/telegramtrac/issues',
         'About': """
-        telegramtrac is Telegram public channels tracker for non-programmers by [claromes](https://claromes.gitlab.io).
-
-        This project is a fork of DFRLab's Telegram Tracker.
+        telegramtrac is web-based tool designed for tracking public channels on Telegram.
 
         -------
         """
@@ -61,7 +58,13 @@ if 'restart' not in st.session_state:
     st.session_state['restart'] = False
 
 #title
-title_component.title('telegramtrac', help="not stable", anchor=False)
+title_component.title("""
+telegramtrac
+
+Web-based tool designed for tracking public channels on Telegram.
+
+The tool is part of Bellingcat's April 2023 Hackathon. It's a fork of the package [`telegram-tracker`](https://github.com/estebanpdl/telegram-tracker) developed by Esteban Ponce de León, DFRLab researcher.
+""", help='not stable', anchor=False)
 
 if not st.session_state.restart:
     #delete all files and directories before start another tracking
@@ -177,6 +180,7 @@ if trac or new_trac and st.session_state.channel_name != '':
     form_component_channel.empty()
 
     try:
+        print('python main.py --telegram-channel')
         cmd_main = 'python main.py --telegram-channel {}'.format(st.session_state.channel_name)
         output = subprocess.check_output(cmd_main.split())
     except subprocess.CalledProcessError:
@@ -185,6 +189,7 @@ if trac or new_trac and st.session_state.channel_name != '':
         pass
 
     try:
+        print('python build-datasets.py')
         cmd_dataset = 'python build-datasets.py'
         output = subprocess.check_output(cmd_dataset.split())
     except subprocess.CalledProcessError:
@@ -269,10 +274,7 @@ if trac or new_trac and st.session_state.channel_name != '':
 
     #network
     with tab4:
-        if path_lens:
-            st.info('Under development')
-        else:
-            st.info('There is only one channel.')
+        st.info('Under development')
 
     #restart
     with tab5:

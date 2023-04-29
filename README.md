@@ -6,7 +6,7 @@
 [claromes](https://claromes.gitlab.io/)
 
 ## Tool Description
-telegramtrac is a web-based tool designed for tracking public channels on Telegram. It's a fork of the Python package [`telegram-tracker`](https://github.com/estebanpdl/telegram-tracker) developed by Esteban Ponce de León, DFRLab researcher.
+telegramtrac is a web-based tool designed for tracking public channels on Telegram. It's a fork of the package [`telegram-tracker`](https://github.com/estebanpdl/telegram-tracker) developed by Esteban Ponce de León, DFRLab researcher.
 
 I became familiar with the package during the DFRLab's Digital Sherlocks Program and believe that an accessible version would benefit researchers of different skill levels.
 
@@ -112,4 +112,4 @@ Mostly limited to Streamlit options. The form and tabs were chosen due to common
     - Fix dataset tab
     - Fix imports
 - [v0.1.0](https://github.com/claromes/telegramtrac/releases/tag/v0.1.0)
-    - Bellingcat Accessiblilty Hackathon submission
+    - Bellingcat Accessibility Hackathon submission
