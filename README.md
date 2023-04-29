@@ -34,48 +34,14 @@ Streamlit will be served at http://localhost:8501
 
 <br>
 
-> Initial screen: credentials, sign in and channel inputs
 <br>
 <p align="center">
     <img src="assets/1.png" width="700">
 </p>
 
-<br>
-
-> Data screens: tabs and download links
-<br>
-<p align="center">
-    <img src="assets/2.png" width="700">
-</p>
-<p align="center">
-    <img src="assets/3.png" width="700">
-</p>
-
-<p align="center">
-    <img src="assets/4.png" width="700">
-</p>
-<p align="center">
-    <img src="assets/5.png" width="700">
-</p>
-
-**network tab is under development*
-<br>
-
-<p align="center">
-    <img src="assets/6.png" width="700">
-</p>
-
-<br>
-
-> Restart tab: to track another channel
-<br>
-<p align="center">
-    <img src="assets/6.png" width="700">
-</p>
-
 ### Workflow
 
-*IMPORTANT: To test using the deploy link with your personal credentials disable the 2FA*
+*IMPORTANT: disable the 2FA*
 
 1. Create your API credentials [here](https://my.telegram.org/auth)
 
@@ -102,11 +68,12 @@ Streamlit will be served at http://localhost:8501
 
 5. Switch tabs to preview or download the data
 
-6. To track another channel, switch to last tab (`trac`) and click `restart`.
+6. To track another channel, switch to last tab (`trac`) and click `new trac`.
 
-- To restart, send the same credentials and `code`
-- A late message could be send to your Telegram app about other authentications
+7. Fill the input `channel name` (*copy name from channel link: t.me/CHANNEL_NAME*) and click on `trac` button
+
 - At each tracking the dataset are grouped in the same file to allow network analysis
+- A late message could be send to your Telegram app about other authentications
 
 ## Additional Information
 
@@ -122,10 +89,11 @@ Mostly limited to Streamlit options. The form and tabs were chosen due to common
 ## Roadmap
 
 - [x] Fix dataset tab
-- [ ] Fix set credentials and code in restart flow
+- [x] Fix set credentials and code in restart flow
 - [ ] Network tab
 - [ ] Error msgs
 - [ ] Storage limit alerts
+- [x] Delete files after session finish
 - [ ] Allow 2FA
 - [ ] Add batch file upload
 - [ ] Option without API credentials
@@ -143,7 +111,3 @@ Mostly limited to Streamlit options. The form and tabs were chosen due to common
     - Fix imports
 - [v0.1.0](https://github.com/claromes/telegramtrac/releases/tag/v0.1.0)
     - Bellingcat Accessiblilty Hackathon submission
-
-## Telegram App Bans in Brazil
-
-Due to the blocking of Telegram in Brazil ([NYT article](https://www.nytimes.com/2023/04/26/briefing/brazil-telegram-ban.html)), which has already occurred on other occasions, I decided to expand the development and include in the roadmap an option without API credentials

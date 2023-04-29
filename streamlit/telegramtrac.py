@@ -6,6 +6,7 @@ import configparser
 from pandas import read_csv
 import base64
 import os
+import shutil
 
 #page config
 st.set_page_config(
@@ -59,12 +60,16 @@ if 'phone' not in st.session_state:
 if 'restart' not in st.session_state:
     st.session_state['restart'] = False
 
-print(st.session_state.restart)
-
 #title
 title_component.title('telegramtrac', help="not stable", anchor=False)
 
 if not st.session_state.restart:
+    #delete all files and directories before start another tracking
+    dir_path_output = os.path.join('output')
+
+    if os.path.exists(dir_path_output):
+        shutil.rmtree(dir_path_output)
+
     #credentials
     with form_component.form(key='config_form'):
         api_id = st.text_input('api_id')
@@ -88,25 +93,25 @@ if not st.session_state.restart:
         center_running()
         st.session_state.code_state = True
 
-        # try:
-        #     cmd_tele = "pip install telethon --user"
-        #     output = subprocess.check_output(cmd_tele.split())
+        try:
+            # cmd_tele = "pip install telethon --user"
+            # output = subprocess.check_output(cmd_tele.split())
 
-        #     cmd_pd = "pip install pandas --user"
-        #     output = subprocess.check_output(cmd_pd.split())
+            # cmd_pd = "pip install pandas --user"
+            # output = subprocess.check_output(cmd_pd.split())
 
-        #     cmd_tqdm = "pip install tqdm --user"
-        #     output = subprocess.check_output(cmd_tqdm.split())
+            # cmd_tqdm = "pip install tqdm --user"
+            # output = subprocess.check_output(cmd_tqdm.split())
 
-        #     cmd_open = "pip install openpyxl --user"
-        #     output = subprocess.check_output(cmd_open.split())
+            # cmd_open = "pip install openpyxl --user"
+            # output = subprocess.check_output(cmd_open.split())
 
-        #     cmd_connect = 'python connect.py'
-        #     output = subprocess.check_output(cmd_connect.split())
-        # except subprocess.CalledProcessError:
-        #     pass
-        # except Exception:
-        #     pass
+            cmd_connect = 'python connect.py'
+            output = subprocess.check_output(cmd_connect.split())
+        except subprocess.CalledProcessError:
+            pass
+        except Exception:
+            pass
 
     #sign in code
     with sign_in_component.form(key='config_sign_in_form'):
@@ -161,8 +166,6 @@ else:
         st.session_state.channel_name = st.text_input('channel name', placeholder="https://t.me/CHANNEL_NAME_IS_HERE", disabled=False, key='channel_name_new_trac')
         new_trac = st.form_submit_button('new trac', disabled=False, type='primary')
 
-print(new_trac, 'trac')
-print(st.session_state.channel_name)
 #data tabs
 if trac or new_trac and st.session_state.channel_name != '':
     center_running()
@@ -192,15 +195,6 @@ if trac or new_trac and st.session_state.channel_name != '':
     path = 'output/data'
     subdirectories = [entry for entry in os.scandir(path) if entry.is_dir()]
     path_lens = len(subdirectories) > 1
-
-    # if path_lens:
-    #     try:
-    #         cmd_dataset = 'python channels-to-network.py'
-    #         output = subprocess.check_output(cmd_dataset.split())
-    #     except subprocess.CalledProcessError:
-    #         pass
-    #     except Exception:
-    #         pass
 
     #json - main file
     with tab1:
@@ -261,7 +255,6 @@ if trac or new_trac and st.session_state.channel_name != '':
     #dataset
     with tab3:
         st.subheader('dataset', anchor=False)
-        #st.caption('Channels: {}'.format(st.session_state.channel_name))
         dataset_csv_file = 'output/data/msgs_dataset.csv'
 
         with open(dataset_csv_file, 'rb') as file:
@@ -274,12 +267,12 @@ if trac or new_trac and st.session_state.channel_name != '':
 
             st.dataframe(df)
 
+    #network
     with tab4:
         if path_lens:
             st.info('Under development')
         else:
             st.info('There is only one channel.')
-            #st.info('There is only one channel.')
 
     #restart
     with tab5:
