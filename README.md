@@ -98,13 +98,14 @@ Mostly limited to Streamlit options. The form and tabs were chosen due to common
 - [ ] Add batch file upload
 - [ ] Option without API credentials
 - [ ] Log for users
-- [ ] Logout users
+- [ ] Logout users (with Telethon)
 - [ ] Docs telegramtrac/ API credentials (how to)
 - [ ] Refactor the code
 - [ ] Check API limitations
 - [ ] Sec issues
 
 ## Changelog
+
 - [v0.3.0](https://github.com/claromes/telegramtrac/releases/tag/v0.3.0)
     - Fix new tracking flow
     - Delete output dir

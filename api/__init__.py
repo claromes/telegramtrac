@@ -34,9 +34,8 @@ async def get_connection(session_file, api_id, api_hash, phone):
 				phone,
 				sign_in_code()
 			)
-		except Exception:
-			pass
-
+		except telethon.errors.rpcerrorlist.FloodWaitError as e:
+			print(e)
 
 	return client
 
