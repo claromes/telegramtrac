@@ -117,7 +117,7 @@ counter = {}
 
 # get `client` connection
 client = loop.run_until_complete(
-	get_connection(sfile, api_id, api_hash, phone)
+	get_client(sfile, api_id, api_hash)
 )
 
 # request type

@@ -102,19 +102,6 @@ with st.sidebar:
     """)
 
 if not st.session_state.restart:
-    #delete all files and directories before start another tracking
-    dir_path_output = os.path.join('output')
-
-    if os.path.exists(dir_path_output):
-        shutil.rmtree(dir_path_output)
-
-    #delete this and add log_out https://docs.telethon.dev/en/stable/modules/client.html#telethon.client.auth.AuthMethods.log_out or ResetAuthorizationsRequest()
-    try:
-        shutil.rmtree('api/__pycache__')
-        os.remove('session_file.session')
-    except:
-        pass
-
     #credentials
     with form_component.form(key='config_form'):
         api_id = st.text_input('api_id')
@@ -140,18 +127,32 @@ if not st.session_state.restart:
 
         try:
             #avoid streamlit errors
-            cmd_tele = "pip install telethon==1.26.1 --user"
-            output = subprocess.check_output(cmd_tele.split())
+            # cmd_tele = "pip install telethon==1.26.1 --user"
+            # output = subprocess.check_output(cmd_tele.split())
 
-            cmd_pd = "pip install pandas==1.5.3 --user"
-            output = subprocess.check_output(cmd_pd.split())
+            # cmd_pd = "pip install pandas==1.5.3 --user"
+            # output = subprocess.check_output(cmd_pd.split())
 
-            cmd_tqdm = "pip install tqdm==4.64.1 --user"
-            output = subprocess.check_output(cmd_tqdm.split())
+            # cmd_tqdm = "pip install tqdm==4.64.1 --user"
+            # output = subprocess.check_output(cmd_tqdm.split())
 
-            cmd_open = "pip install openpyxl==3.0.10 --user"
-            output = subprocess.check_output(cmd_open.split())
+            # cmd_open = "pip install openpyxl==3.0.10 --user"
+            # output = subprocess.check_output(cmd_open.split())
 
+            #delete all files and directories before start another tracking
+            dir_path_output = os.path.join('output')
+
+            if os.path.exists(dir_path_output):
+                shutil.rmtree(dir_path_output)
+
+            #delete this and add log_out https://docs.telethon.dev/en/stable/modules/client.html#telethon.client.auth.AuthMethods.log_out or ResetAuthorizationsRequest()
+            try:
+                shutil.rmtree('api/__pycache__')
+                os.remove('session_file.session')
+            except:
+                pass
+
+            print('python connect.py')
             cmd_connect = 'python connect.py'
             output = subprocess.check_output(cmd_connect.split())
         except subprocess.CalledProcessError:
@@ -186,6 +187,16 @@ if not st.session_state.restart:
         if sign_in:
             center_running()
             st.session_state.code_value = code_sign_in
+            st.session_state.code_state = True
+
+            try:
+                print('python sign_in.py')
+                cmd_sign_in = 'python sign_in.py'
+                output = subprocess.check_output(cmd_sign_in.split())
+            except subprocess.CalledProcessError:
+                pass
+            except Exception:
+                pass
 
     #channel name
     with channel_component.form(key='channel_form'):
@@ -197,6 +208,8 @@ if not st.session_state.restart:
             channel_name = st.text_input('channel name', disabled=True)
             trac = st.form_submit_button('trac', disabled=True, type='primary')
             send_credentials = True
+
+        channel_name = st.session_state.channel_name
 else:
     form_component.empty()
     sign_in_component.empty()
@@ -211,9 +224,6 @@ else:
 
         st.session_state.channel_name = st.text_input('channel name', placeholder="https://t.me/CHANNEL_NAME_IS_HERE", disabled=False, key='channel_name_new_trac')
         new_trac = st.form_submit_button('new trac', disabled=False, type='primary')
-
-        if st.session_state.channel_name == '':
-            st.error('Something went wrong.')
 
 #data tabs
 if trac or new_trac and st.session_state.channel_name != '':

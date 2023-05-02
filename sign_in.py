@@ -3,6 +3,7 @@ import asyncio
 
 from api import *
 from utils import get_config_attrs
+from connect import phone_code_hash
 
 parser = argparse.ArgumentParser(description='Arguments.')
 
@@ -18,6 +19,6 @@ phone = args['phone']
 
 loop = asyncio.get_event_loop()
 
-client, phone_code_hash = loop.run_until_complete(
-	get_connection(sfile, api_id, api_hash, phone)
+client = loop.run_until_complete(
+	client_sign_in(sfile, api_id, api_hash, phone, phone_code_hash)
 )
