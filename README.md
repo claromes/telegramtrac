@@ -10,13 +10,11 @@ telegramtrac is a web-based tool designed for tracking public channels on Telegr
 
 I became familiar with the package during the DFRLab's Digital Sherlocks Program and believe that an accessible version would benefit researchers of different skill levels.
 
-## Installation
+## Development
 
 ### Requirements
 
 - Python 3.8+
-
-### Dev
 
 $ `git clone git@github.com:claromes/telegramtrac.git`
 
@@ -36,7 +34,7 @@ Streamlit will be served at http://localhost:8501
 
 <br>
 <p align="center">
-    <img src="assets/1.png" width="700">
+    <img src="assets/1.jpg" width="700">
 </p>
 
 ### Workflow
@@ -46,10 +44,10 @@ Streamlit will be served at http://localhost:8501
 1. Create your API credentials [here](https://my.telegram.org/auth)
 
 <p align="center">
-    <img src="assets/7.png" width="400">
+    <img src="assets/2.png" width="400">
 </p>
 <p align="center">
-    <img src="assets/8.png" width="400">
+    <img src="assets/3.png" width="400">
 </p>
 
 2. Fill the inputs `api_id`, `api_hash` and your `phone` number (*following this format: +5500912348765*) and click on `send credentials` button

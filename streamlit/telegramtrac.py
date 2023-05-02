@@ -107,9 +107,9 @@ with st.sidebar:
 if not st.session_state.restart:
     #credentials
     with form_component.form(key='config_form'):
-        api_id = st.text_input('api_id')
-        api_hash = st.text_input('api_hash')
-        phone = st.text_input('phone')
+        api_id = st.text_input('api_id', placeholder='12349876')
+        api_hash = st.text_input('api_hash', placeholder='123a456s789d987h654g321q987w12f0')
+        phone = st.text_input('phone', placeholder='+5500912348765')
 
         config = {
             'api_id': api_id,
@@ -166,7 +166,7 @@ if not st.session_state.restart:
     #sign in code
     with sign_in_component.form(key='config_sign_in_form'):
         if st.session_state.code_state:
-            code_sign_in = st.text_input('code', disabled=False, value=st.session_state.code_value)
+            code_sign_in = st.text_input('code', disabled=False, value=st.session_state.code_value, placeholder='54321')
         else:
             code_sign_in = st.text_input('code', disabled=True, value=st.session_state.code_value)
 
