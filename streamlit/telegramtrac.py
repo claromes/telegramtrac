@@ -64,7 +64,10 @@ title_component.title("""
 telegramtrac
 
 Web-based tool designed for tracking public channels on Telegram
+
+*:blue[Create your API credentials [here](https://my.telegram.org/auth)]*
 """, help='not stable', anchor=False)
+
 
 #changelog and roadmap
 with st.sidebar:
@@ -127,17 +130,17 @@ if not st.session_state.restart:
 
         try:
             #avoid streamlit errors
-            # cmd_tele = "pip install telethon==1.26.1 --user"
-            # output = subprocess.check_output(cmd_tele.split())
+            cmd_tele = "pip install telethon==1.26.1 --user"
+            output = subprocess.check_output(cmd_tele.split())
 
-            # cmd_pd = "pip install pandas==1.5.3 --user"
-            # output = subprocess.check_output(cmd_pd.split())
+            cmd_pd = "pip install pandas==1.5.3 --user"
+            output = subprocess.check_output(cmd_pd.split())
 
-            # cmd_tqdm = "pip install tqdm==4.64.1 --user"
-            # output = subprocess.check_output(cmd_tqdm.split())
+            cmd_tqdm = "pip install tqdm==4.64.1 --user"
+            output = subprocess.check_output(cmd_tqdm.split())
 
-            # cmd_open = "pip install openpyxl==3.0.10 --user"
-            # output = subprocess.check_output(cmd_open.split())
+            cmd_open = "pip install openpyxl==3.0.10 --user"
+            output = subprocess.check_output(cmd_open.split())
 
             #delete all files and directories before start another tracking
             dir_path_output = os.path.join('output')
@@ -147,11 +150,11 @@ if not st.session_state.restart:
 
             #delete this and add log_out https://docs.telethon.dev/en/stable/modules/client.html#telethon.client.auth.AuthMethods.log_out or ResetAuthorizationsRequest()
             try:
-                shutil.rmtree('api/__pycache__')
                 os.remove('session_file.session')
             except:
                 pass
 
+            #connect to API
             print('python connect.py')
             cmd_connect = 'python connect.py'
             output = subprocess.check_output(cmd_connect.split())
@@ -189,6 +192,7 @@ if not st.session_state.restart:
             st.session_state.code_value = code_sign_in
             st.session_state.code_state = True
 
+            #sign in to API
             try:
                 print('python sign_in.py')
                 cmd_sign_in = 'python sign_in.py'
@@ -208,8 +212,6 @@ if not st.session_state.restart:
             channel_name = st.text_input('channel name', disabled=True)
             trac = st.form_submit_button('trac', disabled=True, type='primary')
             send_credentials = True
-
-        channel_name = st.session_state.channel_name
 else:
     form_component.empty()
     sign_in_component.empty()
@@ -345,5 +347,4 @@ if trac or new_trac and st.session_state.channel_name != '':
 
     #restart
     with tab5:
-        print(st.session_state.restart)
         st.button('new trac', type='primary', use_container_width=True)

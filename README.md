@@ -54,15 +54,13 @@ Streamlit will be served at http://localhost:8501
 
 2. Fill the inputs `api_id`, `api_hash` and your `phone` number (*following this format: +5500912348765*) and click on `send credentials` button
 
-- It may take a few minutes...
-
 - A 5-digit code will be send to your Telegram app
 
 3. Fill the input `code` and click on `sign in` button
 
-4. Fill the input `channel name` (*copy name from channel link: t.me/CHANNEL_NAME*) and click on `trac` button
-
 - A message will be send to your Telegram app about the authentication
+
+4. Fill the input `channel name` (*copy name from channel link: t.me/CHANNEL_NAME*) and click on `trac` button
 
 - It may take a few minutes...
 
@@ -73,7 +71,6 @@ Streamlit will be served at http://localhost:8501
 7. Fill the input `channel name` (*copy name from channel link: t.me/CHANNEL_NAME*) and click on `trac` button
 
 - At each tracking the dataset are grouped in the same file to allow network analysis
-- A late message could be send to your Telegram app about other authentications
 
 ## Additional Information
 
@@ -81,6 +78,7 @@ Streamlit will be served at http://localhost:8501
 
 - Unable to use with 2FA
 - Only one channel per track
+- Each sign-in generates a new instance
 
 ### Design decisions
 

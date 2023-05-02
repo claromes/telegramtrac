@@ -31,10 +31,12 @@ async def get_connection(session_file, api_id, api_hash, phone):
 			print ('> Not Authorized! Sending code request...')
 			phone_code = await client.send_code_request(phone)
 			phone_code_hash = phone_code.phone_code_hash
+
+			return phone_code_hash
 		except telethon.errors.rpcerrorlist.FloodWaitError as e:
 			print(e)
 
-	return client, phone_code_hash
+	return client
 
 async def client_sign_in(session_file, api_id, api_hash, phone, phone_code_hash):
 	client = telethon.TelegramClient(session_file, api_id, api_hash)
@@ -50,12 +52,6 @@ async def client_sign_in(session_file, api_id, api_hash, phone, phone_code_hash)
 
 	return client
 
-
-async def get_client(session_file, api_id, api_hash):
-	client = telethon.TelegramClient(session_file, api_id, api_hash)
-	await client.connect()
-
-	return client
 
 '''
 

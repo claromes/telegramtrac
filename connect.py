@@ -18,6 +18,6 @@ phone = args['phone']
 
 loop = asyncio.get_event_loop()
 
-client, phone_code_hash = loop.run_until_complete(
+phone_code_hash = loop.run_until_complete(
 	get_connection(sfile, api_id, api_hash, phone)
 )
