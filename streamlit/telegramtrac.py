@@ -41,6 +41,9 @@ new_trac = ''
 if 'channel_name' not in st.session_state:
     st.session_state['channel_name'] = ''
 
+if 'password_value' not in st.session_state:
+    st.session_state['password_value'] = ''
+
 if 'code_state' not in st.session_state:
     st.session_state['code_state'] = False
 
@@ -128,23 +131,26 @@ if not st.session_state.restart:
 
         send_credentials = st.form_submit_button('send credentials', type='primary')
 
+    if send_credentials and (api_id == '' or api_hash == '' or phone == ''):
+        st.error('Something went wrong.')
+
     if send_credentials and api_id != '' and api_hash != '' and phone != '':
         center_running()
         st.session_state.code_state = True
 
         try:
             #avoid streamlit errors
-            cmd_tele = "pip install telethon==1.26.1 --user"
-            output = subprocess.check_output(cmd_tele.split())
+            # cmd_tele = "pip install telethon==1.26.1 --user"
+            # output = subprocess.check_output(cmd_tele.split())
 
-            cmd_pd = "pip install pandas==1.5.3 --user"
-            output = subprocess.check_output(cmd_pd.split())
+            # cmd_pd = "pip install pandas==1.5.3 --user"
+            # output = subprocess.check_output(cmd_pd.split())
 
-            cmd_tqdm = "pip install tqdm==4.64.1 --user"
-            output = subprocess.check_output(cmd_tqdm.split())
+            # cmd_tqdm = "pip install tqdm==4.64.1 --user"
+            # output = subprocess.check_output(cmd_tqdm.split())
 
-            cmd_open = "pip install openpyxl==3.0.10 --user"
-            output = subprocess.check_output(cmd_open.split())
+            # cmd_open = "pip install openpyxl==3.0.10 --user"
+            # output = subprocess.check_output(cmd_open.split())
 
             #delete all files and directories before start another tracking
             dir_path_output = os.path.join('output')
@@ -162,23 +168,27 @@ if not st.session_state.restart:
             print('python connect.py')
             cmd_connect = 'python connect.py'
             output = subprocess.check_output(cmd_connect.split())
-        except subprocess.CalledProcessError:
-            pass
-        except Exception:
-            pass
+        except:
+            st.error('Something went wrong.')
 
     #sign in code
     with sign_in_component.form(key='config_sign_in_form'):
         if st.session_state.code_state:
             code_sign_in = st.text_input('code', disabled=False, value=st.session_state.code_value, placeholder='54321')
+            password = st.text_input('password', disabled=False, value=st.session_state.password_value, type='password', placeholder='For Two-Step Verification enabled users')
         else:
             code_sign_in = st.text_input('code', disabled=True, value=st.session_state.code_value)
+            password = st.text_input('password', disabled=True, value=st.session_state.password_value)
 
         if code_sign_in == '':
             code_sign_in = st.session_state.code_value
 
+        if password == '':
+            password = st.session_state.password_value
+
         config_sign_in_code = {
-            'code': code_sign_in
+            'code': code_sign_in,
+            'password': password
         }
 
         config_sign_in_code_parser = configparser.ConfigParser()
@@ -194,6 +204,7 @@ if not st.session_state.restart:
         if sign_in:
             center_running()
             st.session_state.code_value = code_sign_in
+            st.session_state.password_value = password
             st.session_state.code_state = True
 
             #sign in to API
@@ -201,14 +212,13 @@ if not st.session_state.restart:
                 print('python sign_in.py')
                 cmd_sign_in = 'python sign_in.py'
                 output = subprocess.check_output(cmd_sign_in.split())
-            except subprocess.CalledProcessError:
-                pass
-            except Exception:
-                pass
+            except:
+                st.error('Something went wrong. Try again or a wait of 70000 seconds could be required (telethon.errors.rpcerrorlist.FloodWaitError)')
+                st.session_state.code_state == False
 
     #channel name
     with channel_component.form(key='channel_form'):
-        if sign_in and not st.session_state.code_value == 0 or st.session_state.channel_name != '':
+        if sign_in and st.session_state.code_state == False or st.session_state.channel_name != '':
             channel_name = st.text_input('channel name', placeholder="https://t.me/CHANNEL_NAME_IS_HERE", disabled=False, key='channel_name')
             trac = st.form_submit_button('trac', disabled=False, type='primary')
             send_credentials = True
@@ -227,6 +237,7 @@ else:
         api_hash = st.session_state.api_hash
         phone = st.session_state.phone
         code = st.session_state.code_value
+        password = st.session_state.password_value
 
         st.session_state.channel_name = st.text_input('channel name', placeholder="https://t.me/CHANNEL_NAME_IS_HERE", disabled=False, key='channel_name_new_trac')
         new_trac = st.form_submit_button('new trac', disabled=False, type='primary')
@@ -247,7 +258,7 @@ if trac or new_trac and st.session_state.channel_name != '':
         cmd_main = 'python main.py --telegram-channel {}'.format(st.session_state.channel_name)
         output = subprocess.check_output(cmd_main.split())
     except:
-        st.error('Something went wrong. Try again or a wait of 70000 seconds could be required (telethon.errors.rpcerrorlist.FloodWaitError)')
+        st.error('Something went wrong.')
         st.session_state.restart = False
 
     try:
@@ -255,7 +266,7 @@ if trac or new_trac and st.session_state.channel_name != '':
         cmd_dataset = 'python build-datasets.py'
         output = subprocess.check_output(cmd_dataset.split())
     except:
-        st.error('Something went wrong. Try again or a wait of 70000 seconds could be required (telethon.errors.rpcerrorlist.FloodWaitError)')
+        st.error('Something went wrong.')
 
     # try:
     #     if os.path.exists(dir_path_output):
