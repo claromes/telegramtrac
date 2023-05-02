@@ -6,17 +6,15 @@
 [claromes](https://claromes.gitlab.io/)
 
 ## Tool Description
-telegramtrac is a web-based tool designed for tracking public channels on Telegram. It's a fork of the Python package [`telegram-tracker`](https://github.com/estebanpdl/telegram-tracker) developed by Esteban Ponce de León, DFRLab researcher.
+telegramtrac is a web-based tool designed for tracking public channels on Telegram. It's a fork of the package [`telegram-tracker`](https://github.com/estebanpdl/telegram-tracker) developed by Esteban Ponce de León, DFRLab researcher.
 
 I became familiar with the package during the DFRLab's Digital Sherlocks Program and believe that an accessible version would benefit researchers of different skill levels.
 
-## Installation
+## Development
 
 ### Requirements
 
 - Python 3.8+
-
-### Dev
 
 $ `git clone git@github.com:claromes/telegramtrac.git`
 
@@ -33,10 +31,8 @@ Streamlit will be served at http://localhost:8501
 ### Browser interface
 
 <br>
-
-<br>
 <p align="center">
-    <img src="assets/1.png" width="700">
+    <img src="assets/1.jpg" width="700">
 </p>
 
 ### Workflow
@@ -46,23 +42,21 @@ Streamlit will be served at http://localhost:8501
 1. Create your API credentials [here](https://my.telegram.org/auth)
 
 <p align="center">
-    <img src="assets/7.png" width="400">
+    <img src="assets/2.png" width="400">
 </p>
 <p align="center">
-    <img src="assets/8.png" width="400">
+    <img src="assets/3.png" width="400">
 </p>
 
 2. Fill the inputs `api_id`, `api_hash` and your `phone` number (*following this format: +5500912348765*) and click on `send credentials` button
-
-- It may take a few minutes...
 
 - A 5-digit code will be send to your Telegram app
 
 3. Fill the input `code` and click on `sign in` button
 
-4. Fill the input `channel name` (*copy name from channel link: t.me/CHANNEL_NAME*) and click on `trac` button
-
 - A message will be send to your Telegram app about the authentication
+
+4. Fill the input `channel name` (*copy name from channel link: t.me/CHANNEL_NAME*) and click on `trac` button
 
 - It may take a few minutes...
 
@@ -73,7 +67,6 @@ Streamlit will be served at http://localhost:8501
 7. Fill the input `channel name` (*copy name from channel link: t.me/CHANNEL_NAME*) and click on `trac` button
 
 - At each tracking the dataset are grouped in the same file to allow network analysis
-- A late message could be send to your Telegram app about other authentications
 
 ## Additional Information
 
@@ -81,6 +74,7 @@ Streamlit will be served at http://localhost:8501
 
 - Unable to use with 2FA
 - Only one channel per track
+- Each sign-in generates a new instance
 
 ### Design decisions
 
@@ -98,13 +92,14 @@ Mostly limited to Streamlit options. The form and tabs were chosen due to common
 - [ ] Add batch file upload
 - [ ] Option without API credentials
 - [ ] Log for users
-- [ ] Logout users
+- [ ] Logout users (with Telethon)
 - [ ] Docs telegramtrac/ API credentials (how to)
 - [ ] Refactor the code
 - [ ] Check API limitations
 - [ ] Sec issues
 
 ## Changelog
+
 - [v0.3.0](https://github.com/claromes/telegramtrac/releases/tag/v0.3.0)
     - Fix new tracking flow
     - Delete output dir
@@ -112,4 +107,4 @@ Mostly limited to Streamlit options. The form and tabs were chosen due to common
     - Fix dataset tab
     - Fix imports
 - [v0.1.0](https://github.com/claromes/telegramtrac/releases/tag/v0.1.0)
-    - Bellingcat Accessiblilty Hackathon submission
+    - Bellingcat Accessibility Hackathon submission
