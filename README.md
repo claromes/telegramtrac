@@ -1,6 +1,6 @@
 # telegramtrac
 
-[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_red.svg)](https://telegramtrac.streamlit.app/) (not stable)
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_red.svg)](https://telegramtrac.streamlit.app/) ![GitHub release (latest by date)](https://img.shields.io/github/v/release/claromes/telegramtrac)
 
 ## Team Members
 [claromes](https://claromes.gitlab.io/)
@@ -85,7 +85,7 @@ Mostly limited to Streamlit options. The form and tabs were chosen due to common
 - [x] Fix dataset tab
 - [x] Fix set credentials and code in restart flow
 - [ ] Network tab
-- [ ] Error msgs
+- [x] Error msgs
 - [ ] Storage limit alerts
 - [x] Delete files after session finish
 - [ ] Allow 2FA
@@ -100,6 +100,10 @@ Mostly limited to Streamlit options. The form and tabs were chosen due to common
 
 ## Changelog
 
+- [v0.3.1](https://github.com/claromes/telegramtrac/releases/tag/v0.3.1)
+    - Each sign-in generates a new instance
+    - Add sidebar
+    - Add general error messages
 - [v0.3.0](https://github.com/claromes/telegramtrac/releases/tag/v0.3.0)
     - Fix new tracking flow
     - Delete output dir

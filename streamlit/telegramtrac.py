@@ -66,7 +66,7 @@ telegramtrac
 Web-based tool designed for tracking public channels on Telegram
 
 *:blue[Create your API credentials [here](https://my.telegram.org/auth)]*
-""", help='not stable', anchor=False)
+""", help='v0.3.1', anchor=False)
 
 
 #changelog and roadmap
@@ -78,7 +78,7 @@ with st.sidebar:
 - [x] Fix dataset tab
 - [x] Fix set credentials and code in restart flow
 - [ ] Network tab
-- [ ] Error msgs
+- [x] Error msgs
 - [ ] Storage limit alerts
 - [x] Delete files after session finish
 - [ ] Allow 2FA
@@ -93,6 +93,10 @@ with st.sidebar:
 
 # Changelog
 
+- [v0.3.1](https://github.com/claromes/telegramtrac/releases/tag/v0.3.1)
+    - Each sign-in generates a new instance
+    - Add sidebar
+    - Add general error messages
 - [v0.3.0](https://github.com/claromes/telegramtrac/releases/tag/v0.3.0)
     - Fix new tracking flow
     - Delete output dir
