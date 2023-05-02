@@ -31,8 +31,6 @@ Streamlit will be served at http://localhost:8501
 ### Browser interface
 
 <br>
-
-<br>
 <p align="center">
     <img src="assets/1.jpg" width="700">
 </p>
