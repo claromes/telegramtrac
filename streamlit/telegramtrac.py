@@ -118,6 +118,18 @@ with st.sidebar:
     """)
 
 if not st.session_state.restart:
+    #delete all files and directories before start another tracking
+    dir_path_output = os.path.join('output')
+
+    if os.path.exists(dir_path_output):
+        shutil.rmtree(dir_path_output)
+
+    #delete this and add log_out https://docs.telethon.dev/en/stable/modules/client.html#telethon.client.auth.AuthMethods.log_out or ResetAuthorizationsRequest()
+    try:
+        os.remove('session_file.session')
+    except:
+        pass
+
     #credentials
     with form_component.form(key='config_form'):
         api_id = st.text_input('api_id', placeholder='12349876')
@@ -146,29 +158,17 @@ if not st.session_state.restart:
 
         try:
             #avoid streamlit errors
-            # cmd_tele = "pip install telethon==1.26.1 --user"
-            # output = subprocess.check_output(cmd_tele.split())
+            cmd_tele = "pip install telethon==1.26.1 --user"
+            output = subprocess.check_output(cmd_tele.split())
 
-            # cmd_pd = "pip install pandas==1.5.3 --user"
-            # output = subprocess.check_output(cmd_pd.split())
+            cmd_pd = "pip install pandas==1.5.3 --user"
+            output = subprocess.check_output(cmd_pd.split())
 
-            # cmd_tqdm = "pip install tqdm==4.64.1 --user"
-            # output = subprocess.check_output(cmd_tqdm.split())
+            cmd_tqdm = "pip install tqdm==4.64.1 --user"
+            output = subprocess.check_output(cmd_tqdm.split())
 
-            # cmd_open = "pip install openpyxl==3.0.10 --user"
-            # output = subprocess.check_output(cmd_open.split())
-
-            #delete all files and directories before start another tracking
-            dir_path_output = os.path.join('output')
-
-            if os.path.exists(dir_path_output):
-                shutil.rmtree(dir_path_output)
-
-            #delete this and add log_out https://docs.telethon.dev/en/stable/modules/client.html#telethon.client.auth.AuthMethods.log_out or ResetAuthorizationsRequest()
-            try:
-                os.remove('session_file.session')
-            except:
-                pass
+            cmd_open = "pip install openpyxl==3.0.10 --user"
+            output = subprocess.check_output(cmd_open.split())
 
             #connect to API
             print('python connect.py')
