@@ -63,14 +63,20 @@ if 'restart' not in st.session_state:
     st.session_state['restart'] = False
 
 #title
-title_component.title("""
+if st.session_state.code_state == False:
+    title_component.title("""
 telegramtrac
 
 Web-based tool designed for tracking public channels on Telegram
 
 *:blue[Create your API credentials [here](https://my.telegram.org/auth)]*
 """, help='v0.3.1', anchor=False)
+else:
+    title_component.title("""
+telegramtrac
 
+Web-based tool designed for tracking public channels on Telegram
+""", help='v0.3.1', anchor=False)
 
 #changelog and roadmap
 with st.sidebar:
@@ -213,12 +219,12 @@ if not st.session_state.restart:
                 cmd_sign_in = 'python sign_in.py'
                 output = subprocess.check_output(cmd_sign_in.split())
             except:
-                st.error('Something went wrong. Try again or a wait of 70000 seconds could be required (telethon.errors.rpcerrorlist.FloodWaitError)')
+                st.error('Something went wrong.')
                 st.session_state.code_state == False
 
     #channel name
     with channel_component.form(key='channel_form'):
-        if sign_in and st.session_state.code_state == False or st.session_state.channel_name != '':
+        if sign_in and st.session_state.code_state == True or st.session_state.channel_name != '':
             channel_name = st.text_input('channel name', placeholder="https://t.me/CHANNEL_NAME_IS_HERE", disabled=False, key='channel_name')
             trac = st.form_submit_button('trac', disabled=False, type='primary')
             send_credentials = True
@@ -232,7 +238,7 @@ else:
     channel_component.empty()
 
     with form_component_channel.form(key='config_form_channel'):
-        #send same credentials and code
+        #send same credentials, code and password
         api_id = st.session_state.api_id
         api_hash = st.session_state.api_hash
         phone = st.session_state.phone
@@ -245,7 +251,7 @@ else:
 #data tabs
 if trac or new_trac and st.session_state.channel_name != '':
     center_running()
-    tab1, tab2, tab3, tab4, tab5 = st.tabs(['messages', 'metadata', 'dataset', 'network', 'new trac'])
+    tab1, tab2, tab3, tab4 = st.tabs(['messages', 'metadata', 'dataset', 'new trac'])
 
     form_component.empty()
     sign_in_component.empty()
@@ -357,9 +363,9 @@ if trac or new_trac and st.session_state.channel_name != '':
             st.error('Something went wrong.')
 
     #network
-    with tab4:
-        st.info('Under development')
+    # with tab4:
+    #     st.info('Under development')
 
     #restart
-    with tab5:
+    with tab4:
         st.button('new trac', type='primary', use_container_width=True)

@@ -10,11 +10,11 @@ telegramtrac is a web-based tool designed for tracking public channels on Telegr
 
 I became familiar with the package during the DFRLab's Digital Sherlocks Program and believe that an accessible version would benefit researchers of different skill levels.
 
-## Development
-
-### Requirements
+## Requirements
 
 - Python 3.8+
+
+## Installation
 
 $ `git clone git@github.com:claromes/telegramtrac.git`
 
@@ -84,15 +84,15 @@ Mostly limited to Streamlit options. The form and tabs were chosen due to common
 
 - [x] Fix dataset tab
 - [x] Fix set credentials and code in restart flow
-- [ ] Network tab
-- [x] Error msgs
-- [ ] Storage limit alerts
-- [x] Delete files after session finish
 - [ ] Allow 2FA
 - [ ] Add batch file upload
 - [ ] Option without API credentials
-- [ ] Log for users
+- [ ] Network tab
 - [ ] Logout users (with Telethon)
+- [x] Error msgs
+- [ ] Storage limit alerts
+- [x] Delete files after session finish
+- [ ] Log for users
 - [ ] Docs telegramtrac/ API credentials (how to)
 - [ ] Refactor the code
 - [ ] Check API limitations

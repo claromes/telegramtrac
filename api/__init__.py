@@ -15,7 +15,7 @@ config_sign_in_code.read(path)
 attr_sign_in_code = config_sign_in_code['Sign in code']
 
 sign_in_code = attr_sign_in_code['code']
-password = attr_sign_in_code['password']
+sign_in_password = attr_sign_in_code['password']
 
 # get connection
 async def get_connection(session_file, api_id, api_hash, phone):
@@ -38,12 +38,16 @@ async def get_connection(session_file, api_id, api_hash, phone):
 async def client_sign_in(session_file, api_id, api_hash, phone, phone_code_hash):
 	client = telethon.TelegramClient(session_file, api_id, api_hash)
 	await client.connect()
-	await client.sign_in(
-		phone,
-		code=sign_in_code,
-		password=password,
-		phone_code_hash=str(phone_code_hash)
-	)
+	try:
+		await client.sign_in(
+			phone=phone,
+			code=sign_in_code,
+			phone_code_hash=str(phone_code_hash)
+		)
+	except telethon.errors.rpcerrorlist.SessionPasswordNeededError:
+		await client.sign_in(
+			password=str(sign_in_password)
+		)
 
 	return client
 
