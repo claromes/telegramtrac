@@ -10,11 +10,11 @@ telegramtrac is a web-based tool designed for tracking public channels on Telegr
 
 I became familiar with the package during the DFRLab's Digital Sherlocks Program and believe that an accessible version would benefit researchers of different skill levels.
 
-## Development
-
-### Requirements
+## Requirements
 
 - Python 3.8+
+
+## Installation
 
 $ `git clone git@github.com:claromes/telegramtrac.git`
 
@@ -79,6 +79,18 @@ Streamlit will be served at http://localhost:8501
 ### Design decisions
 
 Mostly limited to Streamlit options. The form and tabs were chosen due to common use in web apps.
+
+## Staging
+
+[stag-telegramtrac.streamlit.app](https://stag-telegramtrac.streamlit.app/)
+
+### Branch name
+
+- 2fa
+
+### New feature
+
+- Allow 2FA
 
 ## Roadmap
 
