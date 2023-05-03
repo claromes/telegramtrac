@@ -10,8 +10,8 @@ import shutil
 
 #page config
 st.set_page_config(
-    page_title="telegramtrac",
-    page_icon="🟦",
+    page_title="telegramtrac [staging]",
+    page_icon="🟨",
     layout="centered",
     initial_sidebar_state="collapsed",
     menu_items={
@@ -70,13 +70,13 @@ telegramtrac
 Web-based tool designed for tracking public channels on Telegram
 
 *:blue[Create your API credentials [here](https://my.telegram.org/auth)]*
-""", help='v0.3.1', anchor=False)
+""", help='v1.0.0', anchor=False)
 else:
     title_component.title("""
 telegramtrac
 
 Web-based tool designed for tracking public channels on Telegram
-""", help='v0.3.1', anchor=False)
+""", help='v1.0.0', anchor=False)
 
 #changelog and roadmap
 with st.sidebar:
