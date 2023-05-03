@@ -80,18 +80,6 @@ Streamlit will be served at http://localhost:8501
 
 Mostly limited to Streamlit options. The form and tabs were chosen due to common use in web apps.
 
-## Staging
-
-[stag-telegramtrac.streamlit.app](https://stag-telegramtrac.streamlit.app/)
-
-### Branch name
-
-- 2fa
-
-### New feature
-
-- Allow 2FA
-
 ## Roadmap
 
 - [x] Fix dataset tab
