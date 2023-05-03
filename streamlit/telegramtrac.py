@@ -86,15 +86,15 @@ with st.sidebar:
 
 - [x] Fix dataset tab
 - [x] Fix set credentials and code in restart flow
+- [x] Allow 2FA
+- [ ] Add batch file upload
+- [ ] Option without API credentials
 - [ ] Network tab
+- [ ] Logout users (with Telethon)
 - [x] Error msgs
 - [ ] Storage limit alerts
 - [x] Delete files after session finish
-- [ ] Allow 2FA
-- [ ] Add batch file upload
-- [ ] Option without API credentials
 - [ ] Log for users
-- [ ] Logout users (with Telethon)
 - [ ] Docs telegramtrac/ API credentials (how to)
 - [ ] Refactor the code
 - [ ] Check API limitations
