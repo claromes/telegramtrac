@@ -139,6 +139,7 @@ with st.sidebar:
 - [x] Fix dataset tab
 - [x] Fix set credentials and code in restart flow
 - [x] Allow 2FA
+- [ ] Tabs description
 - [ ] Add batch file upload
 - [ ] Option without API credentials
 - [ ] Network tab
