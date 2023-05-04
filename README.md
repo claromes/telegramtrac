@@ -32,12 +32,10 @@ Streamlit will be served at http://localhost:8501
 
 <br>
 <p align="center">
-    <img src="assets/1.jpg" width="700">
+    <img src="assets/1.png" width="700">
 </p>
 
 ### Workflow
-
-*IMPORTANT: disable the 2FA*
 
 1. Create your API credentials [here](https://my.telegram.org/auth)
 
@@ -52,7 +50,7 @@ Streamlit will be served at http://localhost:8501
 
 - A 5-digit code will be send to your Telegram app
 
-3. Fill the input `code` and click on `sign in` button
+3. Fill the input `code` and `password` (For Two-Step Verification enabled users) and click on `sign in` button
 
 - A message will be send to your Telegram app about the authentication
 
@@ -72,7 +70,6 @@ Streamlit will be served at http://localhost:8501
 
 ### Limitations
 
-- Unable to use with 2FA
 - Only one channel per track
 - Each sign-in generates a new instance
 
@@ -84,17 +81,19 @@ Mostly limited to Streamlit options. The form and tabs were chosen due to common
 
 - [x] Fix dataset tab
 - [x] Fix set credentials and code in restart flow
+- [x] Allow 2FA
+- [ ] Tabs description
+- [ ] Add batch file upload
+- [ ] Option without API credentials
 - [ ] Network tab
+- [ ] Delete `subprocess.check_output`/ Update dir structure
+- [ ] Logout users (with Telethon)
+- [ ] FloodWaitError msg
 - [x] Error msgs
 - [ ] Storage limit alerts
 - [x] Delete files after session finish
-- [ ] Allow 2FA
-- [ ] Add batch file upload
-- [ ] Option without API credentials
 - [ ] Log for users
-- [ ] Logout users (with Telethon)
 - [ ] Docs telegramtrac/ API credentials (how to)
-- [ ] Refactor the code
 - [ ] Check API limitations
 - [ ] Sec issues
 

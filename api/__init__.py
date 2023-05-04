@@ -2,20 +2,44 @@
 import configparser
 import telethon
 
+from Crypto.Cipher import AES
+
+'''
+
+Get code and password
+
+'''
+def decrypt_code():
+    file_in = open("encrypted_code.bin", "rb")
+    key, nonce, tag, ciphertext = [ file_in.read(x) for x in (16, 16, 16, -1) ]
+    file_in.close()
+
+    cipher = AES.new(key, AES.MODE_EAX, nonce)
+
+    sign_in_code_decrypt = cipher.decrypt_and_verify(ciphertext, tag)
+
+    sign_in_code_decode = sign_in_code_decrypt.decode()
+
+    return sign_in_code_decode
+
+def decrypt_password():
+    file_in = open("encrypted_password.bin", "rb")
+    key, nonce, tag, ciphertext = [ file_in.read(x) for x in (16, 16, 16, -1) ]
+    file_in.close()
+
+    cipher = AES.new(key, AES.MODE_EAX, nonce)
+
+    sign_in_password_decrypt = cipher.decrypt_and_verify(ciphertext, tag)
+
+    sign_in_password_decode = sign_in_password_decrypt.decode()
+
+    return str(sign_in_password_decode)
+
 '''
 
 Client-side
 
 '''
-
-def sign_in_code():
-	path = './config/config_sign_in_code.ini'
-	config_sign_in_code = configparser.ConfigParser()
-	config_sign_in_code.read(path)
-
-	attr_sign_in_code = config_sign_in_code['Sign in code']
-
-	return attr_sign_in_code['code']
 
 # get connection
 async def get_connection(session_file, api_id, api_hash, phone):
@@ -27,14 +51,11 @@ async def get_connection(session_file, api_id, api_hash, phone):
 	if await client.is_user_authorized():
 		print ('> Authorized!')
 	else:
-		try:
-			print ('> Not Authorized! Sending code request...')
-			phone_code = await client.send_code_request(phone)
-			phone_code_hash = phone_code.phone_code_hash
+		print ('> Not Authorized! Sending code request...')
+		phone_code = await client.send_code_request(phone)
+		phone_code_hash = phone_code.phone_code_hash
 
-			return phone_code_hash
-		except telethon.errors.rpcerrorlist.FloodWaitError as e:
-			print(e)
+		return phone_code_hash
 
 	return client
 
@@ -43,12 +64,14 @@ async def client_sign_in(session_file, api_id, api_hash, phone, phone_code_hash)
 	await client.connect()
 	try:
 		await client.sign_in(
-			phone,
-			code=sign_in_code(),
+			phone=phone,
+			code=decrypt_code(),
 			phone_code_hash=str(phone_code_hash)
 		)
-	except telethon.errors.rpcerrorlist.FloodWaitError as e:
-		print(e)
+	except telethon.errors.rpcerrorlist.SessionPasswordNeededError:
+		await client.sign_in(
+			password=decrypt_password()
+		)
 
 	return client
 
