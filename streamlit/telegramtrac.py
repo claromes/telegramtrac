@@ -242,7 +242,7 @@ if not st.session_state.restart:
         if password == '':
             password = st.session_state.password_value
 
-        if st.session_state.code_state:
+        if st.session_state.code_state and not error_connect:
             sign_in = st.form_submit_button('sign in', disabled=False, type='primary')
         else:
             sign_in = st.form_submit_button('sign in', disabled=True, type='primary')
