@@ -82,6 +82,8 @@ Mostly limited to Streamlit options. The form and tabs were chosen due to common
 - [x] Fix dataset tab
 - [x] Fix set credentials and code in restart flow
 - [x] Allow 2FA
+- [ ] One session/sign_in file per user
+- [ ] sqlite3.OperationalError
 - [ ] Tabs description
 - [ ] Add batch file upload
 - [ ] Option without API credentials
