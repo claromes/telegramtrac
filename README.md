@@ -85,7 +85,7 @@ Mostly limited to Streamlit options. The form and tabs were chosen due to common
 - [ ] Add batch file upload
 - [ ] Option without API credentials
 - [ ] Network tab
-- [ ] Refactor the code (delete `subprocess.check_output` and organize dirs and files)
+- [ ] Delete `subprocess.check_output`/ Update dir structure
 - [ ] Logout users (with Telethon)
 - [x] Error msgs
 - [ ] Storage limit alerts
