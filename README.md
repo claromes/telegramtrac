@@ -1,6 +1,6 @@
 # telegramtrac
 
-[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_red.svg)](https://telegramtrac.streamlit.app/) ![GitHub release (latest by date)](https://img.shields.io/github/v/release/claromes/telegramtrac)
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/claromes/telegramtrac)
 
 ## Team Members
 [claromes](https://claromes.gitlab.io/)
