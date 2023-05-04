@@ -231,7 +231,7 @@ async def full_user_req(client, source, channel):
 
 		return user
 	except ValueError:
-		users = await client.get_participants(channel)
+		users = await client.get_participants(channel, aggressive=True)
 		return users
 
 
