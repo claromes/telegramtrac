@@ -7,7 +7,6 @@ from pandas import read_csv
 import base64
 import os
 import shutil
-import asyncio
 
 from Crypto.Cipher import AES
 from Crypto.Random import get_random_bytes
@@ -204,25 +203,27 @@ if not st.session_state.restart:
 
         try:
             #avoid streamlit errors
-            async def reqs():
-                print('pip install -r requirements.txt')
-                cmd_reqs = 'pip install -r requirements.txt'
-                process = await asyncio.create_subprocess_shell(
-                    cmd_reqs,
-                    stdout=subprocess.PIPE,
-                    stderr=subprocess.PIPE,
-                )
-                stdout, stderr = await process.communicate()
-                return stdout.decode()
+            cmd_tele = "pip install telethon==1.26.1 --user"
+            output = subprocess.check_output(cmd_tele.split())
 
-            asyncio.run(reqs())
+            cmd_pd = "pip install pandas==1.5.3 --user"
+            output = subprocess.check_output(cmd_pd.split())
+
+            cmd_tqdm = "pip install tqdm==4.64.1 --user"
+            output = subprocess.check_output(cmd_tqdm.split())
+
+            cmd_open = "pip install openpyxl==3.0.10 --user"
+            output = subprocess.check_output(cmd_open.split())
+
+            cmd_pycrypto = "pip install pycryptodome==3.17 --user"
+            output = subprocess.check_output(cmd_pycrypto.split())
 
             #connect to API
             print('python connect.py')
             cmd_connect = 'python connect.py'
             subprocess.check_output(cmd_connect.split())
         except:
-            st.error('Something went wrong.')
+            form_component.error('Something went wrong.')
 
     #sign in code
     with sign_in_component.form(key='config_sign_in_form'):
