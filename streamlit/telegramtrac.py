@@ -93,6 +93,24 @@ def crypt_password(password):
     [ file_out.write(x) for x in (key, cipher.nonce, tag, ciphertext) ]
     file_out.close()
 
+#delete .session and .bin files
+def delete_files_restores_app():
+    #delete this and add log_out https://docs.telethon.dev/en/stable/modules/client.html#telethon.client.auth.AuthMethods.log_out or ResetAuthorizationsRequest()
+    try:
+        st.session_state.api_id = ''
+        st.session_state.api_hash = ''
+        st.session_state.phone = ''
+        st.session_state.code_value = ''
+        st.session_state.password_value = ''
+        st.session_state.restart = False
+
+        #os.remove('session_file.session')
+        os.remove('encrypted_code.bin')
+        os.remove('encrypted_password.bin')
+        st.success('Session files deleted.')
+    except:
+        st.error('Missing files')
+
 #title
 if st.session_state.code_state == False:
     title_component.title("""
@@ -154,12 +172,6 @@ if not st.session_state.restart:
 
     # if os.path.exists(dir_path_output):
     #     shutil.rmtree(dir_path_output)
-
-    #delete this and add log_out https://docs.telethon.dev/en/stable/modules/client.html#telethon.client.auth.AuthMethods.log_out or ResetAuthorizationsRequest()
-    try:
-        os.remove('session_file.session')
-    except:
-        pass
 
     #credentials
     with form_component.form(key='config_form'):
@@ -291,12 +303,12 @@ if trac or new_trac and st.session_state.channel_name != '':
     #     st.error('Something went wrong.')
     #     st.session_state.restart = False
 
-    try:
-        print('python build-datasets.py')
-        cmd_dataset = 'python build-datasets.py'
-        output = subprocess.check_output(cmd_dataset.split())
-    except:
-        st.error('Something went wrong.')
+    # try:
+    #     print('python build-datasets.py')
+    #     cmd_dataset = 'python build-datasets.py'
+    #     output = subprocess.check_output(cmd_dataset.split())
+    # except:
+    #     st.error('Something went wrong.')
 
     # try:
     #     if os.path.exists(dir_path_output):
@@ -393,3 +405,4 @@ if trac or new_trac and st.session_state.channel_name != '':
     #restart
     with tab4:
         st.button('new trac', type='primary', use_container_width=True)
+        st.button('log out', on_click=delete_files_restores_app, type='secondary', use_container_width=True)

@@ -1,6 +1,6 @@
 import asyncio
 
-from api import client_sign_indecrypt_code, decrypt_password
+from api import client_sign_in, decrypt_code, decrypt_password
 # from connect import (sfile, api_id, api_hash, phone, phone_code_hash)
 
 # loop = asyncio.get_event_loop()
