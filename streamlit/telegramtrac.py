@@ -76,7 +76,8 @@ def crypt_code(code):
     ciphertext, tag = cipher.encrypt_and_digest(sign_in_code)
 
     file_out = open("encrypted_code.bin", "wb")
-    [ file_out.write(x) for x in (key, cipher.nonce, tag, ciphertext) ]
+    for i in (key, cipher.nonce, tag, ciphertext):
+        file_out.write(i)
     file_out.close()
 
 def crypt_password(password):
@@ -90,7 +91,8 @@ def crypt_password(password):
     ciphertext, tag = cipher.encrypt_and_digest(sign_in_password)
 
     file_out = open("encrypted_password.bin", "wb")
-    [ file_out.write(x) for x in (key, cipher.nonce, tag, ciphertext) ]
+    for i in (key, cipher.nonce, tag, ciphertext):
+        file_out.write(i)
     file_out.close()
 
 #delete .session and .bin files
@@ -104,7 +106,7 @@ def delete_files_restores_app():
         st.session_state.password_value = ''
         st.session_state.restart = False
 
-        #os.remove('session_file.session')
+        os.remove('session_file.session')
         os.remove('encrypted_code.bin')
         os.remove('encrypted_password.bin')
         st.success('Session files deleted.')
@@ -139,13 +141,13 @@ with st.sidebar:
 - [ ] Add batch file upload
 - [ ] Option without API credentials
 - [ ] Network tab
+- [ ] Refactor the code (delete `subprocess.check_output` and organize dirs and files)
 - [ ] Logout users (with Telethon)
 - [x] Error msgs
 - [ ] Storage limit alerts
 - [x] Delete files after session finish
 - [ ] Log for users
 - [ ] Docs telegramtrac/ API credentials (how to)
-- [ ] Refactor the code
 - [ ] Check API limitations
 - [ ] Sec issues
 
@@ -168,10 +170,10 @@ with st.sidebar:
 
 if not st.session_state.restart:
     #delete all files and directories before start another tracking
-    # dir_path_output = os.path.join('output')
+    dir_path_output = os.path.join('output')
 
-    # if os.path.exists(dir_path_output):
-    #     shutil.rmtree(dir_path_output)
+    if os.path.exists(dir_path_output):
+        shutil.rmtree(dir_path_output)
 
     #credentials
     with form_component.form(key='config_form'):
@@ -201,22 +203,22 @@ if not st.session_state.restart:
 
         try:
             #avoid streamlit errors
-            # cmd_tele = "pip install telethon==1.26.1 --user"
-            # output = subprocess.check_output(cmd_tele.split())
+            cmd_tele = "pip install telethon==1.26.1 --user"
+            output = subprocess.check_output(cmd_tele.split())
 
-            # cmd_pd = "pip install pandas==1.5.3 --user"
-            # output = subprocess.check_output(cmd_pd.split())
+            cmd_pd = "pip install pandas==1.5.3 --user"
+            output = subprocess.check_output(cmd_pd.split())
 
-            # cmd_tqdm = "pip install tqdm==4.64.1 --user"
-            # output = subprocess.check_output(cmd_tqdm.split())
+            cmd_tqdm = "pip install tqdm==4.64.1 --user"
+            output = subprocess.check_output(cmd_tqdm.split())
 
-            # cmd_open = "pip install openpyxl==3.0.10 --user"
-            # output = subprocess.check_output(cmd_open.split())
+            cmd_open = "pip install openpyxl==3.0.10 --user"
+            output = subprocess.check_output(cmd_open.split())
 
             #connect to API
             print('python connect.py')
-            # cmd_connect = 'python connect.py'
-            # output = subprocess.check_output(cmd_connect.split())
+            cmd_connect = 'python connect.py'
+            output = subprocess.check_output(cmd_connect.split())
         except:
             st.error('Something went wrong.')
 
@@ -246,8 +248,9 @@ if not st.session_state.restart:
             st.session_state.password_value = password
             st.session_state.code_state = True
 
-            crypt_code(st.session_state.code_value)
-            crypt_password(st.session_state.password_value)
+            #encrypt code and password
+            crypt_code(sign_in_code)
+            crypt_password(password)
 
             #sign in to API
             try:
@@ -287,7 +290,7 @@ else:
 #data tabs
 if trac or new_trac and st.session_state.channel_name != '':
     center_running()
-    tab1, tab2, tab3, tab4 = st.tabs(['messages', 'metadata', 'dataset', 'new trac'])
+    tab1, tab2, tab3, tab4 = st.tabs(['messages', 'metadata', 'dataset', 'options'])
 
     form_component.empty()
     sign_in_component.empty()
@@ -295,20 +298,20 @@ if trac or new_trac and st.session_state.channel_name != '':
     form_component_channel.empty()
     st.session_state.restart = True
 
-    # try:
-    #     print('python main.py --telegram-channel')
-    #     cmd_main = 'python main.py --telegram-channel {}'.format(st.session_state.channel_name)
-    #     output = subprocess.check_output(cmd_main.split())
-    # except:
-    #     st.error('Something went wrong.')
-    #     st.session_state.restart = False
+    try:
+        print('python main.py --telegram-channel')
+        cmd_main = 'python main.py --telegram-channel {}'.format(st.session_state.channel_name)
+        output = subprocess.check_output(cmd_main.split())
+    except:
+        st.error('Something went wrong.')
+        st.session_state.restart = False
 
-    # try:
-    #     print('python build-datasets.py')
-    #     cmd_dataset = 'python build-datasets.py'
-    #     output = subprocess.check_output(cmd_dataset.split())
-    # except:
-    #     st.error('Something went wrong.')
+    try:
+        print('python build-datasets.py')
+        cmd_dataset = 'python build-datasets.py'
+        output = subprocess.check_output(cmd_dataset.split())
+    except:
+        st.error('Something went wrong.')
 
     # try:
     #     if os.path.exists(dir_path_output):
@@ -402,7 +405,7 @@ if trac or new_trac and st.session_state.channel_name != '':
     # with tab4:
     #     st.info('Under development')
 
-    #restart
+    #options - new trac or log out
     with tab4:
         st.button('new trac', type='primary', use_container_width=True)
         st.button('log out', on_click=delete_files_restores_app, type='secondary', use_container_width=True)

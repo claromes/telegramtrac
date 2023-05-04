@@ -85,13 +85,13 @@ Mostly limited to Streamlit options. The form and tabs were chosen due to common
 - [ ] Add batch file upload
 - [ ] Option without API credentials
 - [ ] Network tab
+- [ ] Refactor the code (delete `subprocess.check_output` and organize dirs and files)
 - [ ] Logout users (with Telethon)
 - [x] Error msgs
 - [ ] Storage limit alerts
 - [x] Delete files after session finish
 - [ ] Log for users
 - [ ] Docs telegramtrac/ API credentials (how to)
-- [ ] Refactor the code
 - [ ] Check API limitations
 - [ ] Sec issues
 
