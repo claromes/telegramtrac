@@ -39,6 +39,7 @@ center_running()
 
 trac = ''
 new_trac = ''
+error_connect = False
 
 #states
 if 'channel_name' not in st.session_state:
@@ -224,10 +225,11 @@ if not st.session_state.restart:
             subprocess.check_output(cmd_connect.split())
         except:
             form_component.error('Something went wrong.')
+            error_connect = True
 
     #sign in code
     with sign_in_component.form(key='config_sign_in_form'):
-        if st.session_state.code_state:
+        if st.session_state.code_state and not error_connect:
             sign_in_code = st.text_input('code', disabled=False, value=st.session_state.code_value, placeholder='54321')
             password = st.text_input('password', disabled=False, value=st.session_state.password_value, type='password', placeholder='Two-Step Verification enabled users')
         else:
