@@ -156,6 +156,11 @@ with st.sidebar:
 
 # Changelog
 
+- [v0.4.0](https://github.com/claromes/telegramtrac/releases/tag/v0.4.0)
+    - Allow 2FA
+    - Store encrypted code and password
+    - Add log out button
+    - Delete *.session and *.bin files
 - [v0.3.1](https://github.com/claromes/telegramtrac/releases/tag/v0.3.1)
     - Each sign-in generates a new instance
     - Add sidebar
