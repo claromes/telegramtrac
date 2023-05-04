@@ -7,6 +7,7 @@ from pandas import read_csv
 import base64
 import os
 import shutil
+import asyncio
 
 from Crypto.Cipher import AES
 from Crypto.Random import get_random_bytes
@@ -203,22 +204,23 @@ if not st.session_state.restart:
 
         try:
             #avoid streamlit errors
-            cmd_tele = "pip install telethon==1.26.1 --user"
-            output = subprocess.check_output(cmd_tele.split())
+            async def reqs():
+                print('pip install -r requirements.txt')
+                cmd_reqs = 'pip install -r requirements.txt'
+                process = await asyncio.create_subprocess_shell(
+                    cmd_reqs,
+                    stdout=subprocess.PIPE,
+                    stderr=subprocess.PIPE,
+                )
+                stdout, stderr = await process.communicate()
+                return stdout.decode()
 
-            cmd_pd = "pip install pandas==1.5.3 --user"
-            output = subprocess.check_output(cmd_pd.split())
-
-            cmd_tqdm = "pip install tqdm==4.64.1 --user"
-            output = subprocess.check_output(cmd_tqdm.split())
-
-            cmd_open = "pip install openpyxl==3.0.10 --user"
-            output = subprocess.check_output(cmd_open.split())
+            asyncio.run(reqs())
 
             #connect to API
             print('python connect.py')
             cmd_connect = 'python connect.py'
-            output = subprocess.check_output(cmd_connect.split())
+            subprocess.check_output(cmd_connect.split())
         except:
             st.error('Something went wrong.')
 
@@ -226,7 +228,7 @@ if not st.session_state.restart:
     with sign_in_component.form(key='config_sign_in_form'):
         if st.session_state.code_state:
             sign_in_code = st.text_input('code', disabled=False, value=st.session_state.code_value, placeholder='54321')
-            password = st.text_input('password', disabled=False, value=st.session_state.password_value, type='password', placeholder='For Two-Step Verification enabled users')
+            password = st.text_input('password', disabled=False, value=st.session_state.password_value, type='password', placeholder='Two-Step Verification enabled users')
         else:
             sign_in_code = st.text_input('code', disabled=True, value=st.session_state.code_value)
             password = st.text_input('password', disabled=True, value=st.session_state.password_value)
@@ -256,7 +258,7 @@ if not st.session_state.restart:
             try:
                 print('python sign_in.py')
                 cmd_sign_in = 'python sign_in.py'
-                output = subprocess.check_output(cmd_sign_in.split())
+                subprocess.check_output(cmd_sign_in.split())
             except:
                 st.error('Something went wrong.')
                 st.session_state.code_state == False
@@ -301,7 +303,7 @@ if trac or new_trac and st.session_state.channel_name != '':
     try:
         print('python main.py --telegram-channel')
         cmd_main = 'python main.py --telegram-channel {}'.format(st.session_state.channel_name)
-        output = subprocess.check_output(cmd_main.split())
+        subprocess.check_output(cmd_main.split())
     except:
         st.error('Something went wrong.')
         st.session_state.restart = False
@@ -309,7 +311,7 @@ if trac or new_trac and st.session_state.channel_name != '':
     try:
         print('python build-datasets.py')
         cmd_dataset = 'python build-datasets.py'
-        output = subprocess.check_output(cmd_dataset.split())
+        subprocess.check_output(cmd_dataset.split())
     except:
         st.error('Something went wrong.')
 
