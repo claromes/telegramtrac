@@ -8,10 +8,13 @@ import base64
 import os
 import shutil
 
+from Crypto.Cipher import AES
+from Crypto.Random import get_random_bytes
+
 #page config
 st.set_page_config(
-    page_title="telegramtrac [staging]",
-    page_icon="🟨",
+    page_title="telegramtrac",
+    page_icon="🟦",
     layout="centered",
     initial_sidebar_state="collapsed",
     menu_items={
@@ -62,6 +65,34 @@ if 'phone' not in st.session_state:
 if 'restart' not in st.session_state:
     st.session_state['restart'] = False
 
+#encrypt code and password
+def crypt_code(code):
+    key = get_random_bytes(16)
+
+    cipher = AES.new(key, AES.MODE_EAX)
+
+    sign_in_code = code.encode()
+
+    ciphertext, tag = cipher.encrypt_and_digest(sign_in_code)
+
+    file_out = open("encrypted_code.bin", "wb")
+    [ file_out.write(x) for x in (key, cipher.nonce, tag, ciphertext) ]
+    file_out.close()
+
+def crypt_password(password):
+
+    key = get_random_bytes(16)
+
+    cipher = AES.new(key, AES.MODE_EAX)
+
+    sign_in_password = password.encode()
+
+    ciphertext, tag = cipher.encrypt_and_digest(sign_in_password)
+
+    file_out = open("encrypted_password.bin", "wb")
+    [ file_out.write(x) for x in (key, cipher.nonce, tag, ciphertext) ]
+    file_out.close()
+
 #title
 if st.session_state.code_state == False:
     title_component.title("""
@@ -70,13 +101,13 @@ telegramtrac
 Web-based tool designed for tracking public channels on Telegram
 
 *:blue[Create your API credentials [here](https://my.telegram.org/auth)]*
-""", help='v1.0.0', anchor=False)
+""", help='v0.4.0', anchor=False)
 else:
     title_component.title("""
 telegramtrac
 
 Web-based tool designed for tracking public channels on Telegram
-""", help='v1.0.0', anchor=False)
+""", help='v0.4.0', anchor=False)
 
 #changelog and roadmap
 with st.sidebar:
@@ -119,10 +150,10 @@ with st.sidebar:
 
 if not st.session_state.restart:
     #delete all files and directories before start another tracking
-    dir_path_output = os.path.join('output')
+    # dir_path_output = os.path.join('output')
 
-    if os.path.exists(dir_path_output):
-        shutil.rmtree(dir_path_output)
+    # if os.path.exists(dir_path_output):
+    #     shutil.rmtree(dir_path_output)
 
     #delete this and add log_out https://docs.telethon.dev/en/stable/modules/client.html#telethon.client.auth.AuthMethods.log_out or ResetAuthorizationsRequest()
     try:
@@ -158,49 +189,39 @@ if not st.session_state.restart:
 
         try:
             #avoid streamlit errors
-            cmd_tele = "pip install telethon==1.26.1 --user"
-            output = subprocess.check_output(cmd_tele.split())
+            # cmd_tele = "pip install telethon==1.26.1 --user"
+            # output = subprocess.check_output(cmd_tele.split())
 
-            cmd_pd = "pip install pandas==1.5.3 --user"
-            output = subprocess.check_output(cmd_pd.split())
+            # cmd_pd = "pip install pandas==1.5.3 --user"
+            # output = subprocess.check_output(cmd_pd.split())
 
-            cmd_tqdm = "pip install tqdm==4.64.1 --user"
-            output = subprocess.check_output(cmd_tqdm.split())
+            # cmd_tqdm = "pip install tqdm==4.64.1 --user"
+            # output = subprocess.check_output(cmd_tqdm.split())
 
-            cmd_open = "pip install openpyxl==3.0.10 --user"
-            output = subprocess.check_output(cmd_open.split())
+            # cmd_open = "pip install openpyxl==3.0.10 --user"
+            # output = subprocess.check_output(cmd_open.split())
 
             #connect to API
             print('python connect.py')
-            cmd_connect = 'python connect.py'
-            output = subprocess.check_output(cmd_connect.split())
+            # cmd_connect = 'python connect.py'
+            # output = subprocess.check_output(cmd_connect.split())
         except:
             st.error('Something went wrong.')
 
     #sign in code
     with sign_in_component.form(key='config_sign_in_form'):
         if st.session_state.code_state:
-            code_sign_in = st.text_input('code', disabled=False, value=st.session_state.code_value, placeholder='54321')
+            sign_in_code = st.text_input('code', disabled=False, value=st.session_state.code_value, placeholder='54321')
             password = st.text_input('password', disabled=False, value=st.session_state.password_value, type='password', placeholder='For Two-Step Verification enabled users')
         else:
-            code_sign_in = st.text_input('code', disabled=True, value=st.session_state.code_value)
+            sign_in_code = st.text_input('code', disabled=True, value=st.session_state.code_value)
             password = st.text_input('password', disabled=True, value=st.session_state.password_value)
 
-        if code_sign_in == '':
-            code_sign_in = st.session_state.code_value
+        if sign_in_code == '':
+            sign_in_code = st.session_state.code_value
 
         if password == '':
             password = st.session_state.password_value
-
-        config_sign_in_code = {
-            'code': code_sign_in,
-            'password': password
-        }
-
-        config_sign_in_code_parser = configparser.ConfigParser()
-        config_sign_in_code_parser['Sign in code'] = config_sign_in_code
-        with open('config/config_sign_in_code.ini', 'w') as file:
-            config_sign_in_code_parser.write(file)
 
         if st.session_state.code_state:
             sign_in = st.form_submit_button('sign in', disabled=False, type='primary')
@@ -209,9 +230,12 @@ if not st.session_state.restart:
 
         if sign_in:
             center_running()
-            st.session_state.code_value = code_sign_in
+            st.session_state.code_value = sign_in_code
             st.session_state.password_value = password
             st.session_state.code_state = True
+
+            crypt_code(st.session_state.code_value)
+            crypt_password(st.session_state.password_value)
 
             #sign in to API
             try:
@@ -259,13 +283,13 @@ if trac or new_trac and st.session_state.channel_name != '':
     form_component_channel.empty()
     st.session_state.restart = True
 
-    try:
-        print('python main.py --telegram-channel')
-        cmd_main = 'python main.py --telegram-channel {}'.format(st.session_state.channel_name)
-        output = subprocess.check_output(cmd_main.split())
-    except:
-        st.error('Something went wrong.')
-        st.session_state.restart = False
+    # try:
+    #     print('python main.py --telegram-channel')
+    #     cmd_main = 'python main.py --telegram-channel {}'.format(st.session_state.channel_name)
+    #     output = subprocess.check_output(cmd_main.split())
+    # except:
+    #     st.error('Something went wrong.')
+    #     st.session_state.restart = False
 
     try:
         print('python build-datasets.py')

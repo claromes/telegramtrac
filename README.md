@@ -37,8 +37,6 @@ Streamlit will be served at http://localhost:8501
 
 ### Workflow
 
-*IMPORTANT: disable the 2FA*
-
 1. Create your API credentials [here](https://my.telegram.org/auth)
 
 <p align="center">

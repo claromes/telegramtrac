@@ -19,3 +19,6 @@ chatgpt.py
 
 # venv
 venv/
+
+#bin
+*.bin
