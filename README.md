@@ -87,6 +87,7 @@ Mostly limited to Streamlit options. The form and tabs were chosen due to common
 - [ ] Network tab
 - [ ] Delete `subprocess.check_output`/ Update dir structure
 - [ ] Logout users (with Telethon)
+- [ ] FloodWaitError msg
 - [x] Error msgs
 - [ ] Storage limit alerts
 - [x] Delete files after session finish

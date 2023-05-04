@@ -144,6 +144,7 @@ with st.sidebar:
 - [ ] Network tab
 - [ ] Delete `subprocess.check_output`/ Update dir structure
 - [ ] Logout users (with Telethon)
+- [ ] FloodWaitError msg
 - [x] Error msgs
 - [ ] Storage limit alerts
 - [x] Delete files after session finish
