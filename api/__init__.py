@@ -9,8 +9,8 @@ from Crypto.Cipher import AES
 Get code and password
 
 '''
-def decrypt_code():
-    file_in = open("encrypted_code.bin", "rb")
+def decrypt_code(api_id):
+    file_in = open('sign_in/encrypted_code_{}.bin'.format(api_id), 'rb')
     key, nonce, tag, ciphertext = [ file_in.read(x) for x in (16, 16, 16, -1) ]
     file_in.close()
 
@@ -22,8 +22,8 @@ def decrypt_code():
 
     return sign_in_code_decode
 
-def decrypt_password():
-    file_in = open("encrypted_password.bin", "rb")
+def decrypt_password(api_id):
+    file_in = open('sign_in/encrypted_password_{}.bin'.format(api_id), 'rb')
     key, nonce, tag, ciphertext = [ file_in.read(x) for x in (16, 16, 16, -1) ]
     file_in.close()
 
@@ -65,12 +65,12 @@ async def client_sign_in(session_file, api_id, api_hash, phone, phone_code_hash)
 	try:
 		await client.sign_in(
 			phone=phone,
-			code=decrypt_code(),
+			code=decrypt_code(api_id),
 			phone_code_hash=str(phone_code_hash)
 		)
 	except telethon.errors.rpcerrorlist.SessionPasswordNeededError:
 		await client.sign_in(
-			password=decrypt_password()
+			password=decrypt_password(api_id)
 		)
 
 	return client

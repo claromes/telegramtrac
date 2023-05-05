@@ -79,7 +79,7 @@ def crypt_code(code):
 
     ciphertext, tag = cipher.encrypt_and_digest(sign_in_code)
 
-    file_out = open("encrypted_code.bin", "wb")
+    file_out = open('sign_in/encrypted_code_{}.bin'.format(api_id), 'wb')
     for i in (key, cipher.nonce, tag, ciphertext):
         file_out.write(i)
     file_out.close()
@@ -94,7 +94,7 @@ def crypt_password(password):
 
     ciphertext, tag = cipher.encrypt_and_digest(sign_in_password)
 
-    file_out = open("encrypted_password.bin", "wb")
+    file_out = open('sign_in/encrypted_password_{}.bin'.format(api_id), 'wb')
     for i in (key, cipher.nonce, tag, ciphertext):
         file_out.write(i)
     file_out.close()
@@ -103,17 +103,18 @@ def crypt_password(password):
 def delete_files_restores_app():
     #delete this and add log_out https://docs.telethon.dev/en/stable/modules/client.html#telethon.client.auth.AuthMethods.log_out or ResetAuthorizationsRequest()
     try:
+        os.remove('config/config_{}.ini'.format(api_id))
+        os.remove('sign_in/encrypted_code_{}.bin'.format(api_id))
+        os.remove('sign_in/encrypted_password_{}.bin'.format(api_id))
+        #os.remove('session_file_{}.session'.format(api_id))
+
+        st.success('Session files deleted.')
         st.session_state.api_id = ''
         st.session_state.api_hash = ''
         st.session_state.phone = ''
         st.session_state.code_value = ''
         st.session_state.password_value = ''
         st.session_state.restart = False
-
-        os.remove('session_file.session')
-        os.remove('encrypted_code.bin')
-        os.remove('encrypted_password.bin')
-        st.success('Session files deleted.')
     except:
         st.error('Missing files')
 
@@ -183,10 +184,10 @@ with st.sidebar:
 
 if not st.session_state.restart:
     #delete all files and directories before start another tracking
-    dir_path_output = os.path.join('output')
+    # dir_path_output = os.path.join('output')
 
-    if os.path.exists(dir_path_output):
-        shutil.rmtree(dir_path_output)
+    # if os.path.exists(dir_path_output):
+    #     shutil.rmtree(dir_path_output)
 
     #credentials
     with form_component.form(key='config_form'):
@@ -200,11 +201,6 @@ if not st.session_state.restart:
             'phone': phone
         }
 
-        config_parser = configparser.ConfigParser()
-        config_parser['Telegram API credentials'] = config
-        with open('config/config_{}.ini', 'wb'.format(api_id)) as file:
-            config_parser.write(file)
-
         send_credentials = st.form_submit_button('send credentials', type='primary')
 
     if send_credentials and (api_id == '' or api_hash == '' or phone == ''):
@@ -212,32 +208,39 @@ if not st.session_state.restart:
 
     if send_credentials and api_id != '' and api_hash != '' and phone != '':
         center_running()
+
+        config_parser = configparser.ConfigParser()
+        config_parser['Telegram API credentials'] = config
+        with open('config/config_{}.ini'.format(api_id), 'w') as file:
+            config_parser.write(file)
+            file.close()
+
         st.session_state.code_state = True
 
-        try:
-            #avoid streamlit errors
-            cmd_tele = "pip install telethon==1.26.1 --user"
-            output = subprocess.check_output(cmd_tele.split())
+        # try:
+        #     #avoid streamlit errors
+        #     cmd_tele = "pip install telethon==1.26.1 --user"
+        #     output = subprocess.check_output(cmd_tele.split())
 
-            cmd_pd = "pip install pandas==1.5.3 --user"
-            output = subprocess.check_output(cmd_pd.split())
+        #     cmd_pd = "pip install pandas==1.5.3 --user"
+        #     output = subprocess.check_output(cmd_pd.split())
 
-            cmd_tqdm = "pip install tqdm==4.64.1 --user"
-            output = subprocess.check_output(cmd_tqdm.split())
+        #     cmd_tqdm = "pip install tqdm==4.64.1 --user"
+        #     output = subprocess.check_output(cmd_tqdm.split())
 
-            cmd_open = "pip install openpyxl==3.0.10 --user"
-            output = subprocess.check_output(cmd_open.split())
+        #     cmd_open = "pip install openpyxl==3.0.10 --user"
+        #     output = subprocess.check_output(cmd_open.split())
 
-            cmd_pycrypto = "pip install pycryptodome==3.17 --user"
-            output = subprocess.check_output(cmd_pycrypto.split())
+        #     cmd_pycrypto = "pip install pycryptodome==3.17 --user"
+        #     output = subprocess.check_output(cmd_pycrypto.split())
 
-            #connect to API
-            print('python connect.py')
-            cmd_connect = 'python connect.py'
-            subprocess.check_output(cmd_connect.split())
-        except:
-            form_component.error('Something went wrong.')
-            error_connect = True
+        #     #connect to API
+        #     print('python connect.py')
+        #     cmd_connect = 'python connect.py'
+        #     subprocess.check_output(cmd_connect.split())
+        # except:
+        #     form_component.error('Something went wrong.')
+        #     error_connect = True
 
     #sign in code
     with sign_in_component.form(key='config_sign_in_form'):
@@ -270,13 +273,13 @@ if not st.session_state.restart:
             crypt_password(password)
 
             #sign in to API
-            try:
-                print('python sign_in.py')
-                cmd_sign_in = 'python sign_in.py'
-                subprocess.check_output(cmd_sign_in.split())
-            except:
-                st.error('Something went wrong.')
-                st.session_state.code_state == False
+            # try:
+            #     print('python sign_in.py')
+            #     cmd_sign_in = 'python sign_in.py'
+            #     subprocess.check_output(cmd_sign_in.split())
+            # except:
+            #     st.error('Something went wrong.')
+            #     st.session_state.code_state == False
 
     #channel name
     with channel_component.form(key='channel_form'):
@@ -315,13 +318,13 @@ if trac or new_trac and st.session_state.channel_name != '':
     form_component_channel.empty()
     st.session_state.restart = True
 
-    try:
-        print('python main.py --telegram-channel')
-        cmd_main = 'python main.py --telegram-channel {}'.format(st.session_state.channel_name)
-        subprocess.check_output(cmd_main.split())
-    except:
-        st.error('Something went wrong.')
-        st.session_state.restart = False
+    # try:
+    #     print('python main.py --telegram-channel')
+    #     cmd_main = 'python main.py --telegram-channel {}'.format(st.session_state.channel_name)
+    #     subprocess.check_output(cmd_main.split())
+    # except:
+    #     st.error('Something went wrong.')
+    #     st.session_state.restart = False
 
     try:
         print('python build-datasets.py')
@@ -403,7 +406,7 @@ if trac or new_trac and st.session_state.channel_name != '':
     #dataset
     with tab3:
         try:
-            st.subheader('dataset', anchor=False)
+            st.subheader('messages from all requested channels', anchor=False)
             dataset_csv_file = 'output/data/msgs_dataset.csv'
 
             with open(dataset_csv_file, 'rb') as file:
