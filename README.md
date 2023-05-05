@@ -22,7 +22,7 @@ $ `cd telegramtrac`
 
 $ `pip install -r requirements.txt`
 
-$ `streamlit run streamlit\telegramtrac.py`
+$ `streamlit run streamlit/telegramtrac.py`
 
 Streamlit will be served at http://localhost:8501
 

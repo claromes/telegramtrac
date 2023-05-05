@@ -18,14 +18,17 @@ st.set_page_config(
     layout="centered",
     initial_sidebar_state="collapsed",
     menu_items={
-        'Report a bug': 'https://github.com/claromes/telegramtrac/issues',
+
         'About': """
         telegramtrac is web-based tool designed for tracking public channels on Telegram.
 
         The tool is part of Bellingcat's April 2023 Hackathon. It's a fork of the package [`telegram-tracker`](https://github.com/estebanpdl/telegram-tracker) developed by Esteban Ponce de León, DFRLab researcher.
 
         -------
-        """
+        """,
+        'Get help': 'https://github.com/claromes/telegramtrac#workflow',
+        'Report a bug': 'https://github.com/claromes/telegramtrac/issues',
+
     }
 )
 
@@ -199,7 +202,7 @@ if not st.session_state.restart:
 
         config_parser = configparser.ConfigParser()
         config_parser['Telegram API credentials'] = config
-        with open('config/config.ini', 'w') as file:
+        with open('config/config_{}.ini', 'wb'.format(api_id)) as file:
             config_parser.write(file)
 
         send_credentials = st.form_submit_button('send credentials', type='primary')
