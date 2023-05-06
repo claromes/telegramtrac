@@ -1,17 +1,17 @@
-# Ignore Cache
+# ignore Cache
 __pycache__/
 .ipynb_checkpoints/
 .vscode/
 
-# Collected data
+# collected data
 output/
 
 # nbs
 nb/*
 
 # session_file.session
-session_file.session
-session_file.session-journal
+*.session
+*.session-journal
 
 # files
 test.py
@@ -20,5 +20,8 @@ chatgpt.py
 # venv
 venv/
 
-#bin
+# bin
 *.bin
+
+# ini
+*.ini

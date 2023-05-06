@@ -6,12 +6,11 @@ import configparser
 from pandas import read_csv
 import base64
 import os
-import shutil
+import asyncio
 
-from Crypto.Cipher import AES
-from Crypto.Random import get_random_bytes
+from telegramtracker import (api, cryptography)
 
-#page config
+# page config
 st.set_page_config(
     page_title="telegramtrac",
     page_icon="🟦",
@@ -32,7 +31,7 @@ st.set_page_config(
     }
 )
 
-#components variables
+# components variables
 title_component = st.empty()
 form_component = st.empty()
 sign_in_component = st.empty()
@@ -44,7 +43,7 @@ trac = ''
 new_trac = ''
 error_connect = False
 
-#states
+# states
 if 'channel_name' not in st.session_state:
     st.session_state['channel_name'] = ''
 
@@ -66,47 +65,22 @@ if 'api_hash' not in st.session_state:
 if 'phone' not in st.session_state:
     st.session_state['phone'] = ''
 
+if 'sfile' not in st.session_state:
+    st.session_state['sfile'] = ''
+
+if 'phone_code_hash' not in st.session_state:
+    st.session_state['phone_code_hash'] = ''
+
 if 'restart' not in st.session_state:
     st.session_state['restart'] = False
 
-#encrypt code and password
-def crypt_code(code):
-    key = get_random_bytes(16)
-
-    cipher = AES.new(key, AES.MODE_EAX)
-
-    sign_in_code = code.encode()
-
-    ciphertext, tag = cipher.encrypt_and_digest(sign_in_code)
-
-    file_out = open('sign_in/encrypted_code_{}.bin'.format(api_id), 'wb')
-    for i in (key, cipher.nonce, tag, ciphertext):
-        file_out.write(i)
-    file_out.close()
-
-def crypt_password(password):
-
-    key = get_random_bytes(16)
-
-    cipher = AES.new(key, AES.MODE_EAX)
-
-    sign_in_password = password.encode()
-
-    ciphertext, tag = cipher.encrypt_and_digest(sign_in_password)
-
-    file_out = open('sign_in/encrypted_password_{}.bin'.format(api_id), 'wb')
-    for i in (key, cipher.nonce, tag, ciphertext):
-        file_out.write(i)
-    file_out.close()
-
-#delete .session and .bin files
-def delete_files_restores_app():
+def delete():
     #delete this and add log_out https://docs.telethon.dev/en/stable/modules/client.html#telethon.client.auth.AuthMethods.log_out or ResetAuthorizationsRequest()
     try:
         os.remove('config/config_{}.ini'.format(api_id))
         os.remove('sign_in/encrypted_code_{}.bin'.format(api_id))
         os.remove('sign_in/encrypted_password_{}.bin'.format(api_id))
-        #os.remove('session_file_{}.session'.format(api_id))
+        os.remove('session_file_{}.session'.format(api_id))
 
         st.success('Session files deleted.')
         st.session_state.api_id = ''
@@ -118,7 +92,7 @@ def delete_files_restores_app():
     except:
         st.error('Missing files')
 
-#title
+# title
 if st.session_state.code_state == False:
     title_component.title("""
 telegramtrac
@@ -134,7 +108,7 @@ telegramtrac
 Web-based tool designed for tracking public channels on Telegram
 """, help='v0.4.0', anchor=False)
 
-#changelog and roadmap
+# changelog and roadmap
 with st.sidebar:
     st.markdown("""
 
@@ -143,12 +117,14 @@ with st.sidebar:
 - [x] Fix dataset tab
 - [x] Fix set credentials and code in restart flow
 - [x] Allow 2FA
-- [ ] One session/sign_in file per user
-- [ ] sqlite3.OperationalError
-- [ ] Tabs description
+- [x] One session/sign_in file per user
 - [ ] Add batch file upload
-- [ ] Option without API credentials
 - [ ] Network tab
+- [ ] DB to store data
+    - [ ] sqlite3.OperationalError
+    - [ ] cache resourse
+- [ ] Tabs description
+- [ ] Option without API credentials
 - [ ] Delete `subprocess.check_output`/ Update dir structure
 - [ ] Logout users (with Telethon)
 - [ ] FloodWaitError msg
@@ -189,7 +165,7 @@ if not st.session_state.restart:
     # if os.path.exists(dir_path_output):
     #     shutil.rmtree(dir_path_output)
 
-    #credentials
+    # credentials
     with form_component.form(key='config_form'):
         api_id = st.text_input('api_id', placeholder='12349876')
         api_hash = st.text_input('api_hash', placeholder='123a456s789d987h654g321q987w12f0')
@@ -200,6 +176,9 @@ if not st.session_state.restart:
             'api_hash': api_hash,
             'phone': phone
         }
+
+        sfile = 'session_file_{}'.format(api_id)
+        st.session_state.sfile = sfile
 
         send_credentials = st.form_submit_button('send credentials', type='primary')
 
@@ -217,32 +196,36 @@ if not st.session_state.restart:
 
         st.session_state.code_state = True
 
-        # try:
-        #     #avoid streamlit errors
-        #     cmd_tele = "pip install telethon==1.26.1 --user"
-        #     output = subprocess.check_output(cmd_tele.split())
+        try:
+            #avoid streamlit errors
+            # cmd_tele = "pip install telethon==1.26.1 --user"
+            # output = subprocess.check_output(cmd_tele.split())
 
-        #     cmd_pd = "pip install pandas==1.5.3 --user"
-        #     output = subprocess.check_output(cmd_pd.split())
+            # cmd_pd = "pip install pandas==1.5.3 --user"
+            # output = subprocess.check_output(cmd_pd.split())
 
-        #     cmd_tqdm = "pip install tqdm==4.64.1 --user"
-        #     output = subprocess.check_output(cmd_tqdm.split())
+            # cmd_tqdm = "pip install tqdm==4.64.1 --user"
+            # output = subprocess.check_output(cmd_tqdm.split())
 
-        #     cmd_open = "pip install openpyxl==3.0.10 --user"
-        #     output = subprocess.check_output(cmd_open.split())
+            # cmd_open = "pip install openpyxl==3.0.10 --user"
+            # output = subprocess.check_output(cmd_open.split())
 
-        #     cmd_pycrypto = "pip install pycryptodome==3.17 --user"
-        #     output = subprocess.check_output(cmd_pycrypto.split())
+            # cmd_pycrypto = "pip install pycryptodome==3.17 --user"
+            # output = subprocess.check_output(cmd_pycrypto.split())
 
-        #     #connect to API
-        #     print('python connect.py')
-        #     cmd_connect = 'python connect.py'
-        #     subprocess.check_output(cmd_connect.split())
-        # except:
-        #     form_component.error('Something went wrong.')
-        #     error_connect = True
+            #connect to API
+            print('get_connection')
+            phone_code_hash = asyncio.run(
+                api.get_connection(st.session_state.sfile, api_id, api_hash, phone)
+            )
 
-    #sign in code
+            st.session_state.phone_code_hash = phone_code_hash
+
+        except:
+            form_component.error('Something went wrong.')
+            error_connect = True
+
+    # sign in code
     with sign_in_component.form(key='config_sign_in_form'):
         if st.session_state.code_state and not error_connect:
             sign_in_code = st.text_input('code', disabled=False, value=st.session_state.code_value, placeholder='54321')
@@ -268,20 +251,21 @@ if not st.session_state.restart:
             st.session_state.password_value = password
             st.session_state.code_state = True
 
-            #encrypt code and password
-            crypt_code(sign_in_code)
-            crypt_password(password)
+            # encrypt code and password
+            cryptography.crypt_code(sign_in_code, api_id)
+            cryptography.crypt_password(password, api_id)
 
-            #sign in to API
-            # try:
-            #     print('python sign_in.py')
-            #     cmd_sign_in = 'python sign_in.py'
-            #     subprocess.check_output(cmd_sign_in.split())
-            # except:
-            #     st.error('Something went wrong.')
-            #     st.session_state.code_state == False
+            # sign in to API
+            try:
+                print('client_sign_in')
+                client = asyncio.run(
+                    api.client_sign_in(st.session_state.sfile, api_id, api_hash, phone, st.session_state.phone_code_hash)
+                )
+            except:
+                sign_in_component.error('Something went wrong.')
+                st.session_state.code_state == False
 
-    #channel name
+    # channel name
     with channel_component.form(key='channel_form'):
         if sign_in and st.session_state.code_state == True or st.session_state.channel_name != '':
             channel_name = st.text_input('channel name', placeholder="https://t.me/CHANNEL_NAME_IS_HERE", disabled=False, key='channel_name')
@@ -297,7 +281,7 @@ else:
     channel_component.empty()
 
     with form_component_channel.form(key='config_form_channel'):
-        #send same credentials, code and password
+        # send same credentials, code and password
         api_id = st.session_state.api_id
         api_hash = st.session_state.api_hash
         phone = st.session_state.phone
@@ -307,7 +291,7 @@ else:
         st.session_state.channel_name = st.text_input('channel name', placeholder="https://t.me/CHANNEL_NAME_IS_HERE", disabled=False, key='channel_name_new_trac')
         new_trac = st.form_submit_button('new trac', disabled=False, type='primary')
 
-#data tabs
+# data tabs
 if trac or new_trac and st.session_state.channel_name != '':
     center_running()
     tab1, tab2, tab3, tab4 = st.tabs(['messages', 'metadata', 'dataset', 'options'])
@@ -318,17 +302,18 @@ if trac or new_trac and st.session_state.channel_name != '':
     form_component_channel.empty()
     st.session_state.restart = True
 
-    # try:
-    #     print('python main.py --telegram-channel')
-    #     cmd_main = 'python main.py --telegram-channel {}'.format(st.session_state.channel_name)
-    #     subprocess.check_output(cmd_main.split())
-    # except:
-    #     st.error('Something went wrong.')
-    #     st.session_state.restart = False
+    try:
+        print('python main.py --telegram-channel')
+        output_data = 'output_{}/'.format(api_id)
+        cmd_main = 'python main.py --telegram-channel {} --output {}'.format(st.session_state.channel_name, output_data)
+        subprocess.check_output(cmd_main.split())
+    except:
+        st.error('Something went wrong.')
+        st.session_state.restart = False
 
     try:
         print('python build-datasets.py')
-        cmd_dataset = 'python build-datasets.py'
+        cmd_dataset = 'python build-datasets.py --data-path {}'.format(output_data)
         subprocess.check_output(cmd_dataset.split())
     except:
         st.error('Something went wrong.')
@@ -403,7 +388,7 @@ if trac or new_trac and st.session_state.channel_name != '':
         except:
             st.error('Something went wrong.')
 
-    #dataset
+    # dataset
     with tab3:
         try:
             st.subheader('messages from all requested channels', anchor=False)
@@ -421,11 +406,11 @@ if trac or new_trac and st.session_state.channel_name != '':
         except:
             st.error('Something went wrong.')
 
-    #network
+    # network
     # with tab4:
     #     st.info('Under development')
 
-    #options - new trac or log out
+    # options - new trac or log out
     with tab4:
         st.button('new trac', type='primary', use_container_width=True)
-        st.button('log out', on_click=delete_files_restores_app, type='secondary', use_container_width=True)
+        st.button('log out', on_click=delete, type='secondary', use_container_width=True)

@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-# import modules
 import ast
 import time
 import argparse
@@ -9,11 +8,9 @@ import networkx as nx
 import community
 import matplotlib
 
-# import local modules
 from utils import (
 	normalize_values
 )
-
 
 '''
 
@@ -30,7 +27,7 @@ parser.add_argument(
 	help='Path where data is located. Will use `./output/data` if not given.'
 )
 
-# Parse arguments
+# parse arguments
 args = vars(parser.parse_args())
 
 # get main path
@@ -49,7 +46,7 @@ Init program at {time.ctime()}
 '''
 print (text)
 
-# Read collected chats data
+# read collected chats data
 print ('Creating network graph')
 chats_file_path = f'{main_path}/collected_chats.csv'
 chats_file = pd.read_csv(
@@ -57,14 +54,14 @@ chats_file = pd.read_csv(
 	encoding='utf-8'
 )
 
-# Create network
+# create network
 net = {}
 source = [
 	j for i in chats_file['source'].tolist()
 	for j in ast.literal_eval(i)
 ]
 
-# Remove duplicates
+# remove duplicates
 source = list(set(source))
 channels = [
 	(i, j) for i, j in zip(chats_file['username'], chats_file['counter'])
@@ -83,7 +80,7 @@ for user, counter in channels:
 			else:
 				net[i].extend(targets)
 
-# Create network data
+# create network data
 network_data = pd.concat(
 	[
 		pd.DataFrame(
@@ -95,34 +92,34 @@ network_data = pd.concat(
 	]
 )
 
-# Create graph
+# create graph
 G = nx.from_pandas_edgelist(
 	network_data,
 	create_using=nx.DiGraph()
 )
 
-# Save network data
+# save network data
 network_path = f'{main_path}/Graph.gexf'
 nx.write_gexf(G, network_path)
 print ('Saved')
 
-# Community louvain -> compute the best partition
+# community louvain -> compute the best partition
 G_louvain = nx.from_pandas_edgelist(
 	network_data,
 	create_using=nx.Graph()
 )
 partition = community.community_louvain.best_partition(G_louvain)
 
-# Pos -> Graph
+# pos -> Graph
 pos = nx.spring_layout(G)
 
-# Color the nodes according to their partition
+# color the nodes according to their partition
 cmap = matplotlib.cm.get_cmap('viridis', max(partition.values()) + 1)
 
 # plt fig size
 matplotlib.pyplot.figure(figsize=(16, 10), frameon=False)
 
-# Draw network
+# draw network
 nx.draw_networkx_edges(G, pos, alpha=0.3)
 nx.draw_networkx_nodes(
 	G,
@@ -143,5 +140,5 @@ nx.draw_networkx_labels(
 	bbox={'facecolor':'white', 'alpha':0.5, 'edgecolor':'#373737'}
 )
 
-# Save image
+# save image
 matplotlib.pyplot.savefig(f'{main_path}/network.png')

@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-# import modules
 import pandas as pd
 import argparse
 import asyncio
@@ -9,7 +8,6 @@ import time
 import sys
 import os
 
-# import Telegram API submodules
 from api import *
 from utils import (
 	get_config_attrs, JSONEncoder, create_dirs, cmd_request_type,
@@ -53,9 +51,6 @@ parser.add_argument(
 	help='Folder to save collected data. Default: `./output/data`'
 )
 
-
-
-
 '''
 
 Updating data
@@ -66,8 +61,6 @@ parser.add_argument(
 	help='Specifies the offset id. This will update Telegram data with new posts.'
 )
 
-
-
 # parse arguments
 args = vars(parser.parse_args())
 config_attrs = get_config_attrs()
@@ -76,7 +69,6 @@ args = {**args, **config_attrs}
 
 if all(i is not None for i in args.values()):
 	parser.error('Select either --telegram-channel or --batch-file options only.')
-
 
 # log results
 text = f'''
@@ -115,7 +107,7 @@ counter = {}
 
 '''
 
-# get `client` connection
+# get client connection
 client = loop.run_until_complete(
 	get_connection(sfile, api_id, api_hash, phone)
 )
@@ -131,7 +123,7 @@ if req_type == 'batch':
 else:
 	req_input = [req_input]
 
-# reading | Creating an output folder
+# reading | creating an output folder
 if args['output']:
 	output_folder = args['output']
 	if output_folder.endswith('/'):
@@ -175,18 +167,18 @@ for channel in req_input:
 	print ('> ...')
 	print ('')
 
-	# Channel's attributes
+	# channel's attributes
 	entity_attrs = loop.run_until_complete(
 		get_entity_attrs(client, channel)
 	)
 
 	if entity_attrs:
 
-		# Get Channel ID | convert output to dict
+		# get channel ID | convert output to dict
 		channel_id = entity_attrs.id
 		entity_attrs_dict = entity_attrs.to_dict()
 
-		# Collect Source -> GetFullChannelRequest
+		# collect source -> GetFullChannelRequest
 		channel_request = loop.run_until_complete(
 			full_channel_req(client, channel_id)
 		)
@@ -194,7 +186,7 @@ for channel in req_input:
 		# save full channel request
 		full_channel_data = channel_request.to_dict()
 
-		# JsonEncoder
+		# JSONEncoder
 		full_channel_data = JSONEncoder().encode(full_channel_data)
 		full_channel_data = json.loads(full_channel_data)
 
@@ -230,7 +222,7 @@ for channel in req_input:
 
 		if not args['limit_download_to_channel_metadata']:
 
-			# Collect posts
+			# collect posts
 			if not args['min_id']:
 				posts = loop.run_until_complete(
 					get_posts(client, channel_id)
@@ -244,7 +236,7 @@ for channel in req_input:
 
 			data = posts.to_dict()
 
-			# Get offset ID | Get messages
+			# get offset ID | get messages
 			offset_id = min([i['id'] for i in data['messages']])
 
 			while len(posts.messages) > 0:
@@ -267,12 +259,12 @@ for channel in req_input:
 						)
 					)
 
-				# Update data dict
+				# update data dict
 				if posts.messages:
 					tmp = posts.to_dict()
 					data['messages'].extend(tmp['messages'])
 
-					# Adding unique chats objects
+					# adding unique chats objects
 					all_chats = [i['id'] for i in data['chats']]
 					chats = [
 						i for i in tmp['chats']
@@ -290,7 +282,7 @@ for channel in req_input:
 						output_folder
 					)
 
-					# Adding unique users objects
+					# adding unique users objects
 					all_users = [i['id'] for i in data['users']]
 					users = [
 						i for i in tmp['users']
@@ -301,10 +293,10 @@ for channel in req_input:
 					data['chats'].extend(chats)
 					data['users'].extend(users)
 
-					# Get offset ID
+					# get offset ID
 					offset_id = min([i['id'] for i in tmp['messages']])
 
-			# JsonEncoder
+			# JSONEncoder
 			data = JSONEncoder().encode(data)
 			data = json.loads(data)
 
@@ -351,7 +343,7 @@ collected_chats = list(set([
 	i.rstrip() for i in open(chats_path, mode='r', encoding='utf-8')
 ]))
 
-# re write collected chats
+# rewrite collected chats
 chats_file = open(chats_path, mode='w', encoding='utf-8')
 for c in collected_chats:
 	chats_file.write(f'{c}\n')
@@ -360,7 +352,7 @@ for c in collected_chats:
 chats_file.close()
 
 
-# Process counter
+# process counter
 counter_df = pd.DataFrame.from_dict(
 	counter,
 	orient='index'
@@ -390,7 +382,6 @@ df.to_csv(
 	index=False,
 	encoding='utf-8'
 )
-
 
 # log results
 text = f'''

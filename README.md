@@ -2,13 +2,9 @@
 
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/claromes/telegramtrac)
 
-## Team Members
-[claromes](https://claromes.gitlab.io/)
+A web-based tool designed for tracking public channels on Telegram. Provides modules for connecting, signing in and communicating with Telegram API via Telethon. It also includes additional modules for generating datasets and network graphs.
 
-## Tool Description
-telegramtrac is a web-based tool designed for tracking public channels on Telegram. It's a fork of the package [`telegram-tracker`](https://github.com/estebanpdl/telegram-tracker) developed by Esteban Ponce de León, DFRLab researcher.
-
-I became familiar with the package during the DFRLab's Digital Sherlocks Program and believe that an accessible version would benefit researchers of different skill levels.
+It's a fork of [`telegram-tracker`](https://github.com/estebanpdl/telegram-tracker) developed by Esteban Ponce de León (DFRLab).
 
 ## Requirements
 
@@ -22,7 +18,7 @@ $ `cd telegramtrac`
 
 $ `pip install -r requirements.txt`
 
-$ `streamlit run streamlit/telegramtrac.py`
+$ `streamlit run app.py`
 
 Streamlit will be served at http://localhost:8501
 
@@ -71,7 +67,6 @@ Streamlit will be served at http://localhost:8501
 ### Limitations
 
 - Only one channel per track
-- Each sign-in generates a new instance
 
 ### Design decisions
 
@@ -82,12 +77,14 @@ Mostly limited to Streamlit options. The form and tabs were chosen due to common
 - [x] Fix dataset tab
 - [x] Fix set credentials and code in restart flow
 - [x] Allow 2FA
-- [ ] One session/sign_in file per user
-- [ ] sqlite3.OperationalError
-- [ ] Tabs description
+- [x] One session/sign_in file per user
 - [ ] Add batch file upload
-- [ ] Option without API credentials
 - [ ] Network tab
+- [ ] DB to store data
+    - [ ] sqlite3.OperationalError
+    - [ ] cache resourse
+- [ ] Tabs description
+- [ ] Option without API credentials
 - [ ] Delete `subprocess.check_output`/ Update dir structure
 - [ ] Logout users (with Telethon)
 - [ ] FloodWaitError msg

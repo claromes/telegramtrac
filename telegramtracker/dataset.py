@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-# import modules
 import pandas as pd
 import argparse
 import json
@@ -9,7 +8,6 @@ import time
 import os
 import tqdm
 
-# import local submodules
 from utils import (
 	chats_dataset_columns, clean_msg, msg_attrs, get_forward_attrs, get_reply_attrs,
 	get_url_attrs, get_document_attrs, get_poll_attrs, get_contact_attrs,
@@ -31,7 +29,7 @@ parser.add_argument(
 	help='Path where data is located. Will use `./output/data` if not given.'
 )
 
-# Parse arguments
+# parse arguments
 args = vars(parser.parse_args())
 
 # get main path
@@ -49,18 +47,18 @@ Init program at {time.ctime()}
 '''
 print (text)
 
-# Collect JSON files
+# collect JSON files
 json_files_path = f'{main_path}/**/*_messages.json'
 json_files = glob.glob(
 	os.path.join(json_files_path),
 	recursive=True
 )
 
-# Collected channels
+# collected channels
 chats_file_path = f'{main_path}/collected_chats.csv'
 data = pd.read_csv(chats_file_path, encoding='utf-8')
 
-# Init values
+# init values
 data['collected_actions'] = 0
 data['collected_posts'] = 0
 data['replies'] = 0
@@ -69,7 +67,7 @@ data['number_views'] = 0
 data['forwards'] = 0
 data['replies_received'] = 0
 
-# Save dataset
+# save dataset
 msgs_file_path = f'{main_path}/msgs_dataset.csv'
 msgs_data_columns = msgs_dataset_columns()
 
@@ -79,12 +77,12 @@ for f in json_files:
 
 	Iterate JSON files
 	'''
-	#  Get channel name
+	# get channel name
 	username = f.split('.json')[0].replace('\\', '/').split('/')[-1].replace(
 		'_messages', ''
 	)
 
-	# Echo
+	# echo
 	print (f'Reading data from channel -> {username}')
 
 	# read JSON file
@@ -138,7 +136,7 @@ for f in json_files:
 		]
 	)
 
-	# Add values to dataset
+	# values to dataset
 	data.loc[data['username'] == username, 'collected_actions'] = actions
 	data.loc[data['username'] == username, 'collected_posts'] = posts
 	data.loc[data['username'] == username, 'replies'] = replies
@@ -173,7 +171,7 @@ for f in json_files:
 			msg_id = item['id']
 			response['msg_id'] = msg_id
 
-			# add attrs
+			# attrs
 			response['message'] = item['message']
 
 			# clean message
@@ -201,7 +199,7 @@ for f in json_files:
 			response['number_forwards'] = 0 if item['forwards'] == None \
 				else item['forwards']
 
-			# Forward attrs
+			# forward attrs
 			forward_attrs = item['fwd_from']
 			response['is_forward'] = 1 if forward_attrs != None else 0
 
@@ -218,7 +216,7 @@ for f in json_files:
 					data
 				)
 
-			# Reply attrs
+			# reply attrs
 			response['is_reply'] = 0
 			response['reply_to_msg_id'] = None
 			response['reply_msg_link'] = None
@@ -228,7 +226,7 @@ for f in json_files:
 				username
 			)
 
-			# Media
+			# media
 			response['contains_media'] = 1 if item['media'] != None else 0
 			if 'media' in item.keys():
 				response['media_type'] = None if item['media'] == None \
@@ -243,7 +241,7 @@ for f in json_files:
 			'''
 			response = get_url_attrs(item['media'], response)
 
-			# Media Document -> Constructor MessageMediaDocument
+			# media document -> constructor MessageMediaDocument
 			'''
 			Type Document
 
@@ -258,7 +256,7 @@ for f in json_files:
 			response = get_document_attrs(item['media'], response)
 
 
-			# Polls attrs
+			# polls attrs
 			'''
 
 			Type Poll
@@ -273,7 +271,7 @@ for f in json_files:
 			response['poll_results'] = None
 			response = get_poll_attrs(item['media'], response)
 
-			# Contact attrs
+			# contact attrs
 			'''
 
 			Type Contact
@@ -286,7 +284,7 @@ for f in json_files:
 			response['contact_userid'] = None
 			response = get_contact_attrs(item['media'], response)
 
-			# Geo attrs
+			# geo attrs
 			'''
 
 			Type GeoPoint
@@ -323,16 +321,16 @@ for f in json_files:
 				mode='a'
 			)
 
-		# Update pbar
+		# update pbar
 		pbar.update(1)
 
-	# Close pbar connection
+	# close pbar connection
 	pbar.close()
 
 	print ('-- END --')
 	print ('')
 
-# Save data
+# save data
 chats_columns = chats_dataset_columns()
 data = data[chats_columns].copy()
 
@@ -340,5 +338,3 @@ data.to_excel(
 	chats_file_path.replace('.csv', '.xlsx'),
 	index=False
 )
-
-

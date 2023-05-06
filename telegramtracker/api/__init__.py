@@ -1,39 +1,9 @@
 # -*- coding: utf-8 -*-
+
 import configparser
 import telethon
 
-from Crypto.Cipher import AES
-
-'''
-
-Get code and password
-
-'''
-def decrypt_code(api_id):
-    file_in = open('sign_in/encrypted_code_{}.bin'.format(api_id), 'rb')
-    key, nonce, tag, ciphertext = [ file_in.read(x) for x in (16, 16, 16, -1) ]
-    file_in.close()
-
-    cipher = AES.new(key, AES.MODE_EAX, nonce)
-
-    sign_in_code_decrypt = cipher.decrypt_and_verify(ciphertext, tag)
-
-    sign_in_code_decode = sign_in_code_decrypt.decode()
-
-    return sign_in_code_decode
-
-def decrypt_password(api_id):
-    file_in = open('sign_in/encrypted_password_{}.bin'.format(api_id), 'rb')
-    key, nonce, tag, ciphertext = [ file_in.read(x) for x in (16, 16, 16, -1) ]
-    file_in.close()
-
-    cipher = AES.new(key, AES.MODE_EAX, nonce)
-
-    sign_in_password_decrypt = cipher.decrypt_and_verify(ciphertext, tag)
-
-    sign_in_password_decode = sign_in_password_decrypt.decode()
-
-    return str(sign_in_password_decode)
+from ..cryptography import decrypt_code, decrypt_password
 
 '''
 
