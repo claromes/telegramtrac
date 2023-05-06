@@ -8,7 +8,7 @@ import base64
 import os
 import asyncio
 
-from telegramtracker import (api, cryptography)
+from telegram_tracker import (api, cryptography)
 
 __version__ = '0.5.0'
 
@@ -21,9 +21,13 @@ st.set_page_config(
     menu_items={
 
         'About': """
-        telegramtrac is web-based tool designed for tracking public channels on Telegram.
+        ![GitHub release (latest by date)](https://img.shields.io/github/v/release/claromes/telegramtrac) (not stable)
 
-        The tool is part of Bellingcat's April 2023 Hackathon. It's a fork of the package [`telegram-tracker`](https://github.com/estebanpdl/telegram-tracker) developed by Esteban Ponce de León, DFRLab researcher.
+        telegramtrac is a web-based tool designed for tracking public channels on Telegram. Provides modules for connecting, signing in and communicating with Telegram API via Telethon. It also includes additional modules for generating datasets and network graphs.
+
+        It's a fork of [`telegram-tracker`](https://github.com/estebanpdl/telegram-tracker) developed by Esteban Ponce de León (DFRLab).
+
+        The tool is part of Bellingcat's April 2023 Hackathon.
 
         -------
         """,
@@ -296,7 +300,7 @@ else:
 # data tabs
 if trac or new_trac and st.session_state.channel_name != '':
     center_running()
-    tab1, tab2, tab3, tab4 = st.tabs(['messages', 'metadata', 'dataset', 'options'])
+    tab1, tab2, tab3, tab4, tab5 = st.tabs(['messages', 'metadata', 'dataset', 'network', 'options'])
 
     form_component.empty()
     sign_in_component.empty()
@@ -409,10 +413,10 @@ if trac or new_trac and st.session_state.channel_name != '':
             st.error('Something went wrong.')
 
     # network
-    # with tab4:
-    #     st.info('Under development')
+    with tab4:
+        st.info('Under development')
 
     # options - new trac or log out
-    with tab4:
+    with tab5:
         st.button('new trac', type='primary', use_container_width=True)
         st.button('log out', on_click=delete, type='secondary', use_container_width=True)
