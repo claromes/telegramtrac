@@ -10,12 +10,14 @@ import asyncio
 
 from telegramtracker import (api, cryptography)
 
+__version__ = '0.5.0'
+
 # page config
 st.set_page_config(
-    page_title="telegramtrac",
-    page_icon="🟦",
-    layout="centered",
-    initial_sidebar_state="collapsed",
+    page_title='telegramtrac',
+    page_icon='🟦',
+    layout='centered',
+    initial_sidebar_state='collapsed',
     menu_items={
 
         'About': """
@@ -100,13 +102,13 @@ telegramtrac
 Web-based tool designed for tracking public channels on Telegram
 
 *:blue[Create your API credentials [here](https://my.telegram.org/auth)]*
-""", help='v0.4.0', anchor=False)
+""", help='{} (not stable)'.format(__version__), anchor=False)
 else:
     title_component.title("""
 telegramtrac
 
 Web-based tool designed for tracking public channels on Telegram
-""", help='v0.4.0', anchor=False)
+""", help='{} (not stable)'.format(__version__), anchor=False)
 
 # changelog and roadmap
 with st.sidebar:
@@ -125,7 +127,7 @@ with st.sidebar:
     - [ ] cache resourse
 - [ ] Tabs description
 - [ ] Option without API credentials
-- [ ] Delete `subprocess.check_output`/ Update dir structure
+- [x] Delete `subprocess.check_output`/ Update dir structure
 - [ ] Logout users (with Telethon)
 - [ ] FloodWaitError msg
 - [x] Error msgs
@@ -288,7 +290,7 @@ else:
         code = st.session_state.code_value
         password = st.session_state.password_value
 
-        st.session_state.channel_name = st.text_input('channel name', placeholder="https://t.me/CHANNEL_NAME_IS_HERE", disabled=False, key='channel_name_new_trac')
+        st.session_state.channel_name = st.text_input('channel name', placeholder='https://t.me/CHANNEL_NAME_IS_HERE', disabled=False, key='channel_name_new_trac')
         new_trac = st.form_submit_button('new trac', disabled=False, type='primary')
 
 # data tabs

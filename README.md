@@ -1,6 +1,6 @@
 # telegramtrac
 
-![GitHub release (latest by date)](https://img.shields.io/github/v/release/claromes/telegramtrac)
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/claromes/telegramtrac) (not stable)
 
 A web-based tool designed for tracking public channels on Telegram. Provides modules for connecting, signing in and communicating with Telegram API via Telethon. It also includes additional modules for generating datasets and network graphs.
 
@@ -85,7 +85,7 @@ Mostly limited to Streamlit options. The form and tabs were chosen due to common
     - [ ] cache resourse
 - [ ] Tabs description
 - [ ] Option without API credentials
-- [ ] Delete `subprocess.check_output`/ Update dir structure
+- [x] Delete `subprocess.check_output`/ Update dir structure
 - [ ] Logout users (with Telethon)
 - [ ] FloodWaitError msg
 - [x] Error msgs
