@@ -7,7 +7,6 @@ from telegram_tracker.utils import get_config_attrs
 parser = argparse.ArgumentParser(description='Arguments.')
 parser.add_argument(
 	'--api_id',
-	'-o',
 	type=str,
 	required=False,
 )

@@ -4,10 +4,11 @@ import asyncio
 from telegram_tracker.api import client_sign_in
 from telegram_tracker.utils import get_config_attrs
 
+from connect import phone_code_hash
+
 parser = argparse.ArgumentParser(description='Arguments.')
 parser.add_argument(
 	'--api_id',
-	'-o',
 	type=str,
 	required=False,
 )
