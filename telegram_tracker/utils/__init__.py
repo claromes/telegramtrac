@@ -4,6 +4,7 @@ import pandas as pd
 import asyncio
 import json
 import os
+import re
 
 from configparser import ConfigParser
 from urllib.parse import urlparse
@@ -15,11 +16,19 @@ from ..api import full_channel_req
 Creating functions
 '''
 
+# get api_id
+def get_api_id(output_folder):
+	get_api_id = re.findall('[0-9]+', output_folder)
+
+	api_id_str = ''.join(get_api_id)
+
+	return api_id_str
+
 # get config attrs
-def get_config_attrs():
+def get_config_attrs(api_id_str):
 	'''
 	'''
-	path = './config/config.ini'
+	path = './config/config_{}.ini'.format(api_id_str)
 
 	# config parser
 	config = ConfigParser()
@@ -30,7 +39,7 @@ def get_config_attrs():
 	return dict(attrs)
 
 # event loop
-loop = asyncio.get_event_loop()
+
 
 '''
 
@@ -75,6 +84,7 @@ def process_participants_count(client, channel_id):
 	Returns:
 		Participants count
 	'''
+	loop = asyncio.get_event_loop()
 	channel_request = loop.run_until_complete(
 		full_channel_req(client, channel_id)
 	)
@@ -103,6 +113,7 @@ def write_collected_chats(
 	output_folder -> Folder to save collected data
 
 	'''
+	loop = asyncio.get_event_loop()
 	metadata = []
 	for c in chats_object:
 		try:

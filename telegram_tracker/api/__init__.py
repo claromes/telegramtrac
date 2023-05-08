@@ -3,6 +3,8 @@
 import configparser
 import telethon
 
+from telethon.errors import rpcerrorlist
+
 from ..cryptography import decrypt_code, decrypt_password
 
 '''
@@ -18,16 +20,20 @@ async def get_connection(session_file, api_id, api_hash, phone):
 	'''
 	client = telethon.TelegramClient(session_file, api_id, api_hash)
 	await client.connect()
-	if await client.is_user_authorized():
-		print ('> Authorized!')
-	else:
-		print ('> Not Authorized! Sending code request...')
-		phone_code = await client.send_code_request(phone)
-		phone_code_hash = phone_code.phone_code_hash
+	try:
+		if await client.is_user_authorized():
+			print ('> Authorized!')
+		else:
+			print ('> Not Authorized! Sending code request...')
+			phone_code = await client.send_code_request(phone)
+			phone_code_hash = phone_code.phone_code_hash
 
-		return phone_code_hash
+			return phone_code_hash
 
-	return client
+		return client
+	except rpcerrorlist.FloodWaitError as e:
+		print(e)
+		return e
 
 async def client_sign_in(session_file, api_id, api_hash, phone, phone_code_hash):
 	client = telethon.TelegramClient(session_file, api_id, api_hash)

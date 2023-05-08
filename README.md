@@ -85,7 +85,7 @@ Mostly limited to Streamlit options. The form and tabs were chosen due to common
     - [ ] cache resourse
 - [ ] Tabs description
 - [ ] Option without API credentials
-- [x] Delete `subprocess.check_output`/ Update dir structure
+- [ ] Delete `subprocess.check_output`/ Update dir structure
 - [ ] Logout users (with Telethon)
 - [ ] FloodWaitError msg
 - [x] Error msgs

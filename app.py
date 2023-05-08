@@ -77,16 +77,25 @@ if 'sfile' not in st.session_state:
 if 'phone_code_hash' not in st.session_state:
     st.session_state['phone_code_hash'] = ''
 
+if 'client' not in st.session_state:
+    st.session_state['client'] = ''
+
 if 'restart' not in st.session_state:
     st.session_state['restart'] = False
 
 def delete():
     #delete this and add log_out https://docs.telethon.dev/en/stable/modules/client.html#telethon.client.auth.AuthMethods.log_out or ResetAuthorizationsRequest()
     try:
-        os.remove('config/config_{}.ini'.format(api_id))
-        os.remove('sign_in/encrypted_code_{}.bin'.format(api_id))
-        os.remove('sign_in/encrypted_password_{}.bin'.format(api_id))
-        os.remove('session_file_{}.session'.format(api_id))
+        os.remove('config/config_{}.ini'.format(st.session_state.api_id))
+        os.remove('sign_in/encrypted_code_{}.bin'.format(st.session_state.api_id))
+        os.remove('sign_in/encrypted_password_{}.bin'.format(st.session_state.api_id))
+        os.remove('session/session_file_{}.session'.format(st.session_state.api_id))
+        os.remove('session/session_file_{}.session-journal'.format(st.session_state.api_id))
+
+        dir_path_output = os.path.join('output_{}').format(st.session_state.api_id)
+
+        if os.path.exists(dir_path_output):
+            shutil.rmtree(dir_path_output)
 
         st.success('Session files deleted.')
         st.session_state.api_id = ''
@@ -131,7 +140,7 @@ with st.sidebar:
     - [ ] cache resourse
 - [ ] Tabs description
 - [ ] Option without API credentials
-- [x] Delete `subprocess.check_output`/ Update dir structure
+- [ ] Delete `subprocess.check_output`/ Update dir structure
 - [ ] Logout users (with Telethon)
 - [ ] FloodWaitError msg
 - [x] Error msgs
@@ -165,12 +174,6 @@ with st.sidebar:
     """)
 
 if not st.session_state.restart:
-    #delete all files and directories before start another tracking
-    # dir_path_output = os.path.join('output')
-
-    # if os.path.exists(dir_path_output):
-    #     shutil.rmtree(dir_path_output)
-
     # credentials
     with form_component.form(key='config_form'):
         api_id = st.text_input('api_id', placeholder='12349876')
@@ -182,9 +185,6 @@ if not st.session_state.restart:
             'api_hash': api_hash,
             'phone': phone
         }
-
-        sfile = 'session_file_{}'.format(api_id)
-        st.session_state.sfile = sfile
 
         send_credentials = st.form_submit_button('send credentials', type='primary')
 
@@ -203,7 +203,7 @@ if not st.session_state.restart:
         st.session_state.code_state = True
 
         try:
-            #avoid streamlit errors
+            #prevent streamlit errors
             # cmd_tele = "pip install telethon==1.26.1 --user"
             # output = subprocess.check_output(cmd_tele.split())
 
@@ -220,15 +220,12 @@ if not st.session_state.restart:
             # output = subprocess.check_output(cmd_pycrypto.split())
 
             #connect to API
-            print('get_connection')
-            phone_code_hash = asyncio.run(
-                api.get_connection(st.session_state.sfile, api_id, api_hash, phone)
-            )
+            print('python connect.py')
 
-            st.session_state.phone_code_hash = phone_code_hash
-
+            cmd_connect = 'python telegram_tracker/connect.py --api_id {}'.format(str(api_id))
+            subprocess.check_output(cmd_connect.split())
         except:
-            form_component.error('Something went wrong.')
+            sign_in_component.error('Something went wrong.')
             error_connect = True
 
     # sign in code
@@ -263,10 +260,9 @@ if not st.session_state.restart:
 
             # sign in to API
             try:
-                print('client_sign_in')
-                client = asyncio.run(
-                    api.client_sign_in(st.session_state.sfile, api_id, api_hash, phone, st.session_state.phone_code_hash)
-                )
+                print('python sign_in.py')
+                cmd_sign_in = 'python telegram_tracker/sign_in.py --api_id {}'.format(str(api_id))
+                subprocess.check_output(cmd_sign_in.split())
             except:
                 sign_in_component.error('Something went wrong.')
                 st.session_state.code_state == False
@@ -309,9 +305,10 @@ if trac or new_trac and st.session_state.channel_name != '':
     st.session_state.restart = True
 
     try:
+        output_folder = 'output_{}/'.format(st.session_state.api_id)
+
         print('python main.py --telegram-channel')
-        output_data = 'output_{}/'.format(api_id)
-        cmd_main = 'python main.py --telegram-channel {} --output {}'.format(st.session_state.channel_name, output_data)
+        cmd_main = 'python telegram_tracker/main.py --telegram-channel {} --output {}'.format(st.session_state.channel_name, output_folder)
         subprocess.check_output(cmd_main.split())
     except:
         st.error('Something went wrong.')
@@ -319,7 +316,7 @@ if trac or new_trac and st.session_state.channel_name != '':
 
     try:
         print('python build-datasets.py')
-        cmd_dataset = 'python build-datasets.py --data-path {}'.format(output_data)
+        cmd_dataset = 'python telegram_tracker/build-datasets.py --data-path {}'.format(output_folder)
         subprocess.check_output(cmd_dataset.split())
     except:
         st.error('Something went wrong.')
