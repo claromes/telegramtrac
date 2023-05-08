@@ -131,50 +131,9 @@ Web-based tool designed for tracking public channels on Telegram
 with st.sidebar:
     st.markdown("""
 
-# Roadmap
+[Roadmap](/ROADMAP.md)
 
-- [x] Fix dataset tab
-- [x] Fix set credentials and code in restart flow
-- [x] Allow 2FA
-- [x] One session/sign_in file per user
-- [ ] Encrypt config file
-- [ ] Add batch file upload
-- [ ] Network tab
-- [ ] Privacy data policy
-- [ ] DB to store data
-    - [ ] sqlite3.OperationalError
-    - [ ] cache resourse
-- [ ] Option without API credentials
-- [ ] Delete `subprocess.check_output`/ Update dir structure
-- [ ] Logout users (with Telethon)
-- [ ] FloodWaitError msg
-- [x] Error msgs
-- [ ] Storage limit alerts
-- [x] Delete files after session finish
-- [ ] Log for users
-- [ ] Docs telegramtrac/ API credentials (how to)
-- [ ] Check API limitations
-- [ ] Sec issues
-
-# Changelog
-
-- [v0.4.0](https://github.com/claromes/telegramtrac/releases/tag/v0.4.0)
-    - Allow 2FA
-    - Store encrypted code and password
-    - Add log out button
-    - Delete *.session and *.bin files
-- [v0.3.1](https://github.com/claromes/telegramtrac/releases/tag/v0.3.1)
-    - Each sign-in generates a new instance
-    - Add sidebar
-    - Add general error messages
-- [v0.3.0](https://github.com/claromes/telegramtrac/releases/tag/v0.3.0)
-    - Fix new tracking flow
-    - Delete output dir
-- [v0.2.0](https://github.com/claromes/telegramtrac/releases/tag/v0.2.0)
-    - Fix dataset tab
-    - Fix imports
-- [v0.1.0](https://github.com/claromes/telegramtrac/releases/tag/v0.1.0)
-    - Bellingcat Accessibility Hackathon submission
+[Changelog](/CHANGELOG.md)
 
     """)
 
