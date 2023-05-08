@@ -1,5 +1,11 @@
 # Changelog
 
+## [v0.5.0](https://github.com/claromes/telegramtrac/releases/tag/v0.5.0) - 2023-05-08
+- Unique config, code, password files per user
+- Unique session files per user
+- Unique output dir per user
+- Directory structure update
+
 ## [v0.4.0](https://github.com/claromes/telegramtrac/releases/tag/v0.4.0) - 2023-05-04
 - Allow 2FA
 - Store encrypted code and password
