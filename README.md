@@ -1,14 +1,10 @@
 # telegramtrac
 
-![GitHub release (latest by date)](https://img.shields.io/github/v/release/claromes/telegramtrac)
+![Bellingcat Accessibility Hackathon](https://img.shields.io/badge/%C2%BF%20Bellingcat%20Hackathon-April%202023-%23ffca8e?style=flat) [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_red.svg)](https://telegramtrac.streamlit.app/) ![GitHub release (latest by date)](https://img.shields.io/github/v/release/claromes/telegramtrac) (not stable)
 
-## Team Members
-[claromes](https://claromes.gitlab.io/)
+A web-based tool designed for tracking public channels on Telegram. Provides modules for connecting, signing in and communicating with Telegram API via Telethon. It also includes additional modules for generating datasets and network graphs.
 
-## Tool Description
-telegramtrac is a web-based tool designed for tracking public channels on Telegram. It's a fork of the package [`telegram-tracker`](https://github.com/estebanpdl/telegram-tracker) developed by Esteban Ponce de León, DFRLab researcher.
-
-I became familiar with the package during the DFRLab's Digital Sherlocks Program and believe that an accessible version would benefit researchers of different skill levels.
+It's a fork of [`telegram-tracker`](https://github.com/estebanpdl/telegram-tracker) developed by Esteban Ponce de León (DFRLab).
 
 ## Requirements
 
@@ -22,7 +18,7 @@ $ `cd telegramtrac`
 
 $ `pip install -r requirements.txt`
 
-$ `streamlit run streamlit\telegramtrac.py`
+$ `streamlit run app.py`
 
 Streamlit will be served at http://localhost:8501
 
@@ -71,7 +67,6 @@ Streamlit will be served at http://localhost:8501
 ### Limitations
 
 - Only one channel per track
-- Each sign-in generates a new instance
 
 ### Design decisions
 
@@ -79,42 +74,8 @@ Mostly limited to Streamlit options. The form and tabs were chosen due to common
 
 ## Roadmap
 
-- [x] Fix dataset tab
-- [x] Fix set credentials and code in restart flow
-- [x] Allow 2FA
-- [ ] One session/sign_in file per user
-- [ ] sqlite3.OperationalError
-- [ ] Tabs description
-- [ ] Add batch file upload
-- [ ] Option without API credentials
-- [ ] Network tab
-- [ ] Delete `subprocess.check_output`/ Update dir structure
-- [ ] Logout users (with Telethon)
-- [ ] FloodWaitError msg
-- [x] Error msgs
-- [ ] Storage limit alerts
-- [x] Delete files after session finish
-- [ ] Log for users
-- [ ] Docs telegramtrac/ API credentials (how to)
-- [ ] Check API limitations
-- [ ] Sec issues
+[ROADMAP.md](/ROADMAP.md)
 
 ## Changelog
 
-- [v0.4.0](https://github.com/claromes/telegramtrac/releases/tag/v0.4.0)
-    - Allow 2FA
-    - Store encrypted code and password
-    - Add log out button
-    - Delete *.session and *.bin files
-- [v0.3.1](https://github.com/claromes/telegramtrac/releases/tag/v0.3.1)
-    - Each sign-in generates a new instance
-    - Add sidebar
-    - Add general error messages
-- [v0.3.0](https://github.com/claromes/telegramtrac/releases/tag/v0.3.0)
-    - Fix new tracking flow
-    - Delete output dir
-- [v0.2.0](https://github.com/claromes/telegramtrac/releases/tag/v0.2.0)
-    - Fix dataset tab
-    - Fix imports
-- [v0.1.0](https://github.com/claromes/telegramtrac/releases/tag/v0.1.0)
-    - Bellingcat Accessibility Hackathon submission
+[CHANGELOG.md](/CHANGELOG.md)

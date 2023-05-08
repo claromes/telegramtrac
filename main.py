@@ -10,9 +10,9 @@ import sys
 import os
 
 # import Telegram API submodules
-from api import *
-from utils import (
-	get_config_attrs, JSONEncoder, create_dirs, cmd_request_type,
+from telegram_tracker.api import *
+from telegram_tracker.utils import (
+	get_api_id, get_config_attrs, JSONEncoder, create_dirs, cmd_request_type,
 	write_collected_chats
 )
 
@@ -53,6 +53,15 @@ parser.add_argument(
 	help='Folder to save collected data. Default: `./output/data`'
 )
 
+'''
+
+API ID
+'''
+parser.add_argument(
+	'--api_id',
+	type=str,
+	required=False,
+)
 
 
 
@@ -70,7 +79,10 @@ parser.add_argument(
 
 # parse arguments
 args = vars(parser.parse_args())
-config_attrs = get_config_attrs()
+
+api_id_str = get_api_id(args['api_id'])
+
+config_attrs = get_config_attrs(api_id_str)
 
 args = {**args, **config_attrs}
 
@@ -98,7 +110,7 @@ Variables
 
 FILL API KEYS
 '''
-sfile = 'session_file'
+sfile = 'session/session_file_{}'.format(api_id_str)
 api_id = args['api_id']
 api_hash = args['api_hash']
 phone = args['phone']
@@ -174,6 +186,8 @@ for channel in req_input:
 	print (f'> Collecting data from Telegram Channel -> {channel}')
 	print ('> ...')
 	print ('')
+
+	print(client)
 
 	# Channel's attributes
 	entity_attrs = loop.run_until_complete(

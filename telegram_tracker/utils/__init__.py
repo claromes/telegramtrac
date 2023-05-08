@@ -1,29 +1,34 @@
 # -*- coding: utf-8 -*-
 
-# Import modules
 import pandas as pd
 import asyncio
 import json
 import os
+import re
 
-# import submodules
 from configparser import ConfigParser
 from urllib.parse import urlparse
 from datetime import datetime
 
-# Import Telegram API submodules
-from api import full_channel_req
-
+from ..api import full_channel_req
 
 '''
 Creating functions
 '''
 
-# Get config attrs
-def get_config_attrs():
+# get api_id
+def get_api_id(output_folder):
+	get_api_id = re.findall('[0-9]+', output_folder)
+
+	api_id_str = ''.join(get_api_id)
+
+	return api_id_str
+
+# get config attrs
+def get_config_attrs(api_id_str):
 	'''
 	'''
-	path = './config/config.ini'
+	path = './config/config_{}.ini'.format(api_id_str)
 
 	# config parser
 	config = ConfigParser()
@@ -34,7 +39,7 @@ def get_config_attrs():
 	return dict(attrs)
 
 # event loop
-loop = asyncio.get_event_loop()
+
 
 '''
 
@@ -50,7 +55,7 @@ class JSONEncoder(json.JSONEncoder):
 
 		return json.JSONEncoder.default(self, o)
 
-# Create new folders
+# create new folders
 def create_dirs(root, subfolders=None):
 	'''
 	'''
@@ -60,7 +65,7 @@ def create_dirs(root, subfolders=None):
 
 	return
 
-# Get user-console request
+# get user-console request
 def cmd_request_type(args):
 	'''
 	'''
@@ -72,13 +77,14 @@ def cmd_request_type(args):
 
 	return req_type, req_input
 
-# Process collected chats
+# process collected chats
 def process_participants_count(client, channel_id):
 	'''
 
 	Returns:
 		Participants count
 	'''
+	loop = asyncio.get_event_loop()
 	channel_request = loop.run_until_complete(
 		full_channel_req(client, channel_id)
 	)
@@ -86,7 +92,7 @@ def process_participants_count(client, channel_id):
 	return channel_request.full_chat.participants_count
 
 
-# Write collected chats
+# write collected chats
 def write_collected_chats(
 		chats_object,
 		file,
@@ -107,6 +113,7 @@ def write_collected_chats(
 	output_folder -> Folder to save collected data
 
 	'''
+	loop = asyncio.get_event_loop()
 	metadata = []
 	for c in chats_object:
 		try:
@@ -209,7 +216,7 @@ def write_collected_chats(
 
 	return counter
 
-# Time - date attributes
+# time - date attributes
 def timestamp_attrs(data, col='date'):
 	'''
 	'''
@@ -234,13 +241,13 @@ def timestamp_attrs(data, col='date'):
 
 	return data
 
-# Clean msg
+# clean msg
 def clean_msg(text):
 	'''
 	'''
 	return ' '.join(text.split()).strip()
 
-# Message attributes
+# message attributes
 def msg_attrs(msg, res):
 	'''
 	'''
@@ -265,7 +272,7 @@ def msg_attrs(msg, res):
 
 	return res
 
-# Get channel name
+# get channel name
 def get_channel_name(channel_id, channels):
 	'''
 	'''
@@ -279,7 +286,7 @@ def get_channel_name(channel_id, channels):
 
 	return channel_name
 
-# Get forward attrs
+# get forward attrs
 def get_forward_attrs(msg, res, channels_data):
 	'''
 	'''
@@ -329,7 +336,7 @@ def get_forward_attrs(msg, res, channels_data):
 
 	return res
 
-# Get reply attrs
+# get reply attrs
 def get_reply_attrs(msg, res, username):
 	'''
 	'''
@@ -342,14 +349,14 @@ def get_reply_attrs(msg, res, username):
 
 	return res
 
-# Get URL domains < netloc >
+# get URL domains < netloc >
 def get_netloc(value):
 	'''
 	'''
 	N = urlparse(value).netloc
 	return N.replace('www.', '')
 
-# Get URL attrs
+# get URL attrs
 def get_url_attrs(media, res):
 	'''
 	Type WebPage
@@ -385,7 +392,7 @@ def get_url_attrs(media, res):
 
 	return res
 
-# Get document attrs
+# get document attrs
 def get_document_attrs(media, res):
 	'''
 	Type Document
@@ -409,7 +416,7 @@ def get_document_attrs(media, res):
 
 	return res
 
-# Get poll attrs
+# get poll attrs
 def get_poll_attrs(media, res):
 	'''
 
@@ -427,7 +434,7 @@ def get_poll_attrs(media, res):
 
 	return res
 
-# Get contact attrs
+# get contact attrs
 def get_contact_attrs(media, res):
 	'''
 	Type Contact
@@ -443,7 +450,7 @@ def get_contact_attrs(media, res):
 
 	return res
 
-# Get geo attrs
+# get geo attrs
 def get_geo_attrs(media, res):
 	'''
 
@@ -470,7 +477,7 @@ def get_geo_attrs(media, res):
 
 	return res
 
-# Chats dataset -> columns
+# chats dataset -> columns
 def chats_dataset_columns():
 	'''
 	'''
@@ -509,7 +516,7 @@ def chats_dataset_columns():
 		'replies_received'
 	]
 
-# Msgs dataset -> columns
+# msgs dataset -> columns
 def msgs_dataset_columns():
 	'''
 	'''

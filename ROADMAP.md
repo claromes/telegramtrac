@@ -1,0 +1,24 @@
+# Roadmap
+
+- [x] Fix dataset tab
+- [x] Fix set credentials and code in restart flow
+- [x] Allow 2FA
+- [x] One session/sign_in file per user
+- [ ] Encrypt config file
+- [ ] Add batch file upload
+- [ ] Network tab
+- [ ] Privacy data policy
+- [ ] DB to store data
+    - [ ] sqlite3.OperationalError
+    - [ ] cache resourse
+- [ ] Option without API credentials
+- [ ] Delete `subprocess.check_output`/ Update dir structure
+- [ ] Logout users (with Telethon)
+- [ ] FloodWaitError msg
+- [x] Error msgs
+- [ ] Storage limit alerts
+- [x] Delete files after session finish
+- [ ] Log for users
+- [ ] Docs telegramtrac/ API credentials (how to)
+- [ ] Check API limitations
+- [ ] Sec issues

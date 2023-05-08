@@ -10,7 +10,7 @@ import os
 import tqdm
 
 # import local submodules
-from utils import (
+from telegram_tracker.utils import (
 	chats_dataset_columns, clean_msg, msg_attrs, get_forward_attrs, get_reply_attrs,
 	get_url_attrs, get_document_attrs, get_poll_attrs, get_contact_attrs,
 	get_geo_attrs, msgs_dataset_columns

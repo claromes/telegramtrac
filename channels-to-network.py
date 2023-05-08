@@ -10,7 +10,7 @@ import community
 import matplotlib
 
 # import local modules
-from utils import (
+from telegram_tracker.utils import (
 	normalize_values
 )
 

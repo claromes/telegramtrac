@@ -1,20 +1,28 @@
 import argparse
 import asyncio
 
-from api import *
-from utils import get_config_attrs
+from telegram_tracker.api import get_connection
+from telegram_tracker.utils import get_config_attrs
 
 parser = argparse.ArgumentParser(description='Arguments.')
+parser.add_argument(
+	'--api_id',
+	type=str,
+	required=False,
+)
 
-args = vars(parser.parse_args())
-config_attrs = get_config_attrs()
+args_api_id = vars(parser.parse_args())
 
-args = {**args, **config_attrs}
+api_id_str = args_api_id['api_id']
 
-sfile = 'session_file'
+config_attrs = get_config_attrs(api_id_str)
+
+args = {**config_attrs}
+
 api_id = args['api_id']
 api_hash = args['api_hash']
 phone = args['phone']
+sfile = 'session/session_file_{}'.format(api_id)
 
 loop = asyncio.get_event_loop()
 
