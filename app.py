@@ -86,13 +86,13 @@ if 'restart' not in st.session_state:
 def delete():
     #delete this and add log_out https://docs.telethon.dev/en/stable/modules/client.html#telethon.client.auth.AuthMethods.log_out or ResetAuthorizationsRequest()
     try:
-        os.remove('config/config_{}.ini'.format(api_id))
-        os.remove('sign_in/encrypted_code_{}.bin'.format(api_id))
-        os.remove('sign_in/encrypted_password_{}.bin'.format(api_id))
-        os.remove('session/session_file_{}.session'.format(api_id))
-        os.remove('session/session_file_{}.session-journal'.format(api_id))
+        os.remove('config/config_{}.ini'.format(st.session_state.api_id))
+        os.remove('sign_in/encrypted_code_{}.bin'.format(st.session_state.api_id))
+        os.remove('sign_in/encrypted_password_{}.bin'.format(st.session_state.api_id))
+        os.remove('session/session_file_{}.session'.format(st.session_state.api_id))
+        os.remove('session/session_file_{}.session-journal'.format(st.session_state.api_id))
 
-        dir_path_output = os.path.join('output_{}').format(api_id)
+        dir_path_output = os.path.join('output_{}').format(st.session_state.api_id)
 
         if os.path.exists(dir_path_output):
             shutil.rmtree(dir_path_output)
@@ -189,6 +189,9 @@ if not st.session_state.restart:
             'phone': phone
         }
 
+        if st.session_state.api_id == '':
+            st.session_state.api_id = api_id
+
         send_credentials = st.form_submit_button('send credentials', type='primary')
 
     if send_credentials and (api_id == '' or api_hash == '' or phone == ''):
@@ -199,7 +202,7 @@ if not st.session_state.restart:
 
         config_parser = configparser.ConfigParser()
         config_parser['Telegram API credentials'] = config
-        with open('config/config_{}.ini'.format(api_id), 'w') as file:
+        with open('config/config_{}.ini'.format(st.session_state.api_id), 'w') as file:
             config_parser.write(file)
             file.close()
 
@@ -225,7 +228,7 @@ if not st.session_state.restart:
             #connect to API
             print('python connect.py')
 
-            cmd_connect = 'python connect.py --api_id {}'.format(str(api_id))
+            cmd_connect = 'python connect.py --api_id {}'.format(str(st.session_state.api_id))
             subprocess.check_output(cmd_connect.split())
         except:
             sign_in_component.error('Something went wrong.')
@@ -258,13 +261,13 @@ if not st.session_state.restart:
             st.session_state.code_state = True
 
             # encrypt code and password
-            cryptography.crypt_code(sign_in_code, api_id)
-            cryptography.crypt_password(password, api_id)
+            cryptography.crypt_code(sign_in_code, st.session_state.api_id)
+            cryptography.crypt_password(password, st.session_state.api_id)
 
             # sign in to API
             try:
                 print('python sign_in.py')
-                cmd_sign_in = 'python sign_in.py --api_id {}'.format(str(api_id))
+                cmd_sign_in = 'python sign_in.py --api_id {}'.format(str(st.session_state.api_id))
                 subprocess.check_output(cmd_sign_in.split())
             except:
                 sign_in_component.error('Something went wrong.')
@@ -301,22 +304,19 @@ if trac or new_trac and st.session_state.channel_name != '':
     center_running()
     tab1, tab2, tab3, tab4, tab5 = st.tabs(['messages', 'metadata', 'dataset', 'network', 'options'])
 
+    print('---------st.session_state.api_id: ', st.session_state.api_id)
+
     form_component.empty()
     sign_in_component.empty()
     channel_component.empty()
     form_component_channel.empty()
     st.session_state.restart = True
 
-    if st.session_state.api_id == '':
-        api_id = api_id
-    else:
-        api_id = st.session_state.api_id
-
     try:
-        output_folder = 'output_{}/'.format(api_id)
+        output_folder = 'output_{}/'.format(st.session_state.api_id)
 
         print('python main.py --telegram-channel')
-        cmd_main = 'python main.py --telegram-channel {} --output {} --api_id {}'.format(st.session_state.channel_name, output_folder, api_id)
+        cmd_main = 'python main.py --telegram-channel {} --output {} --api_id {}'.format(st.session_state.channel_name, output_folder, st.session_state.api_id)
         subprocess.check_output(cmd_main.split())
     except:
         st.error('Something went wrong.')
@@ -346,7 +346,7 @@ if trac or new_trac and st.session_state.channel_name != '':
     #json - main file
     with tab1:
         try:
-            json_file = 'output_{}/{}/{}_messages.json'.format(api_id, st.session_state.channel_name, st.session_state.channel_name)
+            json_file = 'output_{}/{}/{}_messages.json'.format(st.session_state.api_id, st.session_state.channel_name, st.session_state.channel_name)
 
             with open(json_file, 'rb') as file:
                 st.subheader('{} messages'.format(st.session_state.channel_name), anchor=False)
@@ -364,7 +364,7 @@ if trac or new_trac and st.session_state.channel_name != '':
     #metadata
     with tab2:
         try:
-            metadata_json_file = 'output_{}/{}/{}.json'.format(api_id, st.session_state.channel_name, st.session_state.channel_name)
+            metadata_json_file = 'output_{}/{}/{}.json'.format(st.session_state.api_id, st.session_state.channel_name, st.session_state.channel_name)
             metadata_txt_file = 'output_{}/chats.txt'.format(api_id)
             metadata_chats_csv_file = 'output_{}/collected_chats.csv'.format(api_id)
             metadata_counter_csv_file = 'output_{}/counter.csv'.format(api_id)
@@ -409,7 +409,7 @@ if trac or new_trac and st.session_state.channel_name != '':
     with tab3:
         try:
             st.subheader('messages from all requested channels', anchor=False)
-            dataset_csv_file = 'output_{}/msgs_dataset.csv'.format(api_id)
+            dataset_csv_file = 'output_{}/msgs_dataset.csv'.format(st.session_state.api_id)
 
             with open(dataset_csv_file, 'rb') as file:
                 df = read_csv(dataset_csv_file)
