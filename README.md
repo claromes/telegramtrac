@@ -72,9 +72,35 @@ Streamlit will be served at http://localhost:8501
 
 Mostly limited to Streamlit options. The form and tabs were chosen due to common use in web apps.
 
+## Bugs
+
+- [ ] "sqlite3.OperationalError: database is locked" issue on long-running requests
+    - Do not displays requested data and instead  "new trac" component
+- [ ] `requirements.txt` installation on Streamlit Cloud
+
+
 ## Roadmap
 
-[ROADMAP.md](/ROADMAP.md)
+- [x] Fix dataset tab
+- [x] Fix set credentials and code in restart flow
+- [x] Allow 2FA
+- [x] One session/sign_in file per user
+- [ ] Encrypt config file
+- [ ] Add batch file upload
+- [ ] Network tab
+- [ ] Privacy data policy
+- [ ] DB to store data
+- [ ] Option without API credentials
+- [ ] Delete `subprocess.check_output`/ Update dir structure
+- [ ] Logout users (with Telethon)
+- [x] Error msgs
+- [ ] Review error msgs
+- [ ] Storage limit alerts
+- [x] Delete files after session finish
+- [ ] Log for users
+- [ ] Docs telegramtrac/ API credentials (how to)
+- [ ] Check API limitations (FloodWaitError)
+- [ ] Sec issues
 
 ## Changelog
 

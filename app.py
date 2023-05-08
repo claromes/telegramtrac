@@ -131,7 +131,9 @@ Web-based tool designed for tracking public channels on Telegram
 with st.sidebar:
     st.markdown("""
 
-[Roadmap](https://github.com/claromes/telegramtrac/blob/dev/ROADMAP.md)
+[Bugs](https://github.com/claromes/telegramtrac#bugs)
+
+[Roadmap](https://github.com/claromes/telegramtrac#roadmap)
 
 [Changelog](https://github.com/claromes/telegramtrac/blob/dev/CHANGELOG.md)
 
