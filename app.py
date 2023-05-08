@@ -171,20 +171,20 @@ if not st.session_state.restart:
 
         try:
             #prevent streamlit errors
-            cmd_tele = "pip install telethon==1.26.1 --user"
-            output = subprocess.check_output(cmd_tele.split())
+            # cmd_tele = "pip install telethon==1.26.1 --user"
+            # output = subprocess.check_output(cmd_tele.split())
 
-            cmd_pd = "pip install pandas==1.5.3 --user"
-            output = subprocess.check_output(cmd_pd.split())
+            # cmd_pd = "pip install pandas==1.5.3 --user"
+            # output = subprocess.check_output(cmd_pd.split())
 
-            cmd_tqdm = "pip install tqdm==4.64.1 --user"
-            output = subprocess.check_output(cmd_tqdm.split())
+            # cmd_tqdm = "pip install tqdm==4.64.1 --user"
+            # output = subprocess.check_output(cmd_tqdm.split())
 
-            cmd_open = "pip install openpyxl==3.0.10 --user"
-            output = subprocess.check_output(cmd_open.split())
+            # cmd_open = "pip install openpyxl==3.0.10 --user"
+            # output = subprocess.check_output(cmd_open.split())
 
-            cmd_pycrypto = "pip install pycryptodome==3.17 --user"
-            output = subprocess.check_output(cmd_pycrypto.split())
+            # cmd_pycrypto = "pip install pycryptodome==3.17 --user"
+            # output = subprocess.check_output(cmd_pycrypto.split())
 
             #connect to API
             print('python connect.py')
