@@ -7,6 +7,7 @@ from pandas import read_csv
 import base64
 import os
 import asyncio
+import shutil
 
 from telegram_tracker import (api, cryptography)
 
@@ -21,13 +22,11 @@ st.set_page_config(
     menu_items={
 
         'About': """
-        ![GitHub release (latest by date)](https://img.shields.io/github/v/release/claromes/telegramtrac) (not stable)
+        ![Bellingcat Accessibility Hackathon](https://img.shields.io/badge/%C2%BF%20Bellingcat%20Hackathon-April%202023-%23ffca8e?style=flat) ![GitHub release (latest by date)](https://img.shields.io/github/v/release/claromes/telegramtrac) (not stable)
 
         telegramtrac is a web-based tool designed for tracking public channels on Telegram. Provides modules for connecting, signing in and communicating with Telegram API via Telethon. It also includes additional modules for generating datasets and network graphs.
 
         It's a fork of [`telegram-tracker`](https://github.com/estebanpdl/telegram-tracker) developed by Esteban Ponce de León (DFRLab).
-
-        The tool is part of Bellingcat's April 2023 Hackathon.
 
         -------
         """,
@@ -90,9 +89,13 @@ def delete():
         os.remove('sign_in/encrypted_code_{}.bin'.format(st.session_state.api_id))
         os.remove('sign_in/encrypted_password_{}.bin'.format(st.session_state.api_id))
         os.remove('session/session_file_{}.session'.format(st.session_state.api_id))
-        os.remove('session/session_file_{}.session-journal'.format(st.session_state.api_id))
 
-        dir_path_output = os.path.join('output_{}').format(st.session_state.api_id)
+        file_path_session_journal = 'session/session_file_{}.session-journal'.format(st.session_state.api_id)
+
+        if os.path.exists(file_path_session_journal):
+            os.remove(file_path_session_journal)
+
+        dir_path_output = 'output_{}'.format(st.session_state.api_id)
 
         if os.path.exists(dir_path_output):
             shutil.rmtree(dir_path_output)
@@ -106,8 +109,7 @@ def delete():
         st.session_state.restart = False
     except:
         st.error('Missing files')
-
-    st.session_state.restart = False
+        st.session_state.restart = False
 
 # title
 if st.session_state.code_state == False:
@@ -304,8 +306,6 @@ if trac or new_trac and st.session_state.channel_name != '':
     center_running()
     tab1, tab2, tab3, tab4, tab5 = st.tabs(['messages', 'metadata', 'dataset', 'network', 'options'])
 
-    print('---------st.session_state.api_id: ', st.session_state.api_id)
-
     form_component.empty()
     sign_in_component.empty()
     channel_component.empty()
@@ -333,13 +333,13 @@ if trac or new_trac and st.session_state.channel_name != '':
     #     dir_path_output_data = os.path.join('output_{}').format(st.session_state.api_id)
 
     #     if os.path.exists(dir_path_output_data):
-    #         path = 'output_{}/data'.format(st.session_state.api_id)
-    #         subdirectories = [entry for entry in os.scandir(path) if entry.is_dir()]
+    #         subdirectories = [entry for entry in os.scandir(dir_path_output_data) if entry.is_dir()]
     #         path_lens = len(subdirectories) > 1
 
-    #     print('python channels-to-network.py')
-    #     cmd_dataset = 'python channels-to-network.py --data-path {}'.format(output_folder)
-    #     subprocess.check_output(cmd_dataset.split())
+    #     if path_lens:
+    #         print('python channels-to-network.py')
+    #         cmd_dataset = 'python channels-to-network.py --data-path {}'.format(output_folder)
+    #         subprocess.check_output(cmd_dataset.split())
     # except:
     #     st.error('Something went wrong.')
 
