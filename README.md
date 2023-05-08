@@ -1,6 +1,6 @@
 # telegramtrac
 
-![GitHub release (latest by date)](https://img.shields.io/github/v/release/claromes/telegramtrac) (not stable)
+![Bellingcat Accessibility Hackathon](https://img.shields.io/badge/%C2%BF%20Bellingcat%20Hackathon-April%202023-%23ffca8e?style=flat) [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_red.svg)](https://telegramtrac.streamlit.app/) ![GitHub release (latest by date)](https://img.shields.io/github/v/release/claromes/telegramtrac) (not stable)
 
 A web-based tool designed for tracking public channels on Telegram. Provides modules for connecting, signing in and communicating with Telegram API via Telethon. It also includes additional modules for generating datasets and network graphs.
 
@@ -78,12 +78,13 @@ Mostly limited to Streamlit options. The form and tabs were chosen due to common
 - [x] Fix set credentials and code in restart flow
 - [x] Allow 2FA
 - [x] One session/sign_in file per user
+- [ ] Encrypt config file
 - [ ] Add batch file upload
 - [ ] Network tab
+- [ ] Privacy data policy
 - [ ] DB to store data
     - [ ] sqlite3.OperationalError
     - [ ] cache resourse
-- [ ] Tabs description
 - [ ] Option without API credentials
 - [ ] Delete `subprocess.check_output`/ Update dir structure
 - [ ] Logout users (with Telethon)
