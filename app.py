@@ -223,7 +223,7 @@ if not st.session_state.restart:
             #connect to API
             print('python connect.py')
 
-            cmd_connect = 'python telegram_tracker/connect.py --api_id {}'.format(str(api_id))
+            cmd_connect = 'python connect.py --api_id {}'.format(str(api_id))
             subprocess.check_output(cmd_connect.split())
         except:
             sign_in_component.error('Something went wrong.')
@@ -262,7 +262,7 @@ if not st.session_state.restart:
             # sign in to API
             try:
                 print('python sign_in.py')
-                cmd_sign_in = 'python telegram_tracker/sign_in.py --api_id {}'.format(str(api_id))
+                cmd_sign_in = 'python sign_in.py --api_id {}'.format(str(api_id))
                 subprocess.check_output(cmd_sign_in.split())
             except:
                 sign_in_component.error('Something went wrong.')
@@ -309,7 +309,7 @@ if trac or new_trac and st.session_state.channel_name != '':
         output_folder = 'output_{}/'.format(st.session_state.api_id)
 
         print('python main.py --telegram-channel')
-        cmd_main = 'python telegram_tracker/main.py --telegram-channel {} --output {}'.format(st.session_state.channel_name, output_folder)
+        cmd_main = 'python main.py --telegram-channel {} --output {}'.format(st.session_state.channel_name, output_folder)
         subprocess.check_output(cmd_main.split())
     except:
         st.error('Something went wrong.')
@@ -317,23 +317,29 @@ if trac or new_trac and st.session_state.channel_name != '':
 
     try:
         print('python build-datasets.py')
-        cmd_dataset = 'python telegram_tracker/build-datasets.py --data-path {}'.format(output_folder)
+        cmd_dataset = 'python build-datasets.py --data-path {}'.format(output_folder)
         subprocess.check_output(cmd_dataset.split())
     except:
         st.error('Something went wrong.')
 
     # try:
-    #     if os.path.exists(dir_path_output):
-    #         path = 'output/data'
+    #     dir_path_output_data = os.path.join('output_{}').format(st.session_state.api_id)
+
+    #     if os.path.exists(dir_path_output_data):
+    #         path = 'output_{}/data'.format(st.session_state.api_id)
     #         subdirectories = [entry for entry in os.scandir(path) if entry.is_dir()]
     #         path_lens = len(subdirectories) > 1
+
+    #     print('python channels-to-network.py')
+    #     cmd_dataset = 'python channels-to-network.py --data-path {}'.format(output_folder)
+    #     subprocess.check_output(cmd_dataset.split())
     # except:
     #     st.error('Something went wrong.')
 
     #json - main file
     with tab1:
         try:
-            json_file = 'output/data/{}/{}_messages.json'.format(st.session_state.channel_name, st.session_state.channel_name)
+            json_file = 'output_{}/data/{}/{}_messages.json'.format(st.session_state.api_id, st.session_state.channel_name, st.session_state.channel_name)
 
             with open(json_file, 'rb') as file:
                 st.subheader('{} messages'.format(st.session_state.channel_name), anchor=False)
@@ -351,10 +357,10 @@ if trac or new_trac and st.session_state.channel_name != '':
     #metadata
     with tab2:
         try:
-            metadata_json_file = 'output/data/{}/{}.json'.format(st.session_state.channel_name, st.session_state.channel_name)
-            metadata_txt_file = 'output/data/chats.txt'
-            metadata_chats_csv_file = 'output/data/collected_chats.csv'
-            metadata_counter_csv_file = 'output/data/counter.csv'
+            metadata_json_file = 'output_{}/data/{}/{}.json'.format(st.session_state.api_id, st.session_state.channel_name, st.session_state.channel_name)
+            metadata_txt_file = 'output_{}/data/chats.txt'.format(st.session_state.api_id)
+            metadata_chats_csv_file = 'output_{}/data/collected_chats.csv'.format(st.session_state.api_id)
+            metadata_counter_csv_file = 'output_{}/data/counter.csv'.format(st.session_state.api_id)
 
             st.subheader('{} metadata'.format(st.session_state.channel_name), anchor=False)
             with open(metadata_json_file, 'rb') as file:
@@ -396,7 +402,7 @@ if trac or new_trac and st.session_state.channel_name != '':
     with tab3:
         try:
             st.subheader('messages from all requested channels', anchor=False)
-            dataset_csv_file = 'output/data/msgs_dataset.csv'
+            dataset_csv_file = 'output_{}/data/msgs_dataset.csv'.format(st.session_state.api_id)
 
             with open(dataset_csv_file, 'rb') as file:
                 df = read_csv(dataset_csv_file)

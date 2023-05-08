@@ -1,8 +1,8 @@
 import argparse
 import asyncio
 
-from api import client_sign_in
-from utils import get_config_attrs
+from telegram_tracker.api import client_sign_in
+from telegram_tracker.utils import get_config_attrs
 
 parser = argparse.ArgumentParser(description='Arguments.')
 parser.add_argument(

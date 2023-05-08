@@ -10,8 +10,8 @@ import sys
 import os
 
 # import Telegram API submodules
-from api import *
-from utils import (
+from telegram_tracker.api import *
+from telegram_tracker.utils import (
 	get_api_id, get_config_attrs, JSONEncoder, create_dirs, cmd_request_type,
 	write_collected_chats
 )

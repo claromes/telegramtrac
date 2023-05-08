@@ -5,6 +5,7 @@ __pycache__/
 
 # collected data
 output/
+output_*/
 
 # nbs
 nb/*
@@ -12,10 +13,6 @@ nb/*
 # session_file.session
 *.session
 *.session-journal
-
-# files
-test.py
-chatgpt.py
 
 # venv
 venv/
