@@ -1,6 +1,6 @@
 telethon
 pandas
-openpyxl=
+openpyxl
 tqdm
 networkx
 matplotlib
