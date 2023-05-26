@@ -85,21 +85,25 @@ Mostly limited to Streamlit options. The form and tabs were chosen due to common
 - [x] Fix set credentials and code in restart flow
 - [x] Allow 2FA
 - [x] One session/sign_in file per user
-- [ ] Encrypt config file
-- [ ] Add batch file upload
-- [ ] Network tab
-- [ ] Privacy data policy
-- [ ] DB to store data
-- [ ] Option without API credentials
-- [ ] Delete `subprocess.check_output`/ Update dir structure
-- [ ] Logout users (with Telethon)
 - [x] Error msgs
-- [ ] Review error msgs
-- [ ] Storage limit alerts
 - [x] Delete files after session finish
-- [ ] Log for users
-- [ ] Docs telegramtrac/ API credentials (how to)
+- [ ] Add download (v0.5.1)
+    - [ ] `collected_chats.xlsx`
+    - [ ] `user_exceptions.txt`
+- [ ] Encrypt config file (v0.5.1)
+- [ ] `requirements.txt` installation bug (v0.5.1)
+- [ ] Delete `subprocess.check_output`/ Update dir structure (v0.6)
+- [ ] Add batch file upload (v0.6)
+- [ ] Privacy data policy (v0.6)
+- [ ] Docs telegramtrac/ API credentials (how to) (v0.6)
+- [ ] Network tab (v0.6)
+- [ ] Logout users (with Telethon)
+- [ ] Option without API credentials
+- [ ] Review error msgs
 - [ ] Check API limitations (FloodWaitError)
+- [ ] DB to store data
+- [ ] Storage limit alerts
+- [ ] Log for users
 - [ ] Sec issues
 
 ## Changelog
