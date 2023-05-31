@@ -24,9 +24,7 @@ st.set_page_config(
         'About': """
         ![Bellingcat Accessibility Hackathon](https://img.shields.io/badge/%C2%BF%20Bellingcat%20Hackathon-April%202023-%23ffca8e?style=flat) [![GitHub release (latest by date)](https://img.shields.io/github/v/release/claromes/telegramtrac)](https://github.com/claromes/telegramtrac/releases) (not stable)
 
-        telegramtrac is a web-based tool designed for tracking public channels on Telegram. Provides modules for connecting, signing in and communicating with Telegram API via Telethon. It also includes additional modules for generating datasets and network graphs.
-
-        It's a fork of [`telegram-tracker`](https://github.com/estebanpdl/telegram-tracker) developed by Esteban Ponce de León (DFRLab).
+        telegramtrac is a tool designed for tracking public channels on Telegram.
 
         -------
         """,
@@ -116,7 +114,9 @@ if st.session_state.code_state == False:
     title_component.title("""
 telegramtrac
 
-Web-based tool designed for tracking public channels on Telegram
+Tool designed for tracking public channels on Telegram. Provides modules for connecting, signing in and communicating with Telegram API via Telethon. Generates files containing messages and metadata. It also includes additional modules for generating datasets and network graphs.
+
+It's a web version of Python package [`telegram-tracker`](https://github.com/estebanpdl/telegram-tracker) developed by Esteban Ponce de León (DFRLab).
 
 *:blue[Create your API credentials [here](https://my.telegram.org/auth)]*
 """, help='{} (not stable)'.format(__version__), anchor=False)
@@ -124,7 +124,7 @@ else:
     title_component.title("""
 telegramtrac
 
-Web-based tool designed for tracking public channels on Telegram
+Tool designed for tracking public channels on Telegram.
 """, help='{} (not stable)'.format(__version__), anchor=False)
 
 # changelog and roadmap
