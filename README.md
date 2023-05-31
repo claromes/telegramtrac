@@ -92,6 +92,7 @@ Mostly limited to Streamlit options. The form and tabs were chosen due to common
     - [ ] `user_exceptions.txt`
 - [ ] Encrypt config file (v0.5.1)
 - [ ] `requirements.txt` installation bug (v0.5.1)
+- [ ] Loading process explicit (v0.5.1)
 - [ ] Delete `subprocess.check_output`/ Update dir structure (v0.6)
 - [ ] Add batch file upload (v0.6)
 - [ ] Privacy data policy (v0.6)
