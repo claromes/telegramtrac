@@ -30,7 +30,6 @@ st.set_page_config(
         """,
         'Get help': 'https://github.com/claromes/telegramtrac#workflow',
         'Report a bug': 'https://github.com/claromes/telegramtrac/issues',
-
     }
 )
 
