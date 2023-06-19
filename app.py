@@ -3,15 +3,16 @@ from streamlit_extras.customize_running import center_running
 import subprocess
 import json
 import configparser
-from pandas import read_csv
+from pandas import read_csv, read_excel
 import base64
 import os
 import asyncio
 import shutil
+from io import BytesIO
 
 from telegram_tracker import (api, cryptography)
 
-__version__ = '0.5.0'
+__version__ = '0.5.1'
 
 # page config
 st.set_page_config(
@@ -172,20 +173,20 @@ if not st.session_state.restart:
 
         try:
             #prevent streamlit errors
-            cmd_tele = "pip install telethon==1.26.1 --user"
-            output = subprocess.check_output(cmd_tele.split())
+            # cmd_tele = "pip install telethon==1.26.1 --user"
+            # output = subprocess.check_output(cmd_tele.split())
 
-            cmd_pd = "pip install pandas==1.5.3 --user"
-            output = subprocess.check_output(cmd_pd.split())
+            # cmd_pd = "pip install pandas==1.5.3 --user"
+            # output = subprocess.check_output(cmd_pd.split())
 
-            cmd_tqdm = "pip install tqdm==4.64.1 --user"
-            output = subprocess.check_output(cmd_tqdm.split())
+            # cmd_tqdm = "pip install tqdm==4.64.1 --user"
+            # output = subprocess.check_output(cmd_tqdm.split())
 
-            cmd_open = "pip install openpyxl==3.0.10 --user"
-            output = subprocess.check_output(cmd_open.split())
+            # cmd_open = "pip install openpyxl==3.0.10 --user"
+            # output = subprocess.check_output(cmd_open.split())
 
-            cmd_pycrypto = "pip install pycryptodome==3.17 --user"
-            output = subprocess.check_output(cmd_pycrypto.split())
+            # cmd_pycrypto = "pip install pycryptodome==3.17 --user"
+            # output = subprocess.check_output(cmd_pycrypto.split())
 
             #connect to API
             print('python connect.py')
@@ -327,6 +328,7 @@ if trac or new_trac and st.session_state.channel_name != '':
             metadata_json_file = 'output_{}/{}/{}.json'.format(st.session_state.api_id, st.session_state.channel_name, st.session_state.channel_name)
             metadata_txt_file = 'output_{}/chats.txt'.format(api_id)
             metadata_chats_csv_file = 'output_{}/collected_chats.csv'.format(api_id)
+            metadata_chats_xlsx_file = 'output_{}/collected_chats.xlsx'.format(api_id)
             metadata_counter_csv_file = 'output_{}/counter.csv'.format(api_id)
 
             st.subheader('{} metadata'.format(st.session_state.channel_name), anchor=False)
@@ -347,7 +349,7 @@ if trac or new_trac and st.session_state.channel_name != '':
 
                 st.markdown('<a href="{}" download="chats.txt" title="Download chats.txt">chats.txt</a>'.format(href), unsafe_allow_html=True)
 
-            with open(metadata_chats_csv_file, 'rb') as file:
+            with open(metadata_chats_csv_file, 'rb'):
                 metadata_chats = read_csv(metadata_chats_csv_file)
 
                 csv = metadata_chats.to_csv(index=False)
@@ -355,7 +357,17 @@ if trac or new_trac and st.session_state.channel_name != '':
 
                 st.markdown('<a href="data:file/csv;base64,{}" download="collected_chats.csv" title="Download collected_chats.csv">collected_chats.csv</a>'.format(b64), unsafe_allow_html=True)
 
-            with open(metadata_counter_csv_file, 'rb') as file:
+            with open(metadata_chats_xlsx_file, 'rb'):
+                metadata_chats_xlsx = read_excel(metadata_chats_xlsx_file)
+
+                xlsx = BytesIO()
+                metadata_chats_xlsx.to_excel(xlsx, index=False, engine='openpyxl')
+                xlsx.seek(0)
+                b64 = base64.b64encode(xlsx.read()).decode()
+
+                st.markdown('<a href="data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,{}" download="collected_chats.xlsx" title="Download collected_chats.xlsx">collected_chats.xlsx</a>'.format(b64), unsafe_allow_html=True)
+
+            with open(metadata_counter_csv_file, 'rb'):
                 metadata_counter = read_csv(metadata_counter_csv_file)
 
                 csv = metadata_counter.to_csv(index=False)
@@ -371,7 +383,7 @@ if trac or new_trac and st.session_state.channel_name != '':
             st.subheader('messages from all requested channels', anchor=False)
             dataset_csv_file = 'output_{}/msgs_dataset.csv'.format(st.session_state.api_id)
 
-            with open(dataset_csv_file, 'rb') as file:
+            with open(dataset_csv_file, 'rb'):
                 df = read_csv(dataset_csv_file)
 
                 csv = df.to_csv(index=False)
