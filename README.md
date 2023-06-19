@@ -6,11 +6,11 @@ A web-based tool designed for tracking public channels on Telegram. Provides mod
 
 It's a web version of [`telegram-tracker`](https://github.com/estebanpdl/telegram-tracker) developed by Esteban Ponce de León (DFRLab).
 
-## Requirements
+## Requirement
 
 - Python 3.8+
 
-## Installation
+## Development
 
 $ `git clone git@github.com:claromes/telegramtrac.git`
 
@@ -109,4 +109,3 @@ Mostly limited to Streamlit options. The form and tabs were chosen due to common
 - [ ] Option without API credentials
 
 ## [Changelog](/CHANGELOG.md)
-
