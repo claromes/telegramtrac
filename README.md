@@ -1,16 +1,16 @@
 # telegramtrac
 
-![Bellingcat Accessibility Hackathon](https://img.shields.io/badge/%C2%BF%20Bellingcat%20Hackathon-April%202023-%23ffca8e?style=flat) [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_red.svg)](https://telegramtrac.streamlit.app/) [![GitHub release (latest by date)](https://img.shields.io/github/v/release/claromes/telegramtrac)](https://github.com/claromes/telegramtrac/releases) (not stable)
+[![Bellingcat Accessibility Hackathon](https://img.shields.io/badge/%C2%BF%20Bellingcat%20Hackathon-April%202023-%23ffca8e?style=flat)](https://www.bellingcat.com/resources/2023/06/16/third-hackathon-open-source-tools/) [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_red.svg)](https://telegramtrac.streamlit.app/) [![GitHub release (latest by date)](https://img.shields.io/github/v/release/claromes/telegramtrac)](https://github.com/claromes/telegramtrac/releases) (not stable)
 
 A web-based tool designed for tracking public channels on Telegram. Provides modules for connecting, signing in and communicating with Telegram API via Telethon. Generates files containing messages and metadata. It also includes additional modules for generating datasets and network graphs.
 
 It's a web version of [`telegram-tracker`](https://github.com/estebanpdl/telegram-tracker) developed by Esteban Ponce de León (DFRLab).
 
-## Requirements
+## Requirement
 
 - Python 3.8+
 
-## Installation
+## Development
 
 $ `git clone git@github.com:claromes/telegramtrac.git`
 
@@ -66,7 +66,7 @@ Streamlit will be served at http://localhost:8501
 
 ### Limitations
 
-- Only one channel per track
+- Only one channel per tracking
 
 ### Design decisions
 
@@ -78,7 +78,6 @@ Mostly limited to Streamlit options. The form and tabs were chosen due to common
     - Do not displays requested data and instead  "new trac" component
 - [ ] `requirements.txt` installation on Streamlit Cloud
 
-
 ## Roadmap
 
 - [x] Fix dataset tab
@@ -87,26 +86,26 @@ Mostly limited to Streamlit options. The form and tabs were chosen due to common
 - [x] One session/sign_in file per user
 - [x] Error msgs
 - [x] Delete files after session finish
-- [ ] Add download (v0.5.1)
-    - [ ] `collected_chats.xlsx`
-    - [ ] `user_exceptions.txt`
-- [ ] Encrypt config file (v0.5.1)
-- [ ] `requirements.txt` installation bug (v0.5.1)
-- [ ] Loading process explicit (v0.5.1)
+- [x] Add download
+    - [x] `collected_chats.xlsx`
+    - [x] `user_exceptions.txt`
+- [ ] Encrypt config file (v0.5.2)
+- [ ] Loading process explicit (v0.5.2)
+- [ ] Submit typing Enter (v0.5.2)
 - [ ] Delete `subprocess.check_output`/ Update dir structure (v0.6)
-- [ ] Add batch file upload (v0.6)
-- [ ] Privacy data policy (v0.6)
+- [ ] Multiples channels (v0.6)
 - [ ] Docs telegramtrac/ API credentials (how to) (v0.6)
 - [ ] Network tab (v0.6)
+- [ ] Privacy & Terms
+- [ ] Data cache
+- [ ] `requirements.txt` installation bug
+- [ ] `DtypeWarning` (dataset)
 - [ ] Logout users (with Telethon)
-- [ ] Option without API credentials
-- [ ] Review error msgs
 - [ ] Check API limitations (FloodWaitError)
-- [ ] DB to store data
-- [ ] Storage limit alerts
-- [ ] Log for users
-- [ ] Sec issues
+- [ ] Error msgs
+    - [ ] FloodWaitError
+    - [ ] Channel not found
+- [ ] Database
+- [ ] Option without API credentials
 
-## Changelog
-
-[CHANGELOG.md](/CHANGELOG.md)
+## [Changelog](/CHANGELOG.md)

@@ -3,15 +3,16 @@ from streamlit_extras.customize_running import center_running
 import subprocess
 import json
 import configparser
-from pandas import read_csv
+from pandas import read_csv, read_excel
 import base64
 import os
 import asyncio
 import shutil
+from io import BytesIO
 
 from telegram_tracker import (api, cryptography)
 
-__version__ = '0.5.0'
+__version__ = '0.5.1'
 
 # page config
 st.set_page_config(
@@ -22,7 +23,7 @@ st.set_page_config(
     menu_items={
 
         'About': """
-        ![Bellingcat Accessibility Hackathon](https://img.shields.io/badge/%C2%BF%20Bellingcat%20Hackathon-April%202023-%23ffca8e?style=flat) [![GitHub release (latest by date)](https://img.shields.io/github/v/release/claromes/telegramtrac)](https://github.com/claromes/telegramtrac/releases) (not stable)
+        [![Bellingcat Accessibility Hackathon](https://img.shields.io/badge/%C2%BF%20Bellingcat%20Hackathon-April%202023-%23ffca8e?style=flat)](https://www.bellingcat.com/resources/2023/06/16/third-hackathon-open-source-tools/) [![GitHub release (latest by date)](https://img.shields.io/github/v/release/claromes/telegramtrac)](https://github.com/claromes/telegramtrac/releases) (not stable)
 
         telegramtrac is a tool designed for tracking public channels on Telegram.
 
@@ -126,18 +127,6 @@ telegramtrac
 Tool designed for tracking public channels on Telegram.
 """, help='{} (not stable)'.format(__version__), anchor=False)
 
-# changelog and roadmap
-with st.sidebar:
-    st.markdown("""
-
-[Bugs](https://github.com/claromes/telegramtrac#bugs)
-
-[Roadmap](https://github.com/claromes/telegramtrac#roadmap)
-
-[Changelog](https://github.com/claromes/telegramtrac/blob/dev/CHANGELOG.md)
-
-    """)
-
 if not st.session_state.restart:
     # credentials
     with form_component.form(key='config_form'):
@@ -172,20 +161,20 @@ if not st.session_state.restart:
 
         try:
             #prevent streamlit errors
-            cmd_tele = "pip install telethon==1.26.1 --user"
-            output = subprocess.check_output(cmd_tele.split())
+            # cmd_tele = "pip install telethon==1.26.1 --user"
+            # output = subprocess.check_output(cmd_tele.split())
 
-            cmd_pd = "pip install pandas==1.5.3 --user"
-            output = subprocess.check_output(cmd_pd.split())
+            # cmd_pd = "pip install pandas==1.5.3 --user"
+            # output = subprocess.check_output(cmd_pd.split())
 
-            cmd_tqdm = "pip install tqdm==4.64.1 --user"
-            output = subprocess.check_output(cmd_tqdm.split())
+            # cmd_tqdm = "pip install tqdm==4.64.1 --user"
+            # output = subprocess.check_output(cmd_tqdm.split())
 
-            cmd_open = "pip install openpyxl==3.0.10 --user"
-            output = subprocess.check_output(cmd_open.split())
+            # cmd_open = "pip install openpyxl==3.0.10 --user"
+            # output = subprocess.check_output(cmd_open.split())
 
-            cmd_pycrypto = "pip install pycryptodome==3.17 --user"
-            output = subprocess.check_output(cmd_pycrypto.split())
+            # cmd_pycrypto = "pip install pycryptodome==3.17 --user"
+            # output = subprocess.check_output(cmd_pycrypto.split())
 
             #connect to API
             print('python connect.py')
@@ -200,7 +189,7 @@ if not st.session_state.restart:
     with sign_in_component.form(key='config_sign_in_form'):
         if st.session_state.code_state and not error_connect:
             sign_in_code = st.text_input('code', disabled=False, value=st.session_state.code_value, placeholder='54321')
-            password = st.text_input('password', disabled=False, value=st.session_state.password_value, type='password', placeholder='Two-Step Verification enabled users')
+            password = st.text_input('password', disabled=False, value=st.session_state.password_value, type='password', help='optional')
         else:
             sign_in_code = st.text_input('code', disabled=True, value=st.session_state.code_value)
             password = st.text_input('password', disabled=True, value=st.session_state.password_value)
@@ -327,7 +316,9 @@ if trac or new_trac and st.session_state.channel_name != '':
             metadata_json_file = 'output_{}/{}/{}.json'.format(st.session_state.api_id, st.session_state.channel_name, st.session_state.channel_name)
             metadata_txt_file = 'output_{}/chats.txt'.format(api_id)
             metadata_chats_csv_file = 'output_{}/collected_chats.csv'.format(api_id)
+            metadata_chats_xlsx_file = 'output_{}/collected_chats.xlsx'.format(api_id)
             metadata_counter_csv_file = 'output_{}/counter.csv'.format(api_id)
+            user_exceptions_txt_file = 'output_{}/user_exceptions.txt'.format(api_id)
 
             st.subheader('{} metadata'.format(st.session_state.channel_name), anchor=False)
             with open(metadata_json_file, 'rb') as file:
@@ -347,7 +338,7 @@ if trac or new_trac and st.session_state.channel_name != '':
 
                 st.markdown('<a href="{}" download="chats.txt" title="Download chats.txt">chats.txt</a>'.format(href), unsafe_allow_html=True)
 
-            with open(metadata_chats_csv_file, 'rb') as file:
+            with open(metadata_chats_csv_file, 'rb'):
                 metadata_chats = read_csv(metadata_chats_csv_file)
 
                 csv = metadata_chats.to_csv(index=False)
@@ -355,13 +346,32 @@ if trac or new_trac and st.session_state.channel_name != '':
 
                 st.markdown('<a href="data:file/csv;base64,{}" download="collected_chats.csv" title="Download collected_chats.csv">collected_chats.csv</a>'.format(b64), unsafe_allow_html=True)
 
-            with open(metadata_counter_csv_file, 'rb') as file:
+            with open(metadata_chats_xlsx_file, 'rb'):
+                metadata_chats_xlsx = read_excel(metadata_chats_xlsx_file)
+
+                xlsx = BytesIO()
+                metadata_chats_xlsx.to_excel(xlsx, index=False, engine='openpyxl')
+                xlsx.seek(0)
+                b64 = base64.b64encode(xlsx.read()).decode()
+
+                st.markdown('<a href="data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,{}" download="collected_chats.xlsx" title="Download collected_chats.xlsx">collected_chats.xlsx</a>'.format(b64), unsafe_allow_html=True)
+
+            with open(metadata_counter_csv_file, 'rb'):
                 metadata_counter = read_csv(metadata_counter_csv_file)
 
                 csv = metadata_counter.to_csv(index=False)
                 b64 = base64.b64encode(csv.encode()).decode()
 
                 st.markdown('<a href="data:file/csv;base64,{}" download="counter.csv" title="Download counter.csv">counter.csv</a>'.format(b64), unsafe_allow_html=True)
+
+            if os.path.exists(user_exceptions_txt_file):
+                with open(user_exceptions_txt_file, 'rb') as file:
+                    user_txt = file.read().decode()
+
+                    b64 = base64.b64encode(user_txt.encode()).decode()
+                    href = 'data:file/txt;base64,{}'.format(b64)
+
+                    st.markdown('<a href="{}" download="user_exceptions.txt" title="Download user_exceptions.txt">user_exceptions.txt</a>'.format(href), unsafe_allow_html=True)
         except:
             st.error('Something went wrong.')
 
@@ -371,7 +381,7 @@ if trac or new_trac and st.session_state.channel_name != '':
             st.subheader('messages from all requested channels', anchor=False)
             dataset_csv_file = 'output_{}/msgs_dataset.csv'.format(st.session_state.api_id)
 
-            with open(dataset_csv_file, 'rb') as file:
+            with open(dataset_csv_file, 'rb'):
                 df = read_csv(dataset_csv_file)
 
                 csv = df.to_csv(index=False)
