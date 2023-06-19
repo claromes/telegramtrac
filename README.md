@@ -42,15 +42,15 @@ Streamlit will be served at http://localhost:8501
     <img src="assets/3.png" width="400">
 </p>
 
-2. Fill the inputs `api_id`, `api_hash` and your `phone` number (*following this format: +5500912348765*) and click on `send credentials` button
+2. Fill the inputs `api_id`, `api_hash` and your `phone` number (*+5500912348765*) and click on `send credentials` button
 
 - A 5-digit code will be send to your Telegram app
 
-3. Fill the input `code` and `password` (For Two-Step Verification enabled users) and click on `sign in` button
+3. Fill the input `code` and `password` (optional) and click on `sign in` button
 
-- A message will be send to your Telegram app about the authentication
+- A message will be send to your Telegram app
 
-4. Fill the input `channel name` (*copy name from channel link: t.me/CHANNEL_NAME*) and click on `trac` button
+4. Fill the input `channel name` (*t.me/CHANNEL_NAME*) and click on `trac` button
 
 - It may take a few minutes...
 
@@ -58,7 +58,7 @@ Streamlit will be served at http://localhost:8501
 
 6. To track another channel, switch to last tab (`trac`) and click `new trac`.
 
-7. Fill the input `channel name` (*copy name from channel link: t.me/CHANNEL_NAME*) and click on `trac` button
+7. Fill the input `channel name` (*t.me/CHANNEL_NAME*) and click on `trac` button
 
 - At each tracking the dataset are grouped in the same file to allow network analysis
 
@@ -70,7 +70,7 @@ Streamlit will be served at http://localhost:8501
 
 ### Design decisions
 
-Mostly limited to Streamlit options. The form and tabs were chosen due to common use in web apps.
+Mostly limited to Streamlit options.
 
 ## Bugs
 
@@ -84,24 +84,23 @@ Mostly limited to Streamlit options. The form and tabs were chosen due to common
 - [x] Fix set credentials and code in restart flow
 - [x] Allow 2FA
 - [x] One session/sign_in file per user
-- [x] Error msgs
+- [x] Generic error msgs
 - [x] Delete files after session finish
 - [x] Add download
     - [x] `collected_chats.xlsx`
     - [x] `user_exceptions.txt`
-- [ ] Metadata files with channel name
-- [ ] Encrypt config file (v0.5.2)
-- [ ] Loading process explicit (v0.5.2)
+- [ ] Metadata files with channel name (v0.5.2)
 - [ ] Submit typing Enter (v0.5.2)
-- [ ] Delete `subprocess.check_output`/ Update dir structure (v0.6)
+- [ ] Encrypt config file (v0.5.2)
 - [ ] Multiples channels (v0.6)
-- [ ] Docs telegramtrac/ API credentials (how to) (v0.6)
 - [ ] Network tab (v0.6)
+- [ ] Delete `subprocess.check_output`/ Update dir structure
+- [ ] Loading process explicit
 - [ ] Privacy & Terms
 - [ ] Data cache
 - [ ] `requirements.txt` installation bug
 - [ ] `DtypeWarning` (dataset)
-- [ ] Logout users (with Telethon)
+- [ ] Logout users (via Telethon)
 - [ ] Check API limitations (FloodWaitError)
 - [ ] Error msgs
     - [ ] FloodWaitError
