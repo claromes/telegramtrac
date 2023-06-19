@@ -330,6 +330,7 @@ if trac or new_trac and st.session_state.channel_name != '':
             metadata_chats_csv_file = 'output_{}/collected_chats.csv'.format(api_id)
             metadata_chats_xlsx_file = 'output_{}/collected_chats.xlsx'.format(api_id)
             metadata_counter_csv_file = 'output_{}/counter.csv'.format(api_id)
+            user_exceptions_txt_file = 'output_{}/user_exceptions.txt'.format(api_id)
 
             st.subheader('{} metadata'.format(st.session_state.channel_name), anchor=False)
             with open(metadata_json_file, 'rb') as file:
@@ -374,6 +375,15 @@ if trac or new_trac and st.session_state.channel_name != '':
                 b64 = base64.b64encode(csv.encode()).decode()
 
                 st.markdown('<a href="data:file/csv;base64,{}" download="counter.csv" title="Download counter.csv">counter.csv</a>'.format(b64), unsafe_allow_html=True)
+
+            if os.path.exists(user_exceptions_txt_file):
+                with open(user_exceptions_txt_file, 'rb') as file:
+                    user_txt = file.read().decode()
+
+                    b64 = base64.b64encode(user_txt.encode()).decode()
+                    href = 'data:file/txt;base64,{}'.format(b64)
+
+                    st.markdown('<a href="{}" download="user_exceptions.txt" title="Download user_exceptions.txt">user_exceptions.txt</a>'.format(href), unsafe_allow_html=True)
         except:
             st.error('Something went wrong.')
 

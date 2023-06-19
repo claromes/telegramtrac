@@ -97,6 +97,7 @@ Mostly limited to Streamlit options. The form and tabs were chosen due to common
 - [ ] Docs telegramtrac/ API credentials (how to) (v0.6)
 - [ ] Network tab (v0.6)
 - [ ] `requirements.txt` installation bug
+- [ ] `DtypeWarning` (dataset)
 - [ ] Logout users (with Telethon)
 - [ ] Option without API credentials
 - [ ] Review error msgs
