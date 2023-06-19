@@ -89,6 +89,7 @@ Mostly limited to Streamlit options. The form and tabs were chosen due to common
 - [x] Add download
     - [x] `collected_chats.xlsx`
     - [x] `user_exceptions.txt`
+- [ ] Metadata files with channel name
 - [ ] Encrypt config file (v0.5.2)
 - [ ] Loading process explicit (v0.5.2)
 - [ ] Submit typing Enter (v0.5.2)
