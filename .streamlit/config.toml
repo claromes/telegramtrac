@@ -4,3 +4,6 @@ primaryColor="rgb(46, 154, 255)"
 backgroundColor="rgb(25, 25, 30)"
 textColor="rgb(250, 250, 250)"
 font="monospace"
+
+[client]
+toolbarMode = "minimal"

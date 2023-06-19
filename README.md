@@ -91,22 +91,22 @@ Mostly limited to Streamlit options. The form and tabs were chosen due to common
     - [x] `user_exceptions.txt`
 - [ ] Encrypt config file (v0.5.2)
 - [ ] Loading process explicit (v0.5.2)
+- [ ] Submit typing Enter (v0.5.2)
 - [ ] Delete `subprocess.check_output`/ Update dir structure (v0.6)
-- [ ] Add batch file upload (v0.6)
-- [ ] Privacy data policy (v0.6)
+- [ ] Multiples channels (v0.6)
 - [ ] Docs telegramtrac/ API credentials (how to) (v0.6)
 - [ ] Network tab (v0.6)
+- [ ] Privacy & Terms
+- [ ] Data cache
 - [ ] `requirements.txt` installation bug
 - [ ] `DtypeWarning` (dataset)
 - [ ] Logout users (with Telethon)
-- [ ] Option without API credentials
-- [ ] Review error msgs
 - [ ] Check API limitations (FloodWaitError)
-- [ ] DB to store data
-- [ ] Storage limit alerts
-- [ ] Log for users
-- [ ] Sec issues
+- [ ] Error msgs
+    - [ ] FloodWaitError
+    - [ ] Channel not found
+- [ ] Database
+- [ ] Option without API credentials
 
-## Changelog
+## [Changelog](/CHANGELOG.md)
 
-[CHANGELOG.md](/CHANGELOG.md)

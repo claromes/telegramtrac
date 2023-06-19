@@ -127,18 +127,6 @@ telegramtrac
 Tool designed for tracking public channels on Telegram.
 """, help='{} (not stable)'.format(__version__), anchor=False)
 
-# changelog and roadmap
-with st.sidebar:
-    st.markdown("""
-
-[Bugs](https://github.com/claromes/telegramtrac#bugs)
-
-[Roadmap](https://github.com/claromes/telegramtrac#roadmap)
-
-[Changelog](https://github.com/claromes/telegramtrac/blob/dev/CHANGELOG.md)
-
-    """)
-
 if not st.session_state.restart:
     # credentials
     with form_component.form(key='config_form'):
@@ -201,7 +189,7 @@ if not st.session_state.restart:
     with sign_in_component.form(key='config_sign_in_form'):
         if st.session_state.code_state and not error_connect:
             sign_in_code = st.text_input('code', disabled=False, value=st.session_state.code_value, placeholder='54321')
-            password = st.text_input('password', disabled=False, value=st.session_state.password_value, type='password', placeholder='Two-Step Verification enabled users')
+            password = st.text_input('password', disabled=False, value=st.session_state.password_value, type='password', help='optional')
         else:
             sign_in_code = st.text_input('code', disabled=True, value=st.session_state.code_value)
             password = st.text_input('password', disabled=True, value=st.session_state.password_value)
