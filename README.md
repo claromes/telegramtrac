@@ -194,9 +194,10 @@ Mostly limited to Streamlit options.
     - [x] `user_exceptions.txt`
 - [ ] Desktop bundle (v0.5.2)
 - [ ] Locate data files (v0.5.2)
-- [ ] GitHub Actions
-- [ ] Metadata files with channel name (v0.5.2)
+- [ ] Streamlit Cloud main app file (v0.5.2)
 - [ ] Submit typing Enter (v0.5.2)
+- [ ] GitHub Actions
+- [ ] Metadata files with channel name (v0.5.3)
 - [ ] Encrypt config file (v0.5.3)
 - [ ] Multiples channels (v0.6)
 - [ ] Network tab (v0.6)
