@@ -7,3 +7,10 @@ font="monospace"
 
 [client]
 toolbarMode = "minimal"
+
+[global]
+developmentMode = false
+
+[server]
+port = 8502
+headless = true

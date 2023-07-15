@@ -8,7 +8,6 @@ import base64
 import os
 import asyncio
 import shutil
-from io import BytesIO
 
 from telegram_tracker import (api, cryptography)
 
@@ -25,7 +24,7 @@ st.set_page_config(
         'About': """
         [![Bellingcat Accessibility Hackathon](https://img.shields.io/badge/%C2%BF%20Bellingcat%20Hackathon-April%202023-%23ffca8e?style=flat)](https://www.bellingcat.com/resources/2023/06/16/third-hackathon-open-source-tools/) [![GitHub release (latest by date)](https://img.shields.io/github/v/release/claromes/telegramtrac)](https://github.com/claromes/telegramtrac/releases) (not stable)
 
-        telegramtrac is a tool designed for tracking public channels on Telegram.
+        A browser interface to Telegram's API. It's a fork of [Telegram Tracker](https://github.com/estebanpdl/telegram-tracker).
 
         -------
         """,
@@ -114,9 +113,7 @@ if st.session_state.code_state == False:
     title_component.title("""
 telegramtrac
 
-Tool designed for tracking public channels on Telegram. Provides modules for connecting, signing in and communicating with Telegram API via Telethon. Generates files containing messages and metadata. It also includes additional modules for generating datasets and network graphs.
-
-It's a web version of Python package [`telegram-tracker`](https://github.com/estebanpdl/telegram-tracker) developed by Esteban Ponce de León (DFRLab).
+A browser interface to Telegram's API. Provides modules for connecting, signing in and communicating via Telethon. Generates files containing messages and metadata. It also includes additional modules for generating datasets and network graphs.
 
 *:blue[Create your API credentials [here](https://my.telegram.org/auth)]*
 """, help='{} (not stable)'.format(__version__), anchor=False)
@@ -124,7 +121,7 @@ else:
     title_component.title("""
 telegramtrac
 
-Tool designed for tracking public channels on Telegram.
+A browser interface to Telegram's API.
 """, help='{} (not stable)'.format(__version__), anchor=False)
 
 if not st.session_state.restart:
@@ -160,22 +157,6 @@ if not st.session_state.restart:
         st.session_state.code_state = True
 
         try:
-            #prevent streamlit errors
-            cmd_tele = "pip install telethon==1.26.1 --user"
-            output = subprocess.check_output(cmd_tele.split())
-
-            cmd_pd = "pip install pandas==1.5.3 --user"
-            output = subprocess.check_output(cmd_pd.split())
-
-            cmd_tqdm = "pip install tqdm==4.64.1 --user"
-            output = subprocess.check_output(cmd_tqdm.split())
-
-            cmd_open = "pip install openpyxl==3.0.10 --user"
-            output = subprocess.check_output(cmd_open.split())
-
-            cmd_pycrypto = "pip install pycryptodome==3.17 --user"
-            output = subprocess.check_output(cmd_pycrypto.split())
-
             #connect to API
             print('python connect.py')
 

@@ -22,3 +22,7 @@ venv/
 
 # ini
 *.ini
+
+# nuitka
+telegramtrac.build/
+telegramtrac.dist/

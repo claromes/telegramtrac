@@ -1,16 +1,106 @@
 # telegramtrac
 
-[![Bellingcat Accessibility Hackathon](https://img.shields.io/badge/%C2%BF%20Bellingcat%20Hackathon-April%202023-%23ffca8e?style=flat)](https://www.bellingcat.com/resources/2023/06/16/third-hackathon-open-source-tools/) [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_red.svg)](https://telegramtrac.streamlit.app/) [![GitHub release (latest by date)](https://img.shields.io/github/v/release/claromes/telegramtrac)](https://github.com/claromes/telegramtrac/releases) (not stable)
+[![Bellingcat Accessibility Hackathon](https://img.shields.io/badge/%C2%BF%20Bellingcat%20Hackathon-April%202023-%23ffca8e?style=flat)](https://www.bellingcat.com/resources/2023/06/16/third-hackathon-open-source-tools/) [![Test in Streamlit](https://img.shields.io/badge/Test%20in%20Streamlit-fc7a7a?logo=streamlit&labelColor=eb4949&&logoColor=white)](https://telegramtrac.streamlit.app/) [![GitHub release (latest by date)](https://img.shields.io/github/v/release/claromes/telegramtrac)](https://github.com/claromes/telegramtrac/releases) (not stable)
 
-A web-based tool designed for tracking public channels on Telegram. Provides modules for connecting, signing in and communicating with Telegram API via Telethon. Generates files containing messages and metadata. It also includes additional modules for generating datasets and network graphs.
+A browser interface to Telegram’s API. Provides modules for connecting, signing in and communicating via Telethon. Generates files containing messages and metadata. It also includes additional modules for generating datasets and network graphs.
 
-It's a web version of [`telegram-tracker`](https://github.com/estebanpdl/telegram-tracker) developed by Esteban Ponce de León (DFRLab).
+It's a fork of [Telegram Tracker](https://github.com/estebanpdl/telegram-tracker).
 
-## Requirement
+## Desktop (Serverless App)
+
+*The application can be resource-intensive, and the free Streamlit Cloud Community option is not sufficient. Therefore, I decided to compile telegramtrac to run locally. It is not necessary to configure any development environment; simply run the telegramtrac.exe file.*
+
+- Windows 10: [telegramtrac 0.5.2-beta.zip]()
+
+Extract the contents of the ZIP folder to access the bundled content, and then run it.
+
+Console/Command Prompt is enable to provide logs.
+
+### Folder structure
+
+<details><summary><code>/libs</code></summary>
+
+    python packages (*.pyd)
+    lib files (*.dll)
+
+</details>
+<details><summary><code>/config</code></summary>
+
+    Telegram API credentials files (*.ini)
+
+</details>
+<details><summary><code>/session</code></summary>
+
+    Telegram API sessions encrypted files (*.bin)
+
+</details>
+<details><summary><code>/sign_in</code></summary>
+
+    Telegram API code and password encrypted files (*.bin)
+
+</details>
+<details><summary><code>/telegram-tracker</code></summary>
+
+    Telegram Tracker package code
+
+</details>
+<details><summary><code>app.py</code></summary>
+
+    Streamlit app
+
+</details>
+<details><summary><code>build-datasets.py</code></summary>
+
+    Creates a new dataset containing messages from the requested channels
+
+</details>
+<details><summary><code>channels-to-network.py</code></summary>
+
+    Builds a network graph
+
+</details>
+<details><summary><code>connect.py</code></summary>
+
+    Connecting module to the Telegram API
+
+</details>
+<details><summary><code>main.py</code></summary>
+
+    Main file of Telegram Tracker package
+
+</details>
+<details><summary><code>README.txt</code></summary>
+
+    This README file with better readability
+
+</details>
+<details><summary><code>sign_in.py</code></summary>
+
+    Signing module to the Telegram API
+
+</details>
+<details><summary><code>telegramtrac.exe</code></summary>
+
+    telegramtrac's executable file
+
+</details>
+<details><summary><code>telegramtrac.py</code></summary>
+
+    Webview and Streamlit processes. telegramtrac main file
+
+</details>
+
+## Cloud
+
+The application is also available on [Streamlit Community Cloud](https://telegramtrac.streamlit.app) with limited server resources.
+
+## Development
+
+### Requirement
 
 - Python 3.8+
 
-## Development
+### Installation
 
 $ `git clone git@github.com:claromes/telegramtrac.git`
 
@@ -21,6 +111,10 @@ $ `pip install -r requirements.txt`
 $ `streamlit run app.py`
 
 Streamlit will be served at http://localhost:8501
+
+### Build with Nuitka (Python compiler)
+
+$ `nuitka --standalone --windows-icon-from-ico=icon/icon.ico telegramtrac.py`
 
 ## Usage
 
@@ -74,9 +168,16 @@ Mostly limited to Streamlit options.
 
 ## Bugs
 
-- [ ] "sqlite3.OperationalError: database is locked" issue on long-running requests
-    - Do not displays requested data and instead  "new trac" component
-- [ ] `requirements.txt` installation on Streamlit Cloud
+- Desktop
+    - [ ] Warnings:
+        - Missing WebView2Loader.dll
+        - UserWarning: loaded more than 1 DLL from .libs
+    - [ ] Close console
+
+- Streamlit Cloud
+    - [ ] "sqlite3.OperationalError: database is locked" issue on long-running requests
+        - Do not displays requested data and instead  "new trac" component
+    - [ ] `requirements.txt` installation on Streamlit Cloud
 
 ## Roadmap
 
@@ -89,23 +190,24 @@ Mostly limited to Streamlit options.
 - [x] Add download
     - [x] `collected_chats.xlsx`
     - [x] `user_exceptions.txt`
+- [ ] Desktop bundle (v0.5.2)
+- [ ] Locate data files (v0.5.2)
+- [ ] GitHub Actions
 - [ ] Metadata files with channel name (v0.5.2)
 - [ ] Submit typing Enter (v0.5.2)
-- [ ] Encrypt config file (v0.5.2)
+- [ ] Encrypt config file (v0.5.3)
 - [ ] Multiples channels (v0.6)
 - [ ] Network tab (v0.6)
 - [ ] Delete `subprocess.check_output`/ Update dir structure
+    - [ ] Use `trio` instead of `asyncIO`
 - [ ] Loading process explicit
-- [ ] Privacy & Terms
-- [ ] Data cache
-- [ ] `requirements.txt` installation bug
 - [ ] `DtypeWarning` (dataset)
 - [ ] Logout users (via Telethon)
 - [ ] Check API limitations (FloodWaitError)
 - [ ] Error msgs
     - [ ] FloodWaitError
     - [ ] Channel not found
-- [ ] Database
 - [ ] Option without API credentials
+- [ ] Build for Debian/Ubuntu/Mint
 
 ## [Changelog](/CHANGELOG.md)
