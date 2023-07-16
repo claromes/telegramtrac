@@ -12,7 +12,7 @@ It's a fork of [Telegram Tracker](https://github.com/estebanpdl/telegram-tracker
 
 - Windows 10: [telegramtrac 0.6-beta.zip]()
 
-Extract the contents of the ZIP folder to access the bundled content, and then run it.
+Extract the contents of the ZIP folder to access the bundled content, and then run `telegramtrac.exe`.
 
 Console/Command Prompt is enable to provide logs.
 
@@ -20,8 +20,8 @@ Console/Command Prompt is enable to provide logs.
 
 <details><summary><code>./</code></summary>
 
-    python packages (*.pyd)
-    libs (*.dll)
+    python packages (.pyd)
+    libs (.dll)
 
 </details>
 <details><summary><code>.streamlit</code></summary>
@@ -29,22 +29,27 @@ Console/Command Prompt is enable to provide logs.
     Streamlit configurations
 
 </details>
-<details><summary><code>/config</code></summary>
+<details><summary><code>telegramtrac_data/config</code></summary>
 
-    Telegram API credentials files (*.ini)
-
-</details>
-<details><summary><code>/session</code></summary>
-
-    Telegram API sessions files (*.session and *.session-journal)
+    Telegram API credentials files (.ini)
 
 </details>
-<details><summary><code>/sign_in</code></summary>
+<details><summary><code>telegramtrac_data/output_API_ID</code></summary>
 
-    Telegram API code and password encrypted files (*.bin)
+    Output files (.json, .csv, .xlsx, .txt)
 
 </details>
-<details><summary><code>/telegram-tracker</code></summary>
+<details><summary><code>telegramtrac_data/session</code></summary>
+
+    Telegram API sessions files (.session and .session-journal)
+
+</details>
+<details><summary><code>telegramtrac_data/sign_in</code></summary>
+
+    Telegram API code and password encrypted files (.bin)
+
+</details>
+<details><summary><code>telegram-tracker/</code></summary>
 
     Telegram Tracker package code
 
@@ -197,6 +202,8 @@ Mostly limited to Streamlit options.
 - [x] Desktop bundle (v0.6)
 - [ ] Locate data files (v0.6)
 - [ ] Submit typing Enter (v0.6)
+- [ ] Add message about output folder (Desktop)
+- [ ] Create `telegramtrac_data` dir (Desktop)
 - [ ] GitHub Actions
 - [ ] Metadata files with channel name (v0.6.1)
 - [ ] Encrypt config file (v0.6.2)
