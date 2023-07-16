@@ -21,6 +21,11 @@ import multiprocessing
 import webview
 import subprocess
 import psutil
+import sys
+import ctypes
+
+app_process_pid = None
+webview_process_pid = None
 
 window = webview.create_window(title='telegramtrac', url='http://localhost:8502', width=1280, height=720, background_color='#19191E')
 is_closed = False
@@ -32,11 +37,24 @@ def run_app():
     subprocess.Popen(['streamlit', 'run', 'app.py'])
 
 def on_closed():
-    global is_closed
+    global app_process_pid, webview_process_pid
+    app_process_handle = psutil.Process(app_process_pid)
+    webview_process_handle = psutil.Process(webview_process_pid)
 
-    is_closed = True
+    app_process_handle.terminate()
+    webview_process_handle.terminate()
 
-window.events.closed += on_closed
+    webview_process.wait()
+    app_process.wait()
+
+    if sys.platform == 'win32':
+        ctypes.windll.kernel32.SetConsoleCtrlHandler(None, 1)
+        ctypes.windll.kernel32.GenerateConsoleCtrlEvent(0, 0)
+        ctypes.windll.kernel32.FreeConsole()
+    else:
+        sys.exit()
+
+    window.events.closed += on_closed
 
 if __name__ == '__main__':
     app_process = multiprocessing.Process(target=run_app)
@@ -47,15 +65,3 @@ if __name__ == '__main__':
 
     app_process.start()
     webview_process.start()
-
-    if is_closed:
-        app_process_handle = psutil.Process(app_process_pid)
-        webview_process_handle = psutil.Process(webview_process_pid)
-
-        app_process_handle.terminate()
-        webview_process_handle.terminate()
-
-        webview_process.wait()
-        app_process.wait()
-
-        sys.exit()

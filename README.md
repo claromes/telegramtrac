@@ -10,7 +10,7 @@ It's a fork of [Telegram Tracker](https://github.com/estebanpdl/telegram-tracker
 
 *The application can be resource-intensive, and the free Streamlit Cloud Community option is not sufficient. Therefore, I decided to compile telegramtrac to run locally. It is not necessary to configure any development environment; simply run the telegramtrac.exe file.*
 
-- Windows 10: [telegramtrac 0.5.2-beta.zip]()
+- Windows 10: [telegramtrac 0.6-beta.zip]()
 
 Extract the contents of the ZIP folder to access the bundled content, and then run it.
 
@@ -18,10 +18,15 @@ Console/Command Prompt is enable to provide logs.
 
 ### Folder structure
 
-<details><summary><code>/libs</code></summary>
+<details><summary><code>./</code></summary>
 
     python packages (*.pyd)
-    lib files (*.dll)
+    libs (*.dll)
+
+</details>
+<details><summary><code>.streamlit</code></summary>
+
+    Streamlit configurations
 
 </details>
 <details><summary><code>/config</code></summary>
@@ -69,11 +74,6 @@ Console/Command Prompt is enable to provide logs.
     Main file of Telegram Tracker package
 
 </details>
-<details><summary><code>README.txt</code></summary>
-
-    This README file with better readability
-
-</details>
 <details><summary><code>sign_in.py</code></summary>
 
     Signing module to the Telegram API
@@ -110,11 +110,13 @@ $ `pip install -r requirements.txt`
 
 $ `streamlit run app.py`
 
-Streamlit will be served at http://localhost:8501
+Streamlit will be served at http://localhost:8502
 
 ### Build with Nuitka (Python compiler)
 
-$ `nuitka --standalone --windows-icon-from-ico=icon/icon.ico telegramtrac.py`
+$ `python -m nuitka --standalone --remove-output --output-dir=output --include-package=typing_extensions --windows-icon-from-ico=icon/icon.ico telegramtrac.py`
+
+*To test locally delete the `--standalone` option*
 
 ## Usage
 
@@ -174,7 +176,7 @@ Mostly limited to Streamlit options.
     - [ ] Warnings:
         - Missing WebView2Loader.dll
         - UserWarning: loaded more than 1 DLL from .libs
-    - [ ] Close console
+    - [x] Close console
 
 - Streamlit Cloud
     - [ ] "sqlite3.OperationalError: database is locked" issue on long-running requests
@@ -192,15 +194,14 @@ Mostly limited to Streamlit options.
 - [x] Add download
     - [x] `collected_chats.xlsx`
     - [x] `user_exceptions.txt`
-- [ ] Desktop bundle (v0.5.2)
-- [ ] Locate data files (v0.5.2)
-- [ ] Streamlit Cloud main app file (v0.5.2)
-- [ ] Submit typing Enter (v0.5.2)
+- [x] Desktop bundle (v0.6)
+- [ ] Locate data files (v0.6)
+- [ ] Submit typing Enter (v0.6)
 - [ ] GitHub Actions
-- [ ] Metadata files with channel name (v0.5.3)
-- [ ] Encrypt config file (v0.5.3)
-- [ ] Multiples channels (v0.6)
-- [ ] Network tab (v0.6)
+- [ ] Metadata files with channel name (v0.6.1)
+- [ ] Encrypt config file (v0.6.2)
+- [ ] Multiples channels (v0.6.2)
+- [ ] Network tab (v0.6.3)
 - [ ] Delete `subprocess.check_output`/ Update dir structure
     - [ ] Use `trio` instead of `asyncIO`
 - [ ] Loading process explicit

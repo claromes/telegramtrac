@@ -29,7 +29,7 @@ import shutil
 
 from telegram_tracker import (api, cryptography)
 
-__version__ = '0.5.1'
+__version__ = '0.6'
 
 # page config
 st.set_page_config(
