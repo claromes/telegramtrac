@@ -41,7 +41,7 @@ st.set_page_config(
     menu_items={
 
         'About': """
-        [![Bellingcat Accessibility Hackathon](https://img.shields.io/badge/%C2%BF%20Bellingcat%20Hackathon-April%202023-%23ffca8e?style=flat)](https://www.bellingcat.com/resources/2023/06/16/third-hackathon-open-source-tools/) [![GitHub release (latest by date)](https://img.shields.io/github/v/release/claromes/telegramtrac)](https://github.com/claromes/telegramtrac/releases) (not stable)
+        [![Bellingcat Accessibility Hackathon](https://img.shields.io/badge/%C2%BF%20Bellingcat%20Hackathon-April%202023-%23ffca8e?style=flat)](https://www.bellingcat.com/resources/2023/06/16/third-hackathon-open-source-tools/) [![GitHub release (latest by date)](https://img.shields.io/github/v/release/claromes/telegramtrac?include_prereleases)](https://github.com/claromes/telegramtrac/releases) (beta)
 
         A browser interface to Telegram's API. It's a fork of [Telegram Tracker](https://github.com/estebanpdl/telegram-tracker).
 
@@ -135,13 +135,13 @@ telegramtrac
 A browser interface to Telegram's API. Provides modules for connecting, signing in and communicating via Telethon. Generates files containing messages and metadata. It also includes additional modules for generating datasets and network graphs.
 
 *:blue[Create your API credentials [here](https://my.telegram.org/auth)]*
-""", help='{} (not stable)'.format(__version__), anchor=False)
+""", help='{} (beta)'.format(__version__), anchor=False)
 else:
     title_component.title("""
 telegramtrac
 
 A browser interface to Telegram's API.
-""", help='{} (not stable)'.format(__version__), anchor=False)
+""", help='{} (beta)'.format(__version__), anchor=False)
 
 if not st.session_state.restart:
     # credentials

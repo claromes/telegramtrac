@@ -1,10 +1,14 @@
 # telegramtrac
 
-[![Bellingcat Accessibility Hackathon](https://img.shields.io/badge/%C2%BF%20Bellingcat%20Hackathon-April%202023-%23ffca8e?style=flat)](https://www.bellingcat.com/resources/2023/06/16/third-hackathon-open-source-tools/) [![Test in Streamlit](https://img.shields.io/badge/Test%20in%20Streamlit-fc7a7a?logo=streamlit&labelColor=eb4949&&logoColor=white)](https://telegramtrac.streamlit.app/) [![GitHub release (latest by date)](https://img.shields.io/github/v/release/claromes/telegramtrac)](https://github.com/claromes/telegramtrac/releases) (not stable)
+[![Bellingcat Accessibility Hackathon](https://img.shields.io/badge/%C2%BF%20Bellingcat%20Hackathon-April%202023-%23ffca8e?style=flat)](https://www.bellingcat.com/resources/2023/06/16/third-hackathon-open-source-tools/) [![Test in Streamlit](https://img.shields.io/badge/Test%20in%20Streamlit-fc7a7a?logo=streamlit&labelColor=eb4949&&logoColor=white)](https://telegramtrac.streamlit.app/) [![GitHub release (latest by date)](https://img.shields.io/github/v/release/claromes/telegramtrac?include_prereleases)](https://github.com/claromes/telegramtrac/releases) (beta)
 
 A browser interface to Telegram’s API. Provides modules for connecting, signing in and communicating via Telethon. Generates files containing messages and metadata. It also includes additional modules for generating datasets and network graphs.
 
 It's a fork of [Telegram Tracker](https://github.com/estebanpdl/telegram-tracker).
+
+<p align="center">
+    <img src="assets/interface.png" width="700">
+</p>
 
 ## Desktop (Serverless App)
 
@@ -117,20 +121,11 @@ Streamlit will be served at http://localhost:8502
 
 ### Build with Nuitka (Python compiler)
 
-$ `python -m nuitka --standalone --remove-output --output-dir=output --include-package=typing_extensions --windows-icon-from-ico=icon/icon.ico telegramtrac.py`
+$ `python -m nuitka --standalone --remove-output --output-dir=serveless --include-package=typing_extensions --windows-icon-from-ico=icon/icon.ico telegramtrac.py`
 
 *To test locally delete the `--standalone` option*
 
 ## Usage
-
-### Browser interface
-
-<br>
-<p align="center">
-    <img src="assets/interface.png" width="700">
-</p>
-
-### Workflow
 
 1. Create your API credentials [here](https://my.telegram.org/auth)
 
@@ -199,7 +194,6 @@ Mostly limited to Streamlit options.
     - [x] `user_exceptions.txt`
 - [x] Desktop bundle (v0.6)
 - [ ] Locate data files (v0.6)
-- [ ] Submit typing Enter (v0.6)
 - [x] Add message about output folder (Desktop)
 - [ ] GitHub Actions
 - [ ] Metadata files with channel name (v0.6.1)
@@ -208,6 +202,7 @@ Mostly limited to Streamlit options.
 - [ ] Network tab (v0.6.3)
 - [ ] Delete `subprocess.check_output`/ Update dir structure
     - [ ] Use `trio` instead of `asyncIO`
+- [ ] Submit typing Enter
 - [ ] Loading process explicit
 - [ ] `DtypeWarning` (dataset)
 - [ ] Logout users (via Telethon)
