@@ -14,18 +14,12 @@ It's a fork of [Telegram Tracker](https://github.com/estebanpdl/telegram-tracker
 
 *The application can be resource-intensive, and the free Streamlit Cloud Community option is not sufficient. Therefore, I decided to compile telegramtrac to run locally. It is not necessary to configure any development environment; simply run the telegramtrac.exe file.*
 
-- Windows 10: [telegramtrac 0.6-beta.zip]()
+- Windows 10: [telegramtrac-0.6.zip]()
 
 Extract the contents of the ZIP folder to access the bundled content, and then run it.
 
 ### Folder structure
 
-<details><summary><code>./</code></summary>
-
-    python packages (.pyd)
-    libs (.dll)
-
-</details>
 <details><summary><code>.streamlit</code></summary>
 
     Streamlit configuration options
@@ -91,11 +85,6 @@ Extract the contents of the ZIP folder to access the bundled content, and then r
     telegramtrac's executable file
 
 </details>
-<details><summary><code>telegramtrac.py</code></summary>
-
-    Webview and Streamlit processes. telegramtrac main file
-
-</details>
 
 ## Cloud
 
@@ -146,9 +135,10 @@ Mostly limited to Streamlit options
 
 ## Development
 
-### Requirement
+### Requirements
 
 - Python 3.8+
+- [C Compiler](https://nuitka.net/doc/user-manual.html#requirements)
 
 ### Installation
 
@@ -164,17 +154,16 @@ Streamlit will be served at http://localhost:8502
 
 ### Build with Nuitka (Python compiler)
 
-$ `python -m nuitka --standalone --disable-console --remove-output --output-dir=serveless --windows-icon-from-ico=icon/icon.ico telegramtrac.py`
+$ `python -m nuitka --onefile --disable-console --remove-output --output-dir=telegramtrac --onefile-tempdir-spec="%CACHE_DIR%/%COMPANY%/%PRODUCT%/%VERSION%" --company-name=telegramtrac --product-name=telegramtrac --file-version=0.1 --product-version=0.6 --include-data-files=venv\Lib\site-packages\webview\lib\runtimes\win-x64\native\WebView2Loader.dll=webview\lib\runtimes\win-x64\native\ --windows-icon-from-ico=images/icon.ico telegramtrac.py`
 
-[Nuitka docs](https://nuitka.net/doc/user-manual.html)
+[Nuitka User Manual](https://nuitka.net/doc/user-manual.html)
 
 ## Bugs
 
 - Desktop
     - [ ] Warnings:
-        - Missing WebView2Loader.dll
         - UserWarning: loaded more than 1 DLL from .libs
-    - [x] Close console
+    - [ ] Close console (fixed with `--disable-console`)
 
 - Streamlit Cloud
     - [ ] "sqlite3.OperationalError: database is locked" issue on long-running requests
@@ -192,17 +181,18 @@ $ `python -m nuitka --standalone --disable-console --remove-output --output-dir=
 - [x] Add download
     - [x] `collected_chats.xlsx`
     - [x] `user_exceptions.txt`
-- [x] Desktop bundle (v0.6)
-- [ ] Locate data files (v0.6)
+- [x] Desktop bundle
 - [x] Add message about output folder (Desktop)
+- [ ] Keep *output_api_id* folder
+- [ ] Metadata files with channel name
 - [ ] GitHub Actions
-- [ ] Metadata files with channel name (v0.6)
-- [ ] Encrypt config file (v0.6.2)
-- [ ] Multiples channels (v0.6.2)
-- [ ] Network tab (v0.6.3)
+- [ ] Encrypt config file
+- [ ] Multiples channels
+- [ ] Network tab
+- [ ] Submit typing Enter
 - [ ] Delete `subprocess.check_output`/ Update dir structure
     - [ ] Use `trio` instead of `asyncIO`
-- [ ] Submit typing Enter
+- [ ] Screen Splash (C compiler issue)
 - [ ] Loading process explicit
 - [ ] `DtypeWarning` (dataset)
 - [ ] Logout users (via Telethon)

@@ -26,7 +26,6 @@ import base64
 from io import BytesIO
 import os
 import asyncio
-import shutil
 
 from telegram_tracker import (api, cryptography)
 
@@ -112,11 +111,6 @@ def delete():
 
         if os.path.exists(file_path_session_journal):
             os.remove(file_path_session_journal)
-
-        dir_path_output = 'output_{}'.format(st.session_state.api_id)
-
-        if os.path.exists(dir_path_output):
-            shutil.rmtree(dir_path_output)
 
         st.success('Session files deleted.')
         st.session_state.api_id = ''

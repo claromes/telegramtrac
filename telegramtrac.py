@@ -51,8 +51,8 @@ def on_closed():
         ctypes.windll.kernel32.SetConsoleCtrlHandler(None, 1)
         ctypes.windll.kernel32.GenerateConsoleCtrlEvent(0, 0)
         ctypes.windll.kernel32.FreeConsole()
-    else:
-        sys.exit()
+
+    sys.exit()
 
     window.events.closed += on_closed
 
