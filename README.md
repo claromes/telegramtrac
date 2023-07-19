@@ -28,7 +28,7 @@ Extract the contents of the ZIP folder to access the bundled content, and then r
 </details>
 <details><summary><code>.streamlit</code></summary>
 
-    Streamlit configurations
+    Streamlit configuration options
 
 </details>
 <details><summary><code>./config</code></summary>
@@ -51,7 +51,7 @@ Extract the contents of the ZIP folder to access the bundled content, and then r
     Telegram API code and password encrypted files (.bin)
 
 </details>
-<details><summary><code>telegram-tracker/</code></summary>
+<details><summary><code>./telegram-tracker</code></summary>
 
     Telegram Tracker package code
 
@@ -101,30 +101,6 @@ Extract the contents of the ZIP folder to access the bundled content, and then r
 
 The application is also available on [Streamlit Community Cloud](https://telegramtrac.streamlit.app) with limited server resources.
 
-## Development
-
-### Requirement
-
-- Python 3.8+
-
-### Installation
-
-$ `git clone git@github.com:claromes/telegramtrac.git`
-
-$ `cd telegramtrac`
-
-$ `pip install -r requirements.txt`
-
-$ `streamlit run app.py`
-
-Streamlit will be served at http://localhost:8502
-
-### Build with Nuitka (Python compiler)
-
-$ `python -m nuitka --standalone --remove-output --output-dir=serveless --include-package=typing_extensions --windows-icon-from-ico=icon/icon.ico telegramtrac.py`
-
-*To test locally delete the `--standalone` option*
-
 ## Usage
 
 1. Create your API credentials [here](https://my.telegram.org/auth)
@@ -166,7 +142,31 @@ $ `python -m nuitka --standalone --remove-output --output-dir=serveless --includ
 
 ### Design decisions
 
-Mostly limited to Streamlit options.
+Mostly limited to Streamlit options
+
+## Development
+
+### Requirement
+
+- Python 3.8+
+
+### Installation
+
+$ `git clone git@github.com:claromes/telegramtrac.git`
+
+$ `cd telegramtrac`
+
+$ `pip install -r requirements.txt`
+
+$ `streamlit run app.py`
+
+Streamlit will be served at http://localhost:8502
+
+### Build with Nuitka (Python compiler)
+
+$ `python -m nuitka --standalone --disable-console --remove-output --output-dir=serveless --windows-icon-from-ico=icon/icon.ico telegramtrac.py`
+
+[Nuitka docs](https://nuitka.net/doc/user-manual.html)
 
 ## Bugs
 
@@ -196,7 +196,7 @@ Mostly limited to Streamlit options.
 - [ ] Locate data files (v0.6)
 - [x] Add message about output folder (Desktop)
 - [ ] GitHub Actions
-- [ ] Metadata files with channel name (v0.6.1)
+- [ ] Metadata files with channel name (v0.6)
 - [ ] Encrypt config file (v0.6.2)
 - [ ] Multiples channels (v0.6.2)
 - [ ] Network tab (v0.6.3)
