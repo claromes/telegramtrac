@@ -41,9 +41,11 @@ st.set_page_config(
     menu_items={
 
         'About': """
-        [![Bellingcat Accessibility Hackathon](https://img.shields.io/badge/%C2%BF%20Bellingcat%20Hackathon-April%202023-%23ffca8e?style=flat)](https://www.bellingcat.com/resources/2023/06/16/third-hackathon-open-source-tools/) [![GitHub release (latest by date)](https://img.shields.io/github/v/release/claromes/telegramtrac?include_prereleases)](https://github.com/claromes/telegramtrac/releases) (beta)
+        ### 🟦 telegramtrac
 
-        A browser interface to Telegram's API. It's a fork of [Telegram Tracker](https://github.com/estebanpdl/telegram-tracker).
+        [![GitHub release (latest by date)](https://img.shields.io/github/v/release/claromes/telegramtrac?include_prereleases)](https://github.com/claromes/telegramtrac/releases) [![License](https://img.shields.io/github/license/claromes/telegramtrac)](https://github.com/claromes/telegramtrac/blob/main/LICENSE.md)
+
+        A browser interface to Telegram's API.
 
         -------
         """,
