@@ -24,7 +24,7 @@ Extract the contents of the ZIP folder to access the bundled content, and then r
 
 <details><summary><code>./config</code></summary>
 
-    Telegram API credentials files (.ini)
+    Telegram API credentials file (.ini)
 
 </details>
 <details><summary><code>./output_API_ID</code></summary>
@@ -34,7 +34,7 @@ Extract the contents of the ZIP folder to access the bundled content, and then r
 </details>
 <details><summary><code>./session</code></summary>
 
-    Telegram API sessions files (.session and .session-journal)
+    Telegram API session files (.session and .session-journal)
 
 </details>
 <details><summary><code>./sign_in</code></summary>
@@ -110,7 +110,15 @@ $ `cd telegramtrac`
 
 $ `pip install -r requirements.txt`
 
-$ `streamlit run app.py`
+### Desktop version
+
+$ `python telegramtrac.py`
+
+The Streamlit main file is `app.py`
+
+### Cloud version
+
+$ `streamlit run cloud_app.py`
 
 Streamlit will be served at http://localhost:8502
 
