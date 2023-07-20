@@ -26,6 +26,7 @@ import base64
 from io import BytesIO
 import os
 import asyncio
+import shutil
 
 from telegram_tracker import (api, cryptography)
 
@@ -44,7 +45,7 @@ st.set_page_config(
 
         [![GitHub release (latest by date)](https://img.shields.io/github/v/release/claromes/telegramtrac?include_prereleases)](https://github.com/claromes/telegramtrac/releases) [![License](https://img.shields.io/github/license/claromes/telegramtrac)](https://github.com/claromes/telegramtrac/blob/main/LICENSE.md)
 
-        A browser interface to Telegram's API.
+        A browser interface to Telegram's API
 
         -------
         """,
@@ -136,7 +137,7 @@ else:
     title_component.title("""
 telegramtrac
 
-A browser interface to Telegram's API.
+A browser interface to Telegram's API
 """, help='{} (beta)'.format(__version__), anchor=False)
 
 if not st.session_state.restart:
@@ -249,7 +250,7 @@ else:
 # data tabs
 if trac or new_trac and st.session_state.channel_name != '':
     center_running()
-    tab1, tab2, tab3, tab4, tab5 = st.tabs(['messages', 'metadata', 'dataset', 'network', 'options'])
+    tab1, tab2, tab3, tab4, tab5 = st.tabs(['messages', 'dataset', 'network', 'metadata', 'options'])
 
     form_component.empty()
     sign_in_component.empty()
@@ -301,25 +302,49 @@ if trac or new_trac and st.session_state.channel_name != '':
                 b64 = base64.b64encode(json_dump.encode()).decode()
                 href = 'data:file/json;base64,{}'.format(b64)
 
-                st.caption('Serverless version: this file is available in the _output_{}_ directory'.format(st.session_state.api_id))
+                st.caption('this file is available in the _output_{}/{}/_ directory'.format(st.session_state.api_id, st.session_state.channel_name))
 
                 st.markdown('<a href="{}" download="{}_messages.json" title="Download {}_messages.json">{}_messages.json</a>'.format(href, st.session_state.channel_name, st.session_state.channel_name, st.session_state.channel_name), unsafe_allow_html=True)
                 st.json(data, expanded=False)
         except:
             st.error('Something went wrong.')
 
-    #metadata
+    # dataset
     with tab2:
         try:
+            st.subheader('messages from all requested channels', anchor=False)
+            dataset_csv_file = 'output_{}/msgs_dataset.csv'.format(st.session_state.api_id)
+
+            with open(dataset_csv_file, 'rb'):
+                df = read_csv(dataset_csv_file)
+
+                csv = df.to_csv(index=False)
+                b64 = base64.b64encode(csv.encode()).decode()
+
+                st.caption('this file is available in the _output_{}/_ directory'.format(st.session_state.api_id))
+
+                st.markdown('<a href="data:file/csv;base64,{}" download="msgs_dataset.csv" title="Download msgs_dataset.csv">msgs_dataset.csv</a>'.format(b64), unsafe_allow_html=True)
+
+                st.dataframe(df)
+        except:
+            st.error('Something went wrong.')
+
+    # network
+    with tab3:
+        st.info('Under development')
+
+    #metadata
+    with tab4:
+        try:
             metadata_json_file = 'output_{}/{}/{}.json'.format(st.session_state.api_id, st.session_state.channel_name, st.session_state.channel_name)
-            metadata_txt_file = 'output_{}/chats.txt'.format(api_id)
-            metadata_chats_csv_file = 'output_{}/collected_chats.csv'.format(api_id)
-            metadata_chats_xlsx_file = 'output_{}/collected_chats.xlsx'.format(api_id)
-            metadata_counter_csv_file = 'output_{}/counter.csv'.format(api_id)
-            user_exceptions_txt_file = 'output_{}/user_exceptions.txt'.format(api_id)
+            metadata_txt_file = 'output_{}/chats.txt'.format(st.session_state.api_id)
+            metadata_chats_csv_file = 'output_{}/collected_chats.csv'.format(st.session_state.api_id)
+            metadata_chats_xlsx_file = 'output_{}/collected_chats.xlsx'.format(st.session_state.api_id)
+            metadata_counter_csv_file = 'output_{}/counter.csv'.format(st.session_state.api_id)
+            user_exceptions_txt_file = 'output_{}/user_exceptions.txt'.format(st.session_state.api_id)
 
             st.subheader('{} metadata'.format(st.session_state.channel_name), anchor=False)
-            st.caption('Serverless version: these files are available in the _output_{}_ directory'.format(st.session_state.api_id))
+            st.caption('these files are available in the _output_{}/{}/_ directory'.format(st.session_state.api_id, st.session_state.channel_name))
 
             with open(metadata_json_file, 'rb') as file:
                 data = json.load(file)
@@ -375,31 +400,23 @@ if trac or new_trac and st.session_state.channel_name != '':
         except:
             st.error('Something went wrong.')
 
-    # dataset
-    with tab3:
-        try:
-            st.subheader('messages from all requested channels', anchor=False)
-            dataset_csv_file = 'output_{}/msgs_dataset.csv'.format(st.session_state.api_id)
-
-            with open(dataset_csv_file, 'rb'):
-                df = read_csv(dataset_csv_file)
-
-                csv = df.to_csv(index=False)
-                b64 = base64.b64encode(csv.encode()).decode()
-
-                st.caption('Serverless version: this file is available in the _output_{}_ directory'.format(st.session_state.api_id))
-
-                st.markdown('<a href="data:file/csv;base64,{}" download="msgs_dataset.csv" title="Download msgs_dataset.csv">msgs_dataset.csv</a>'.format(b64), unsafe_allow_html=True)
-
-                st.dataframe(df)
-        except:
-            st.error('Something went wrong.')
-
-    # network
-    with tab4:
-        st.info('Under development')
-
-    # options - new trac or log out
+    # options - new trac or delete
     with tab5:
         st.button('new trac', type='primary', use_container_width=True)
-        st.button('log out', on_click=delete, type='secondary', use_container_width=True)
+        st.button('delete session files', on_click=delete, type='secondary', use_container_width=True)
+
+    # duplicate files
+    meta_files = [
+        metadata_txt_file,
+        metadata_chats_csv_file,
+        metadata_chats_xlsx_file,
+        metadata_counter_csv_file
+    ]
+
+    channel_dir = '{}/{}'.format(output_folder, st.session_state.channel_name)
+
+    for f in meta_files:
+        new_f = '{}_'.format(st.session_state.channel_name) + os.path.basename(f)
+
+        file_dir = os.path.join(channel_dir, new_f)
+        shutil.copy(f, file_dir)

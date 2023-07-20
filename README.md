@@ -14,17 +14,14 @@ It's a fork of [Telegram Tracker](https://github.com/estebanpdl/telegram-tracker
 
 *The application can be resource-intensive, and the free Streamlit Cloud Community option is not sufficient. Therefore, I decided to compile telegramtrac to run locally. It is not necessary to configure any development environment; simply run the telegramtrac.exe file.*
 
+### Download
+
 - Windows 10: [telegramtrac-0.6.zip]()
 
 Extract the contents of the ZIP folder to access the bundled content, and then run it.
 
 ### Folder structure
 
-<details><summary><code>.streamlit</code></summary>
-
-    Streamlit configuration options
-
-</details>
 <details><summary><code>./config</code></summary>
 
     Telegram API credentials files (.ini)
@@ -32,7 +29,7 @@ Extract the contents of the ZIP folder to access the bundled content, and then r
 </details>
 <details><summary><code>./output_API_ID</code></summary>
 
-    Output files (.json, .csv, .xlsx, .txt)
+    Telegram channel files (.json, .csv, .xlsx, .txt)
 
 </details>
 <details><summary><code>./session</code></summary>
@@ -43,41 +40,6 @@ Extract the contents of the ZIP folder to access the bundled content, and then r
 <details><summary><code>./sign_in</code></summary>
 
     Telegram API code and password encrypted files (.bin)
-
-</details>
-<details><summary><code>./telegram-tracker</code></summary>
-
-    Telegram Tracker package code
-
-</details>
-<details><summary><code>app.py</code></summary>
-
-    Streamlit app
-
-</details>
-<details><summary><code>build-datasets.py</code></summary>
-
-    Creates a new dataset containing messages from the requested channels
-
-</details>
-<details><summary><code>channels-to-network.py</code></summary>
-
-    Builds a network graph
-
-</details>
-<details><summary><code>connect.py</code></summary>
-
-    Connecting module to the Telegram API
-
-</details>
-<details><summary><code>main.py</code></summary>
-
-    Main file of Telegram Tracker package
-
-</details>
-<details><summary><code>sign_in.py</code></summary>
-
-    Signing module to the Telegram API
 
 </details>
 <details><summary><code>telegramtrac.exe</code></summary>
@@ -181,12 +143,13 @@ $ `python -m nuitka --onefile --disable-console --remove-output --output-dir=tel
 - [x] Add download
     - [x] `collected_chats.xlsx`
     - [x] `user_exceptions.txt`
-- [x] Desktop bundle
+- [ ] Executable file
 - [x] Add message about output folder (Desktop)
-- [ ] Keep *output_api_id* folder
-- [ ] Metadata files with channel name
+- [x] Keep *output_api_id* folder (Desktop)
+- [x] Metadata files with channel name
 - [ ] GitHub Actions
 - [ ] Encrypt config file
+- [ ] Check login
 - [ ] Multiples channels
 - [ ] Network tab
 - [ ] Submit typing Enter
@@ -195,13 +158,13 @@ $ `python -m nuitka --onefile --disable-console --remove-output --output-dir=tel
 - [ ] Screen Splash (C compiler issue)
 - [ ] Loading process explicit
 - [ ] `DtypeWarning` (dataset)
-- [ ] Logout users (via Telethon)
 - [ ] Check API limitations (FloodWaitError)
 - [ ] Error msgs
     - [ ] FloodWaitError
     - [ ] Wrong password
     - [ ] Channel not found
-- [ ] Option without API credentials
 - [ ] Build for Debian/Ubuntu/Mint
+- [ ] Logout users (via Telethon)
+- [ ] Option without API credentials
 
 ## [Changelog](/CHANGELOG.md)
