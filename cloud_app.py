@@ -146,6 +146,8 @@ telegramtrac
 A browser interface to Telegram's API
 """, help='{} (beta)'.format(__version__), anchor=False)
 
+st.caption('Try the [Desktop](https://github.com/claromes/telegramtrac#desktop-serverless-app) version. The Streamlit Community Cloud has limited server resources.')
+
 if not st.session_state.restart:
     # credentials
     with form_component.form(key='config_form'):
