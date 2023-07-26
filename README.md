@@ -6,8 +6,24 @@ A browser interface to Telegram’s API. Provides modules for connecting, signin
 
 It's a fork of [Telegram Tracker](https://github.com/estebanpdl/telegram-tracker).
 
+<br>
+<br>
+
+<p align="center">
+    <img src="images/splash-screen.png" width="450">
+</p>
+<p align="center">
+    <i>Splash screen</i>
+</p>
+
+<br>
+<br>
+
 <p align="center">
     <img src="assets/interface.png" width="700">
+</p>
+<p align="center">
+    <i>Login</i>
 </p>
 
 ## Desktop (Serverless App)
@@ -100,7 +116,7 @@ Mostly limited to Streamlit options
 ### Requirements
 
 - Python 3.8+
-- [C Compiler](https://nuitka.net/doc/user-manual.html#requirements)
+- [Visual Studio 2022 or higher](https://nuitka.net/doc/user-manual.html#requirements)
 
 ### Installation
 
@@ -124,7 +140,33 @@ Streamlit will be served at http://localhost:8502
 
 ### Build with Nuitka (Python compiler)
 
-$ `python -m nuitka --onefile --disable-console --remove-output --output-dir=telegramtrac --onefile-tempdir-spec="%CACHE_DIR%/%COMPANY%/%PRODUCT%/%VERSION%" --company-name=telegramtrac --product-name=telegramtrac --file-version=0.1 --product-version=0.6 --include-data-files=venv\Lib\site-packages\webview\lib\runtimes\win-x64\native\WebView2Loader.dll=webview\lib\runtimes\win-x64\native\ --windows-icon-from-ico=images/icon.ico --onefile-windows-splash-screen-image=images/splash-screen.png --msvc=latest telegramtrac.py`
+```powershell
+python -m nuitka --onefile `
+    --disable-console `
+    --remove-output `
+    --output-dir=telegramtrac `
+    --onefile-tempdir-spec="%CACHE_DIR%/%COMPANY%/%PRODUCT%/%VERSION%" `
+    --company-name=telegramtrac `
+    --product-name=telegramtrac `
+    --file-version=0.1 `
+    --product-version=0.6 `
+    --include-data-files=venv\Lib\site-packages\webview\lib\runtimes\win-x64\native\WebView2Loader.dll=webview\lib\runtimes\win-x64\native\ `
+    --include-data-files=app.py=app.py `
+    --include-data-files=build-datasets.py=build-datasets.py `
+    --include-data-files=channels-to-network.py=channels-to-network.py `
+    --include-data-files=connect.py=connect.py `
+    --include-data-files=main.py=main.py `
+    --include-data-files=sign_in.py=sign_in.py `
+    --include-data-files=.streamlit\config.toml=.streamlit\ `
+    --include-data-files=telegram_tracker\api\__init__.py=telegram_tracker\api\ `
+    --include-data-files=telegram_tracker\cryptography\__init__.py=telegram_tracker\cryptography\ `
+    --include-data-files=telegram_tracker\utils\__init__.py=telegram_tracker\utils\ `
+    --include-data-files=telegram_tracker\__init__.py=telegram_tracker\ `
+    --windows-icon-from-ico=images/icon.ico `
+    --onefile-windows-splash-screen-image=images/splash-screen.png `
+    --msvc=latest `
+    telegramtrac.py
+```
 
 [Nuitka User Manual](https://nuitka.net/doc/user-manual.html)
 
