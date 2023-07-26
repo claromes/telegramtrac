@@ -124,7 +124,7 @@ Streamlit will be served at http://localhost:8502
 
 ### Build with Nuitka (Python compiler)
 
-$ `python -m nuitka --onefile --disable-console --remove-output --output-dir=telegramtrac --onefile-tempdir-spec="%CACHE_DIR%/%COMPANY%/%PRODUCT%/%VERSION%" --company-name=telegramtrac --product-name=telegramtrac --file-version=0.1 --product-version=0.6 --include-data-files=venv\Lib\site-packages\webview\lib\runtimes\win-x64\native\WebView2Loader.dll=webview\lib\runtimes\win-x64\native\ --windows-icon-from-ico=images/icon.ico telegramtrac.py`
+$ `python -m nuitka --onefile --disable-console --remove-output --output-dir=telegramtrac --onefile-tempdir-spec="%CACHE_DIR%/%COMPANY%/%PRODUCT%/%VERSION%" --company-name=telegramtrac --product-name=telegramtrac --file-version=0.1 --product-version=0.6 --include-data-files=venv\Lib\site-packages\webview\lib\runtimes\win-x64\native\WebView2Loader.dll=webview\lib\runtimes\win-x64\native\ --windows-icon-from-ico=images/icon.ico --onefile-windows-splash-screen-image=images/splash-screen.png --msvc=latest telegramtrac.py`
 
 [Nuitka User Manual](https://nuitka.net/doc/user-manual.html)
 
