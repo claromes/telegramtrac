@@ -152,7 +152,7 @@ Streamlit will be served at http://localhost:8502
 
     $ `make standalone`
 
-- test
+- non-distributable executable option
 
     $ `make test`
 
