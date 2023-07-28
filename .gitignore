@@ -24,7 +24,9 @@ venv/
 *.ini
 
 # nuitka
-telegramtrac/
+telegramtrac_test/
+telegramtrac_onefile/
+telegramtrac_standalone/
 telegramtrac.build/
 telegramtrac.dist/
 

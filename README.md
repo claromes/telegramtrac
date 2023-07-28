@@ -120,6 +120,7 @@ Mostly limited to Streamlit options
 ### Requirements
 
 - Python 3.8+
+- Make
 - MSVC 14.3
 - Ccache *(optional)*
 
@@ -147,34 +148,25 @@ Streamlit will be served at http://localhost:8502
 
 ### Build with Nuitka (Python compiler)
 
-```powershell
-python -m nuitka `
-    --onefile `
-    --disable-console `
-    --remove-output `
-    --output-dir=telegramtrac `
-    --onefile-tempdir-spec="%CACHE_DIR%/%COMPANY%/%PRODUCT%/%VERSION%" `
-    --company-name=telegramtrac `
-    --product-name=telegramtrac `
-    --file-version=0.1 `
-    --product-version=0.6 `
-    --include-data-files=venv/Lib/site-packages/webview/lib/runtimes/win-x64/native/WebView2Loader.dll=webview/lib/runtimes/win-x64/native/WebView2Loader.dll `
-    --include-data-files=app.py=app.py `
-    --include-data-files=build-datasets.py=build-datasets.py `
-    --include-data-files=channels-to-network.py=channels-to-network.py `
-    --include-data-files=connect.py=connect.py `
-    --include-data-files=main.py=main.py `
-    --include-data-files=sign_in.py=sign_in.py `
-    --include-data-files=.streamlit/config.toml=.streamlit/config.toml `
-    --include-data-files=telegram_tracker/api/__init__.py=telegram_tracker/api/__init__.py `
-    --include-data-files=telegram_tracker/cryptography/__init__.py=telegram_tracker/cryptography/__init__.py `
-    --include-data-files=telegram_tracker/utils/__init__.py=telegram_tracker/utils/__init__.py `
-    --include-data-files=telegram_tracker/__init__.py=telegram_tracker/__init__.py `
-    --windows-icon-from-ico=images/icon.ico `
-    --onefile-windows-splash-screen-image=images/splash-screen-0.6.png `
-    --msvc=14.3 `
-    telegramtrac.py
-```
+- --onefile
+
+    $ `make onefile`
+
+- --onefile (with console enabled)
+
+    $ `make onefile console`
+
+- --standalone
+
+    $ `make standalone`
+
+- --standalone (with console enabled)
+
+    $ `make standalone console`
+
+- test
+
+    $ `make test`
 
 [Nuitka User Manual](https://nuitka.net/doc/user-manual.html)
 
@@ -206,7 +198,8 @@ python -m nuitka `
 - [x] Keep *output_api_id* folder (Desktop)
 - [x] Metadata files with channel name
 - [ ] GitHub Actions
-- [ ] Makefile to build/test
+- [x] Makefile to build/test
+- [ ] Serverless App without Python installed
 - [ ] Encrypt config file
 - [ ] Check login
 - [ ] Multiples channels
