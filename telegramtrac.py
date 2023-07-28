@@ -22,65 +22,55 @@ import webview
 import subprocess
 import psutil
 import sys
-import ctypes
-import time
 import tempfile
 import os
 
-app_process_pid = None
-webview_process_pid = None
-
-time.sleep(2)
-
-if "NUITKA_ONEFILE_PARENT" in os.environ:
+if 'NUITKA_ONEFILE_PARENT' in os.environ:
    splash_filename = os.path.join(
       tempfile.gettempdir(),
-      "onefile_%d_splash_feedback.tmp" % int(os.environ["NUITKA_ONEFILE_PARENT"]),
+      'onefile_%d_splash_feedback.tmp' % int(os.environ['NUITKA_ONEFILE_PARENT']),
    )
 
    if os.path.exists(splash_filename):
       os.unlink(splash_filename)
 
 window = webview.create_window(title='telegramtrac', url='http://localhost:8502', width=1280, height=720, background_color='#19191E')
-is_closed = False
 
 def run_webview():
-    webview.start(private_mode=True)
+    webview.start(private_mode=True, gui='edgechromium')
 
 def run_app():
-    app_path = os.path.join(os.path.dirname(__file__), 'app.py')
-    print(app_path)
+    cache_dir = os.environ.get('LOCALAPPDATA', '')
+    app_path = '{}\\telegramtrac\\telegramtrac\\0.6.0.0-0.1.0.0\\app.py'.format(cache_dir)
 
-    if os.path.exists(app_path):
-        streamlit.bootstrap.run(filename,'',args)
-        subprocess.Popen(['streamlit', 'run', app_path])
+    subprocess.Popen(['python', '-m', 'streamlit', 'run', 'app.py', '--global.developmentMode=false', '--server.port=8502', '--server.headless=true'])
 
-def on_closed():
-    global app_process_pid, webview_process_pid
-    app_process_handle = psutil.Process(app_process_pid)
-    webview_process_handle = psutil.Process(webview_process_pid)
+def on_closing():
+    print('Stopping...')
 
-    app_process_handle.terminate()
-    webview_process_handle.terminate()
+    for proc in psutil.process_iter(['pid', 'name']):
+        for conn in proc.connections():
+            if conn.laddr.port == 8502:
+                pid = proc.info['pid']
 
-    webview_process.wait()
-    app_process.wait()
+    if pid:
+        try:
+            process = psutil.Process(pid)
+            process.terminate()
+            print('Process {} terminated successfully.'.format(pid))
+        except psutil.NoSuchProcess:
+            print('Process {} not found.'.format(pid))
+        except psutil.AccessDenied:
+            print('Permission denied to terminate process {}.'.format(pid))
 
-    if sys.platform == 'win32':
-        ctypes.windll.kernel32.SetConsoleCtrlHandler(None, 1)
-        ctypes.windll.kernel32.GenerateConsoleCtrlEvent(0, 0)
-        ctypes.windll.kernel32.FreeConsole()
+window.events.closing += on_closing
 
-    sys.exit()
-
-    window.events.closed += on_closed
+app_process = multiprocessing.Process(target=run_app)
+webview_process = multiprocessing.Process(target=run_webview)
 
 if __name__ == '__main__':
-    app_process = multiprocessing.Process(target=run_app)
-    webview_process = multiprocessing.Process(target=run_webview)
-
-    app_process_pid = app_process.pid
-    webview_process_pid = webview_process.pid
-
     app_process.start()
     webview_process.start()
+
+    app_process.join()
+    webview_process.join()

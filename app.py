@@ -40,15 +40,20 @@ st.set_page_config(
     initial_sidebar_state='collapsed',
     menu_items={
 
-        'About': """
+        'About': '''
         ### 🟦 telegramtrac
+        -------
 
-        [![GitHub release (latest by date)](https://img.shields.io/github/v/release/claromes/telegramtrac?include_prereleases)](https://github.com/claromes/telegramtrac/releases) [![License](https://img.shields.io/github/license/claromes/telegramtrac)](https://github.com/claromes/telegramtrac/blob/main/LICENSE.md)
+        Serverless App, release v{}
 
-        A browser interface to Telegram's API
+        Copyright (c) [Clarissa R Mendes]((https://claromes.gitlab.io/)) (2023)
+
+        Licensed under the Apache License,
+
+        Version 2.0 (the "License")
 
         -------
-        """,
+        '''.format(__version__),
         'Get help': 'https://github.com/claromes/telegramtrac#workflow',
         'Report a bug': 'https://github.com/claromes/telegramtrac/issues',
     }

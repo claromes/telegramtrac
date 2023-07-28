@@ -5,7 +5,7 @@ tqdm==4.64.1
 networkx==3.0
 matplotlib==3.6.3
 python-louvain==0.16
-streamlit==1.23.1
+streamlit==1.25.0
 streamlit-extras==0.2.7
 pycryptodome==3.17
 pywebview==4.2.2
