@@ -152,21 +152,15 @@ Streamlit will be served at http://localhost:8502
 
     $ `make onefile`
 
-- --onefile (with console enabled)
-
-    $ `make onefile console`
-
 - --standalone
 
     $ `make standalone`
 
-- --standalone (with console enabled)
-
-    $ `make standalone console`
-
 - test
 
     $ `make test`
+
+    *To use the target `test`, change `app_path` variable in telegramtrac.py file to `app_path_test`*
 
 [Nuitka User Manual](https://nuitka.net/doc/user-manual.html)
 

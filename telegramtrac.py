@@ -42,8 +42,21 @@ def run_webview():
 def run_app():
     cache_dir = os.environ.get('LOCALAPPDATA', '')
     app_path = '{}\\telegramtrac\\telegramtrac\\0.6.0.0-0.1.0.0\\app.py'.format(cache_dir)
+    # app_path_test = '..\\app.py'
 
-    subprocess.Popen(['python', '-m', 'streamlit', 'run', 'app.py', '--global.developmentMode=false', '--server.port=8502', '--server.headless=true'])
+    subprocess.Popen([
+        'python', '-m', 'streamlit', 'run', app_path,
+        # 'python', '-m', 'streamlit', 'run', app_path_test,
+        '--theme.base=dark',
+        '--theme.primaryColor=rgb(46, 154, 255)',
+        '--theme.backgroundColor=rgb(25, 25, 30)',
+        '--theme.textColor=rgb(250, 250, 250)',
+        '--theme.font=monospace',
+        '--client.toolbarMode=minimal',
+        '--global.developmentMode=false',
+        '--server.port=8502',
+        '--server.headless=true'
+    ])
 
 def on_closing():
     print('Stopping...')
