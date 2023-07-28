@@ -54,7 +54,7 @@ st.set_page_config(
 
         -------
         '''.format(__version__),
-        'Get help': 'https://github.com/claromes/telegramtrac#workflow',
+        'Get help': 'https://github.com/claromes/telegramtrac#usage',
         'Report a bug': 'https://github.com/claromes/telegramtrac/issues',
     }
 )

@@ -1,34 +1,14 @@
-# telegramtrac
+# 🟦 telegramtrac
 
-[![Bellingcat Accessibility Hackathon](https://img.shields.io/badge/%C2%BF%20Bellingcat%20Hackathon-April%202023-%23ffca8e?style=flat)](https://www.bellingcat.com/resources/2023/06/16/third-hackathon-open-source-tools/) [![Test in Streamlit](https://img.shields.io/badge/Test%20in%20Streamlit-fc7a7a?logo=streamlit&labelColor=eb4949&&logoColor=white)](https://telegramtrac.streamlit.app/) [![GitHub release (latest by date)](https://img.shields.io/github/v/release/claromes/telegramtrac?include_prereleases)](https://github.com/claromes/telegramtrac/releases)
+[![Bellingcat Accessibility Hackathon](https://img.shields.io/badge/%C2%BF%20Bellingcat%20Hackathon-April%202023-%23ffca8e?style=flat)](https://www.bellingcat.com/resources/2023/06/16/third-hackathon-open-source-tools/) [![GitHub release (latest by date)](https://img.shields.io/github/v/release/claromes/telegramtrac?include_prereleases)](https://github.com/claromes/telegramtrac/releases)
 
-A browser interface to Telegram’s API. Provides modules for connecting, signing in and communicating via Telethon. Generates files containing messages and metadata. It also includes additional modules for generating datasets and network graphs.
-
-It's a fork of [Telegram Tracker](https://github.com/estebanpdl/telegram-tracker).
-
-<br>
-<br>
-
-<p align="center">
-    <img src="images/splash-screen-0.6.png" width="450">
-</p>
-<p align="center">
-    <i>Splash screen</i>
-</p>
-
-<br>
-<br>
-
-<p align="center">
-    <img src="assets/interface.png" width="700">
-</p>
-<p align="center">
-    <i>Login</i>
-</p>
+A browser interface to Telegram’s API. Provides modules for connecting, signing in and communicating via Telethon. Generates files containing messages and metadata. It also includes additional modules for generating datasets and network graphs. telegramtrac is a [Telegram Tracker](https://github.com/estebanpdl/telegram-tracker) fork.
 
 ## Desktop (Serverless App)
 
 *The application can be resource-intensive, and the free Streamlit Cloud Community option is not sufficient. Therefore, I decided to compile telegramtrac to run locally. It is not necessary to configure any development environment; simply run the telegramtrac.exe file.*
+
+[![Test in Streamlit](https://img.shields.io/badge/Test%20in%20Cloud-fc7a7a?logo=streamlit&labelColor=eb4949&&logoColor=white)](https://telegramtrac.streamlit.app/)
 
 ### Requirement
 
@@ -36,9 +16,7 @@ It's a fork of [Telegram Tracker](https://github.com/estebanpdl/telegram-tracker
 
 ### Download
 
-- Windows 10: [telegramtrac-0.6.zip]()
-
-Extract the contents of the ZIP folder to access the bundled content, and then run it.
+- Windows x64: [telegramtrac-0.6-win-x64.zip]()
 
 ### Folder structure
 
@@ -67,6 +45,24 @@ Extract the contents of the ZIP folder to access the bundled content, and then r
     telegramtrac's executable file
 
 </details>
+
+### Screenshots
+
+<p align="center">
+    <img src="images/splash-screen-0.6.png" width="450">
+</p>
+<p align="center">
+    <i>Splash screen</i>
+</p>
+
+<br>
+
+<p align="center">
+    <img src="assets/interface.png" width="700">
+</p>
+<p align="center">
+    <i>Login</i>
+</p>
 
 ## Cloud
 
@@ -110,6 +106,7 @@ The application is also available on [Streamlit Community Cloud](https://telegra
 ### Limitations
 
 - Only one channel per tracking
+- Python installed
 
 ### Design decisions
 
@@ -122,7 +119,6 @@ Mostly limited to Streamlit options
 - Python 3.8+
 - Make
 - MSVC 14.3
-- Ccache *(optional)*
 
 ### Installation
 
@@ -148,11 +144,11 @@ Streamlit will be served at http://localhost:8502
 
 ### Build with Nuitka (Python compiler)
 
-- --onefile
+- --onefile option
 
     $ `make onefile`
 
-- --standalone
+- --standalone option
 
     $ `make standalone`
 
@@ -201,7 +197,7 @@ Streamlit will be served at http://localhost:8502
 - [ ] Submit typing Enter
 - [ ] Delete `subprocess.check_output`/ Update dir structure
     - [ ] Use `trio` instead of `asyncIO`
-- [ ] Screen Splash (C compiler issue)
+- [x] Splash screen (C compiler issue)
 - [ ] Loading process explicit
 - [ ] `DtypeWarning` (dataset)
 - [ ] Check API limitations (FloodWaitError)
