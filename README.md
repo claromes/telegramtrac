@@ -30,7 +30,7 @@ It's a fork of [Telegram Tracker](https://github.com/estebanpdl/telegram-tracker
 
 *The application can be resource-intensive, and the free Streamlit Cloud Community option is not sufficient. Therefore, I decided to compile telegramtrac to run locally. It is not necessary to configure any development environment; simply run the telegramtrac.exe file.*
 
-### Requirements
+### Requirement
 
 - Python 3.8+
 
@@ -206,6 +206,7 @@ python -m nuitka `
 - [x] Keep *output_api_id* folder (Desktop)
 - [x] Metadata files with channel name
 - [ ] GitHub Actions
+- [ ] Makefile to build/test
 - [ ] Encrypt config file
 - [ ] Check login
 - [ ] Multiples channels
