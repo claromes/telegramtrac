@@ -26,3 +26,6 @@ venv/
 # nuitka
 telegramtrac.build/
 telegramtrac.dist/
+
+#vs
+.vs/

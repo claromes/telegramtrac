@@ -23,9 +23,23 @@ import subprocess
 import psutil
 import sys
 import ctypes
+import time
+import tempfile
+import os
 
 app_process_pid = None
 webview_process_pid = None
+
+time.sleep(2)
+
+if "NUITKA_ONEFILE_PARENT" in os.environ:
+   splash_filename = os.path.join(
+      tempfile.gettempdir(),
+      "onefile_%d_splash_feedback.tmp" % int(os.environ["NUITKA_ONEFILE_PARENT"]),
+   )
+
+   if os.path.exists(splash_filename):
+      os.unlink(splash_filename)
 
 window = webview.create_window(title='telegramtrac', url='http://localhost:8502', width=1280, height=720, background_color='#19191E')
 is_closed = False
@@ -34,7 +48,12 @@ def run_webview():
     webview.start(private_mode=True)
 
 def run_app():
-    subprocess.Popen(['streamlit', 'run', 'app.py'])
+    app_path = os.path.join(os.path.dirname(__file__), 'app.py')
+    print(app_path)
+
+    if os.path.exists(app_path):
+        streamlit.bootstrap.run(filename,'',args)
+        subprocess.Popen(['streamlit', 'run', app_path])
 
 def on_closed():
     global app_process_pid, webview_process_pid

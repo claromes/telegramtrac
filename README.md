@@ -10,7 +10,7 @@ It's a fork of [Telegram Tracker](https://github.com/estebanpdl/telegram-tracker
 <br>
 
 <p align="center">
-    <img src="images/splash-screen.png" width="450">
+    <img src="images/splash-screen-0.6.png" width="450">
 </p>
 <p align="center">
     <i>Splash screen</i>
@@ -29,6 +29,10 @@ It's a fork of [Telegram Tracker](https://github.com/estebanpdl/telegram-tracker
 ## Desktop (Serverless App)
 
 *The application can be resource-intensive, and the free Streamlit Cloud Community option is not sufficient. Therefore, I decided to compile telegramtrac to run locally. It is not necessary to configure any development environment; simply run the telegramtrac.exe file.*
+
+### Requirements
+
+- Python 3.8+
 
 ### Download
 
@@ -116,7 +120,8 @@ Mostly limited to Streamlit options
 ### Requirements
 
 - Python 3.8+
-- [Visual Studio 2022 or higher](https://nuitka.net/doc/user-manual.html#requirements)
+- MSVC 14.3
+- Ccache *(optional)*
 
 ### Installation
 
@@ -126,22 +131,25 @@ $ `cd telegramtrac`
 
 $ `pip install -r requirements.txt`
 
+### Cloud version
+
+$ `streamlit run cloud-app.py`
+
+Streamlit will be served at http://localhost:8502
+
 ### Desktop version
 
 $ `python telegramtrac.py`
 
 The Streamlit main file is `app.py`
 
-### Cloud version
-
-$ `streamlit run cloud_app.py`
-
 Streamlit will be served at http://localhost:8502
 
 ### Build with Nuitka (Python compiler)
 
 ```powershell
-python -m nuitka --onefile `
+python -m nuitka `
+    --onefile `
     --disable-console `
     --remove-output `
     --output-dir=telegramtrac `
@@ -150,21 +158,21 @@ python -m nuitka --onefile `
     --product-name=telegramtrac `
     --file-version=0.1 `
     --product-version=0.6 `
-    --include-data-files=venv\Lib\site-packages\webview\lib\runtimes\win-x64\native\WebView2Loader.dll=webview\lib\runtimes\win-x64\native\ `
+    --include-data-files=venv/Lib/site-packages/webview/lib/runtimes/win-x64/native/WebView2Loader.dll=webview/lib/runtimes/win-x64/native/WebView2Loader.dll `
     --include-data-files=app.py=app.py `
     --include-data-files=build-datasets.py=build-datasets.py `
     --include-data-files=channels-to-network.py=channels-to-network.py `
     --include-data-files=connect.py=connect.py `
     --include-data-files=main.py=main.py `
     --include-data-files=sign_in.py=sign_in.py `
-    --include-data-files=.streamlit\config.toml=.streamlit\ `
-    --include-data-files=telegram_tracker\api\__init__.py=telegram_tracker\api\ `
-    --include-data-files=telegram_tracker\cryptography\__init__.py=telegram_tracker\cryptography\ `
-    --include-data-files=telegram_tracker\utils\__init__.py=telegram_tracker\utils\ `
-    --include-data-files=telegram_tracker\__init__.py=telegram_tracker\ `
+    --include-data-files=.streamlit/config.toml=.streamlit/config.toml `
+    --include-data-files=telegram_tracker/api/__init__.py=telegram_tracker/api/__init__.py `
+    --include-data-files=telegram_tracker/cryptography/__init__.py=telegram_tracker/cryptography/__init__.py `
+    --include-data-files=telegram_tracker/utils/__init__.py=telegram_tracker/utils/__init__.py `
+    --include-data-files=telegram_tracker/__init__.py=telegram_tracker/__init__.py `
     --windows-icon-from-ico=images/icon.ico `
-    --onefile-windows-splash-screen-image=images/splash-screen.png `
-    --msvc=latest `
+    --onefile-windows-splash-screen-image=images/splash-screen-0.6.png `
+    --msvc=14.3 `
     telegramtrac.py
 ```
 
@@ -175,7 +183,7 @@ python -m nuitka --onefile `
 - Desktop
     - [ ] Warnings:
         - UserWarning: loaded more than 1 DLL from .libs
-    - [ ] Close console (fixed with `--disable-console`)
+    - [x] Close console
 
 - Streamlit Cloud
     - [ ] "sqlite3.OperationalError: database is locked" issue on long-running requests
