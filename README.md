@@ -205,13 +205,15 @@ References:
 - [x] Add download
     - [x] `collected_chats.xlsx`
     - [x] `user_exceptions.txt`
-- [ ] Executable file
+- [x] Executable file
 - [x] Add message about output folder (Desktop)
 - [x] Keep *output_api_id* folder (Desktop)
 - [x] Metadata files with channel name
 - [ ] GitHub Actions
 - [x] Makefile to build/test
-- [ ] Serverless App without Python installed
+- [x] Serverless App without Python installed
+- [ ] Set up installer
+- [ ] Set `Download` dir as output dir
 - [ ] Encrypt config file
 - [ ] Check login
 - [ ] Multiples channels
