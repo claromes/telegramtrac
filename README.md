@@ -6,65 +6,54 @@ A browser interface to Telegram’s API. Provides modules for connecting, signin
 
 ## Desktop (Serverless App)
 
-*The application can be resource-intensive, and the free Streamlit Cloud Community option is not sufficient. Therefore, I decided to compile telegramtrac to run locally. It is not necessary to configure any development environment; simply run the telegramtrac.exe file.*
-
-[![Test in Streamlit](https://img.shields.io/badge/Test%20in%20Cloud-fc7a7a?logo=streamlit&labelColor=eb4949&&logoColor=white)](https://telegramtrac.streamlit.app/)
-
-### Requirement
-
-- Python 3.8+
+> [!NOTE]
+> The application can be resource-intensive, and the free Streamlit Cloud Community option is not sufficient. Therefore, I decided to compile telegramtrac to run locally. It is not necessary to configure any development environment; simply run the telegramtrac.exe file.
 
 ### Download
 
-- Windows x64: [telegramtrac-0.6-win-x64.zip]()
+- Windows x64: [telegramtrac-0.6-installer-win-x64.zip]()
 
-### Folder structure
+[Usage instructions](#usage)
 
-<details><summary><code>./config</code></summary>
+### Built with
 
-    Telegram API credentials file (.ini)
-
-</details>
-<details><summary><code>./output_API_ID</code></summary>
-
-    Telegram channel files (.json, .csv, .xlsx, .txt)
-
-</details>
-<details><summary><code>./session</code></summary>
-
-    Telegram API session files (.session and .session-journal)
-
-</details>
-<details><summary><code>./sign_in</code></summary>
-
-    Telegram API code and password encrypted files (.bin)
-
-</details>
-<details><summary><code>telegramtrac.exe</code></summary>
-
-    telegramtrac's executable file
-
-</details>
+- Streamlit 1.25.0
+- pywebview 4.2.2
+- Nuitka 1.7.3 (standalone mode)
+- Inno Setup 6.2.2
 
 ### Screenshots
 
 <p align="center">
-    <img src="images/splash-screen-0.6.png" width="450">
+    <img src="assets/login.png" width="450">
+    <img src="assets/tracking.png" width="450">
 </p>
 <p align="center">
-    <i>Splash screen</i>
+    <i>Login and Tracking</i>
 </p>
 
 <br>
 
 <p align="center">
-    <img src="assets/interface.png" width="700">
+    <img src="assets/messages.png" width="450">
+    <img src="assets/dataset.png" width="450">
 </p>
 <p align="center">
-    <i>Login</i>
+    <i>Messages and dataset visualization</i>
+</p>
+
+<br>
+
+<p align="center">
+    <img src="assets/new_trac.png" width="450">
+</p>
+<p align="center">
+    <i>New tracking/ Logoff</i>
 </p>
 
 ## Cloud
+
+[![Test in Streamlit](https://img.shields.io/badge/Test%20in%20Cloud-fc7a7a?logo=streamlit&labelColor=eb4949&&logoColor=white)](https://telegramtrac.streamlit.app/)
 
 The application is also available on [Streamlit Community Cloud](https://telegramtrac.streamlit.app) with limited server resources.
 
@@ -101,12 +90,39 @@ The application is also available on [Streamlit Community Cloud](https://telegra
 
 - At each tracking the dataset are grouped in the same file to allow network analysis
 
+### Folder structure
+
+<details><summary><code>./config</code></summary>
+
+    Telegram API credentials file (.ini)
+
+</details>
+<details><summary><code>./output_API_ID</code></summary>
+
+    Telegram channel files (.json, .csv, .xlsx, .txt)
+
+</details>
+<details><summary><code>./session</code></summary>
+
+    Telegram API session files (.session and .session-journal)
+
+</details>
+<details><summary><code>./sign_in</code></summary>
+
+    Telegram API code and password encrypted files (.bin)
+
+</details>
+<details><summary><code>telegramtrac.exe</code></summary>
+
+    telegramtrac's executable file
+
+</details>
+
 ## Additional Information
 
 ### Limitations
 
 - Only one channel per tracking
-- Python installed
 
 ### Design decisions
 
@@ -116,9 +132,10 @@ Mostly limited to Streamlit options
 
 ### Requirements
 
+- Operating System: Windows 64 bits
 - Python 3.8+
-- Make
-- MSVC 14.3
+- C Compiler
+- Make (optional)
 
 ### Installation
 
@@ -138,15 +155,14 @@ Streamlit will be served at http://localhost:8502
 
 $ `python telegramtrac.py`
 
-The Streamlit main file is `app.py`
+The Streamlit main file is `app.py`.
 
 Streamlit will be served at http://localhost:8502
 
 ### Build with Nuitka (Python compiler)
 
-- --onefile option
-
-    $ `make onefile`
+>[!NOTE]
+>To use the target `dev`, change `app_path` variable in telegramtrac.py file to `app_path_dev`
 
 - --standalone option
 
@@ -154,11 +170,17 @@ Streamlit will be served at http://localhost:8502
 
 - non-distributable executable option
 
-    $ `make test`
+    $ `make dev`
 
-    *To use the target `test`, change `app_path` variable in telegramtrac.py file to `app_path_test`*
+Reference:
+- [Nuitka User Manual](https://nuitka.net/doc/user-manual.html)
 
-[Nuitka User Manual](https://nuitka.net/doc/user-manual.html)
+### Installer configuration with Inno Setup
+
+References:
+
+- [Inno Setup Documentation](https://jrsoftware.org/ishelp.php)
+- [blog.pythonlibrary.org](https://www.blog.pythonlibrary.org/2019/03/19/distributing-a-wxpython-application/) (topic: Creating an Installer with Inno Setup)
 
 ## Bugs
 
@@ -194,7 +216,7 @@ Streamlit will be served at http://localhost:8502
 - [ ] Check login
 - [ ] Multiples channels
 - [ ] Network tab
-- [ ] Submit typing Enter
+- [x] Submit typing Enter
 - [ ] Delete `subprocess.check_output`/ Update dir structure
     - [ ] Use `trio` instead of `asyncIO`
 - [x] Splash screen (C compiler issue)
