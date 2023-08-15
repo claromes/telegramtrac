@@ -4,7 +4,7 @@
 
 A browser interface to Telegram’s API. Provides modules for connecting, signing in and communicating via Telethon. Generates files containing messages and metadata. It also includes additional modules for generating datasets and network graphs. telegramtrac is a [Telegram Tracker](https://github.com/estebanpdl/telegram-tracker) fork.
 
-## Desktop (Serverless App)
+## Serverless (Desktop App)
 
 > [!NOTE]
 > The application can be resource-intensive, and the free Streamlit Cloud Community option is not sufficient. Therefore, I decided to compile telegramtrac to run locally. It is not necessary to configure any development environment; simply run the telegramtrac.exe file.
@@ -24,8 +24,8 @@ A browser interface to Telegram’s API. Provides modules for connecting, signin
 ### Screenshots
 
 <p align="center">
-    <img src="images/splash-screen-telegram-0.6.png" height="260">
-    <img src="assets/login.png" height="260">
+    <img src="images/splash-screen-telegram-0.6.png" height="200">
+    <img src="assets/login.png" height="200">
 </p>
 <p align="center">
     <i>Splash screen (--onefile mode) and login</i>
@@ -34,8 +34,8 @@ A browser interface to Telegram’s API. Provides modules for connecting, signin
 <br>
 
 <p align="center">
-    <img src="assets/tracking.png" height="260">
-    <img src="assets/messages.png" height="260">
+    <img src="assets/tracking.png" height="200">
+    <img src="assets/messages.png" height="200">
 </p>
 <p align="center">
     <i>Tracking and messages visualization</i>
@@ -44,8 +44,8 @@ A browser interface to Telegram’s API. Provides modules for connecting, signin
 <br>
 
 <p align="center">
-    <img src="assets/dataset.png" height="260">
-    <img src="assets/new_trac.png" height="260">
+    <img src="assets/dataset.png" height="200">
+    <img src="assets/new_trac.png" height="200">
 </p>
 <p align="center">
     <i>Dataset visualization and new tracking/logoff</i>
@@ -54,7 +54,7 @@ A browser interface to Telegram’s API. Provides modules for connecting, signin
 <br>
 
 <p align="center">
-    <img src="assets/cmd.png" height="260">
+    <img src="assets/cmd.png" height="220">
 </p>
 <p align="center">
     <i>log (OS console/prompt)</i>
@@ -159,7 +159,7 @@ $ `pip install -r requirements.txt`
 
 $ `streamlit run app.py`
 
-Streamlit will be served at http://localhost:8502
+Streamlit will be served at http://localhost:8501
 
 ### Desktop version
 
