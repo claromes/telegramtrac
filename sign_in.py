@@ -19,6 +19,7 @@ limitations under the License.
 
 import argparse
 import asyncio
+import telethon
 
 from telegram_tracker.api import client_sign_in
 from telegram_tracker.utils import get_config_attrs

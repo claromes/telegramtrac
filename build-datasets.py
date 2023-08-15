@@ -25,6 +25,7 @@ import glob
 import time
 import os
 import tqdm
+import telethon
 
 # import local submodules
 from telegram_tracker.utils import (
