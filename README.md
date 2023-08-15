@@ -18,37 +18,46 @@ A browser interface to Telegram’s API. Provides modules for connecting, signin
 ### Built with
 
 - Streamlit 1.25.0
-- pywebview 4.2.2
 - Nuitka 1.7.3 (standalone mode)
 - Inno Setup 6.2.2
 
 ### Screenshots
 
 <p align="center">
-    <img src="assets/login.png" width="450">
-    <img src="assets/tracking.png" width="450">
+    <img src="images/splash-screen-telegram-0.6.png" height="260">
+    <img src="assets/login.png" height="260">
 </p>
 <p align="center">
-    <i>Login and Tracking</i>
-</p>
-
-<br>
-
-<p align="center">
-    <img src="assets/messages.png" width="450">
-    <img src="assets/dataset.png" width="450">
-</p>
-<p align="center">
-    <i>Messages and dataset visualization</i>
+    <i>Splash screen (--onefile mode) and login</i>
 </p>
 
 <br>
 
 <p align="center">
-    <img src="assets/new_trac.png" width="450">
+    <img src="assets/tracking.png" height="260">
+    <img src="assets/messages.png" height="260">
 </p>
 <p align="center">
-    <i>New tracking/ Logoff</i>
+    <i>Tracking and messages visualization</i>
+</p>
+
+<br>
+
+<p align="center">
+    <img src="assets/dataset.png" height="260">
+    <img src="assets/new_trac.png" height="260">
+</p>
+<p align="center">
+    <i>Dataset visualization and new tracking/logoff</i>
+</p>
+
+<br>
+
+<p align="center">
+    <img src="assets/cmd.png" height="260">
+</p>
+<p align="center">
+    <i>log (OS console/prompt)</i>
 </p>
 
 ## Cloud
@@ -135,6 +144,7 @@ Mostly limited to Streamlit options
 - Operating System: Windows 64 bits
 - Python 3.8+
 - C Compiler
+    - MSVC 14.3 (`--onefile mode`)
 - Make (optional)
 
 ### Installation
@@ -147,7 +157,7 @@ $ `pip install -r requirements.txt`
 
 ### Cloud version
 
-$ `streamlit run cloud-app.py`
+$ `streamlit run app.py`
 
 Streamlit will be served at http://localhost:8502
 
@@ -161,14 +171,18 @@ Streamlit will be served at http://localhost:8502
 
 ### Build with Nuitka (Python compiler)
 
->[!NOTE]
->To use the target `dev`, change `app_path` variable in telegramtrac.py file to `app_path_dev`
+- --onefile mode
 
-- --standalone option
+    $ `make onefile`
+
+- --standalone mode
 
     $ `make standalone`
 
-- non-distributable executable option
+- non-distributable executable mode
+
+    >[!NOTE]
+    >To use the target `dev`, change `app_path` variable in telegramtrac.py file to `app_path_dev`
 
     $ `make dev`
 
@@ -209,10 +223,9 @@ References:
 - [x] Add message about output folder (Desktop)
 - [x] Keep *output_api_id* folder (Desktop)
 - [x] Metadata files with channel name
-- [ ] GitHub Actions
 - [x] Makefile to build/test
 - [x] Serverless App without Python installed
-- [ ] Set up installer
+- [x] Set up installer
 - [ ] Set `Download` dir as output dir
 - [ ] Encrypt config file
 - [ ] Check login

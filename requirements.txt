@@ -8,6 +8,5 @@ python-louvain==0.16
 streamlit==1.25.0
 streamlit-extras==0.2.7
 pycryptodome==3.17
-pywebview==4.2.2
 psutil==5.9.5
 nuitka==1.7.3

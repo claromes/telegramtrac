@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 '''
-Copyright (c) Clarissa R Mendes (2023)
+Copyright (c) Clarissa R Mendes (claromes) (2023)
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

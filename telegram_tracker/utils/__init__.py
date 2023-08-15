@@ -2,7 +2,7 @@
 
 '''
 Copyright (c) Esteban Ponce de León (2023)
-Modified by Clarissa R Mendes
+Modified by Clarissa R Mendes (claromes)
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

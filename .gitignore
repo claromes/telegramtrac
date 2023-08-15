@@ -32,3 +32,6 @@ telegramtrac.dist/
 
 #vs
 .vs/
+
+#Inno Setup
+*.iss

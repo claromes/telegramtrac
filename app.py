@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 '''
-Copyright (c) Clarissa R Mendes (2023)
+Copyright (c) Clarissa R Mendes (claromes) (2023)
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -39,21 +39,15 @@ st.set_page_config(
     layout='centered',
     initial_sidebar_state='collapsed',
     menu_items={
-
         'About': '''
         ### 🟦 telegramtrac
-        -------
 
-        Serverless App, release v{}
+        A browser interface to Telegram's API
 
-        Copyright (c) [Clarissa R Mendes]((https://claromes.gitlab.io/)) (2023)
-
-        Licensed under the Apache License,
-
-        Version 2.0 (the "License")
+        [![GitHub release (latest by date including pre-releases](https://img.shields.io/github/v/release/claromes/telegramtrac?include_prereleases)](https://github.com/claromes/telegramtrac/releases) [![License](https://img.shields.io/github/license/claromes/telegramtrac)](https://github.com/claromes/telegramtrac/blob/main/LICENSE.txt)
 
         -------
-        '''.format(__version__),
+        ''',
         'Get help': 'https://github.com/claromes/telegramtrac#usage',
         'Report a bug': 'https://github.com/claromes/telegramtrac/issues',
     }
