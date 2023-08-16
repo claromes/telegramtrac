@@ -43,13 +43,12 @@ c = Console()
 
 def run_app():
     cache_dir = os.environ.get('LOCALAPPDATA', '')
-    # app_path = '{}\\Programs\\telegramtrac\\0.6.0.0-0.1.0.0\\app.py'.format(cache_dir) # --onefile mode
-    app_path = '{}\\Programs\\telegramtrac\\app.py'.format(cache_dir)
+    app_path = '{}\\Programs\\telegramtrac\\0.6.0.0-0.1.0.0\\app.py'.format(cache_dir)
     app_path_dev = 'app.py' # non-distributable executable mode
 
     sys.argv = [
-        # '0', 'run', app_path,
-        '0', 'run', app_path_dev,
+        '0', 'run', app_path,
+        # '0', 'run', app_path_dev,
         '--theme.base=dark',
         '--theme.primaryColor=rgb(46, 154, 255)',
         '--theme.backgroundColor=rgb(25, 25, 30)',

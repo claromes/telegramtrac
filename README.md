@@ -7,11 +7,11 @@ A browser interface to Telegram’s API. Provides modules for connecting, signin
 ## Serverless (Desktop App)
 
 > [!NOTE]
-> The application can be resource-intensive, and the free Streamlit Cloud Community option is not sufficient. Therefore, I decided to compile telegramtrac to run locally. It is not necessary to configure any development environment; simply run the telegramtrac.exe file.
+> The application can be resource-intensive, and the free Streamlit Cloud Community option is not sufficient. Therefore, I decided to compile telegramtrac to run locally. It is not necessary to configure any development environment; simply run as administrator the telegramtrac.exe file.
 
 ### Download
 
-- Windows x64: [telegramtrac-0.6-installer-win-x64.zip]()
+- Windows x64: [telegramtrac-0.6-installer-win-x64](download/telegramtrac-0.6-installer-win-x64.exe)
 
 [Usage instructions](#usage)
 
@@ -24,11 +24,11 @@ A browser interface to Telegram’s API. Provides modules for connecting, signin
 ### Screenshots
 
 <p align="center">
-    <img src="images/splash-screen-telegram-0.6.png" height="200">
+    <img src="assets/os_log.png" height="200">
     <img src="assets/login.png" height="200">
 </p>
 <p align="center">
-    <i>Splash screen (--onefile mode) and login</i>
+    <i>Log (OS console/prompt) and login</i>
 </p>
 
 <br>
@@ -53,13 +53,6 @@ A browser interface to Telegram’s API. Provides modules for connecting, signin
 
 <br>
 
-<p align="center">
-    <img src="assets/cmd.png" height="220">
-</p>
-<p align="center">
-    <i>log (OS console/prompt)</i>
-</p>
-
 ## Cloud
 
 [![Test in Streamlit](https://img.shields.io/badge/Test%20in%20Cloud-fc7a7a?logo=streamlit&labelColor=eb4949&&logoColor=white)](https://telegramtrac.streamlit.app/)
@@ -71,10 +64,11 @@ The application is also available on [Streamlit Community Cloud](https://telegra
 1. Create your API credentials [here](https://my.telegram.org/auth)
 
 <p align="center">
-    <img src="assets/credentials_1.png" width="400">
+    <img src="assets/credentials_1.png" width="350">
+    <img src="assets/credentials_2.png" width="350">
 </p>
 <p align="center">
-    <img src="assets/credentials_2.png" width="400">
+
 </p>
 
 2. Enter the input `api_id`, `api_hash` and `phone` (e.g., +55912348765), then click on the `send credentials` button
@@ -98,34 +92,6 @@ The application is also available on [Streamlit Community Cloud](https://telegra
 7. To finish and delete all credentials/session/code/password, click on the `log out` button
 
 - At each tracking the dataset are grouped in the same file to allow network analysis
-
-### Folder structure
-
-<details><summary><code>./config</code></summary>
-
-    Telegram API credentials file (.ini)
-
-</details>
-<details><summary><code>./output_API_ID</code></summary>
-
-    Telegram channel files (.json, .csv, .xlsx, .txt)
-
-</details>
-<details><summary><code>./session</code></summary>
-
-    Telegram API session files (.session and .session-journal)
-
-</details>
-<details><summary><code>./sign_in</code></summary>
-
-    Telegram API code and password encrypted files (.bin)
-
-</details>
-<details><summary><code>telegramtrac.exe</code></summary>
-
-    telegramtrac's executable file
-
-</details>
 
 ## Additional Information
 
@@ -229,17 +195,18 @@ References:
 - [x] Serverless App without Python installed
 - [x] Set up installer
 - [ ] Set `Download` dir as output dir
-- [ ] Encrypt config file
+- [ ] Inno Setup docs
+- [ ] Folder structure docs
 - [ ] Check login
+- [ ] Loading process explicit
+- [ ] Encrypt config file
 - [ ] Multiples channels
 - [ ] Network tab
 - [x] Submit typing Enter
 - [ ] Delete `subprocess.check_output`/ Update dir structure
     - [ ] Use `trio` instead of `asyncIO`
 - [x] Splash screen (C compiler issue)
-- [ ] Loading process explicit
 - [ ] `DtypeWarning` (dataset)
-- [ ] Check API limitations (FloodWaitError)
 - [ ] Error msgs
     - [ ] FloodWaitError
     - [ ] Wrong password

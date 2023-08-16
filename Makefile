@@ -30,21 +30,21 @@ onefile:
 	--include-package=matplotlib \
 	--include-package=psutil \
 	--include-package=Crypto \
+	--include-package=app.py \
+	--include-package=build-datasets.py \
+	--include-package=channels-to-network.py \
+	--include-package=connect.py \
+	--include-package=main.py \
+	--include-package=sign_in.py \
+	--include-package=telegram_tracker/api/__init__.py \
+	--include-package=telegram_tracker/cryptography/__init__.py \
+	--include-package=telegram_tracker/utils/__init__.py \
+	--include-package=telegram_tracker/__init__.py \
 	--include-data-dir=venv/Lib/site-packages/streamlit=streamlit \
 	--include-data-dir=venv/Lib/site-packages/streamlit_card=streamlit_card \
 	--include-data-dir=venv/Lib/site-packages/streamlit_image_coordinates=streamlit_image_coordinates \
 	--include-data-dir=venv/Lib/site-packages/streamlit_toggle=streamlit_toggle \
 	--include-data-dir=venv/Lib/site-packages/streamlit_vertical_slider=streamlit_vertical_slider \
-	--include-data-files=app.py=app.py \
-	--include-data-files=build-datasets.py=build-datasets.py \
-	--include-data-files=channels-to-network.py=channels-to-network.py \
-	--include-data-files=connect.py=connect.py \
-	--include-data-files=main.py=main.py \
-	--include-data-files=sign_in.py=sign_in.py \
-	--include-data-files=telegram_tracker/api/__init__.py=telegram_tracker/api/__init__.py \
-	--include-data-files=telegram_tracker/cryptography/__init__.py=telegram_tracker/cryptography/__init__.py \
-	--include-data-files=telegram_tracker/utils/__init__.py=telegram_tracker/utils/__init__.py \
-	--include-data-files=telegram_tracker/__init__.py=telegram_tracker/__init__.py \
 	--windows-icon-from-ico=images/icon.ico \
 	--onefile-windows-splash-screen-image=images/splash-screen-telegram-0.6.png \
 	--msvc=14.3 \
@@ -59,6 +59,8 @@ standalone:
 	--remove-output \
 	--output-dir=telegramtrac_standalone \
 	--follow-imports \
+	--file-version=0.1 \
+	--product-version=0.6 \
 	--include-package=annotated_text \
 	--include-package=streamlit \
 	--include-package=camera_input_live \
@@ -77,21 +79,24 @@ standalone:
 	--include-package=matplotlib \
 	--include-package=psutil \
 	--include-package=Crypto \
+	--include-package=app.py \
+	--include-package=build-datasets.py \
+	--include-package=channels-to-network.py \
+	--include-package=connect.py \
+	--include-package=main.py \
+	--include-package=sign_in.py \
+	--include-package=telegram_tracker/api/__init__.py \
+	--include-package=telegram_tracker/cryptography/__init__.py \
+	--include-package=telegram_tracker/utils/__init__.py \
+	--include-package=telegram_tracker/__init__.py \
 	--include-data-dir=venv/Lib/site-packages/streamlit=streamlit \
 	--include-data-dir=venv/Lib/site-packages/streamlit_card=streamlit_card \
 	--include-data-dir=venv/Lib/site-packages/streamlit_image_coordinates=streamlit_image_coordinates \
 	--include-data-dir=venv/Lib/site-packages/streamlit_toggle=streamlit_toggle \
 	--include-data-dir=venv/Lib/site-packages/streamlit_vertical_slider=streamlit_vertical_slider \
-	--include-data-files=app.py=app.py \
-	--include-data-files=build-datasets.py=build-datasets.py \
-	--include-data-files=channels-to-network.py=channels-to-network.py \
-	--include-data-files=connect.py=connect.py \
-	--include-data-files=main.py=main.py \
-	--include-data-files=sign_in.py=sign_in.py \
-	--include-data-files=telegram_tracker/api/__init__.py=telegram_tracker/api/__init__.py \
-	--include-data-files=telegram_tracker/cryptography/__init__.py=telegram_tracker/cryptography/__init__.py \
-	--include-data-files=telegram_tracker/utils/__init__.py=telegram_tracker/utils/__init__.py \
-	--include-data-files=telegram_tracker/__init__.py=telegram_tracker/__init__.py \
+	--include-data-dir=config=config \
+	--include-data-dir=session=session \
+	--include-data-dir=sign_in=sign_in \
 	--windows-icon-from-ico=images/icon.ico \
 	telegramtrac.py
 
