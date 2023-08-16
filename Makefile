@@ -36,10 +36,7 @@ onefile:
 	--include-package=connect.py \
 	--include-package=main.py \
 	--include-package=sign_in.py \
-	--include-package=telegram_tracker/api/__init__.py \
-	--include-package=telegram_tracker/cryptography/__init__.py \
-	--include-package=telegram_tracker/utils/__init__.py \
-	--include-package=telegram_tracker/__init__.py \
+	--include-package=telegram_tracker \
 	--include-data-dir=venv/Lib/site-packages/streamlit=streamlit \
 	--include-data-dir=venv/Lib/site-packages/streamlit_card=streamlit_card \
 	--include-data-dir=venv/Lib/site-packages/streamlit_image_coordinates=streamlit_image_coordinates \
@@ -85,10 +82,7 @@ standalone:
 	--include-package=connect.py \
 	--include-package=main.py \
 	--include-package=sign_in.py \
-	--include-package=telegram_tracker/api/__init__.py \
-	--include-package=telegram_tracker/cryptography/__init__.py \
-	--include-package=telegram_tracker/utils/__init__.py \
-	--include-package=telegram_tracker/__init__.py \
+	--include-package=telegram_tracker \
 	--include-data-dir=venv/Lib/site-packages/streamlit=streamlit \
 	--include-data-dir=venv/Lib/site-packages/streamlit_card=streamlit_card \
 	--include-data-dir=venv/Lib/site-packages/streamlit_image_coordinates=streamlit_image_coordinates \
