@@ -153,15 +153,17 @@ $ `git clone git@github.com:claromes/telegramtrac.git`
 
 $ `cd telegramtrac`
 
-$ `pip install -r requirements.txt`
-
 ### Cloud version
+
+$ `pip install -r requirements.txt`
 
 $ `streamlit run app.py`
 
 Streamlit will be served at http://localhost:8501
 
-### Desktop version
+### Serverless version
+
+$ `pip install -r requirements-build.txt`
 
 $ `python telegramtrac.py`
 
@@ -198,7 +200,7 @@ References:
 
 ## Bugs
 
-- Desktop
+- Serverless
     - [ ] Warnings:
         - UserWarning: loaded more than 1 DLL from .libs
     - [x] Close console
