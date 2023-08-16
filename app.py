@@ -318,7 +318,7 @@ if trac or new_trac and st.session_state.channel_name != '':
                 b64 = base64.b64encode(json_dump.encode()).decode()
                 href = 'data:file/json;base64,{}'.format(b64)
 
-                st.caption('this file is available in the _output_{}/{}/_ directory'.format(st.session_state.api_id, st.session_state.channel_name))
+                st.info('''**INFO**: In Serverless version this file is available in the *:blue[output_{}/{}/]* directory'''.format(st.session_state.api_id, st.session_state.channel_name))
 
                 st.markdown('<a href="{}" download="{}_messages.json" title="Download {}_messages.json">{}_messages.json</a>'.format(href, st.session_state.channel_name, st.session_state.channel_name, st.session_state.channel_name), unsafe_allow_html=True)
                 st.json(data, expanded=False)
@@ -337,7 +337,7 @@ if trac or new_trac and st.session_state.channel_name != '':
                 csv = df.to_csv(index=False)
                 b64 = base64.b64encode(csv.encode()).decode()
 
-                st.caption('this file is available in the _output_{}/_ directory'.format(st.session_state.api_id))
+                st.info('''**INFO**: In Serverless version this file is available in the *:blue[output_{}/]* directory'''.format(st.session_state.api_id))
 
                 st.markdown('<a href="data:file/csv;base64,{}" download="msgs_dataset.csv" title="Download msgs_dataset.csv">msgs_dataset.csv</a>'.format(b64), unsafe_allow_html=True)
 
@@ -360,7 +360,7 @@ if trac or new_trac and st.session_state.channel_name != '':
             user_exceptions_txt_file = 'output_{}/user_exceptions.txt'.format(st.session_state.api_id)
 
             st.subheader('{} metadata'.format(st.session_state.channel_name), anchor=False)
-            st.caption('these files are available in the _output_{}/{}/_ directory'.format(st.session_state.api_id, st.session_state.channel_name))
+            st.info('''**INFO**: In Serverless version this file is available in the *:blue[output_{}/{}/]* directory'''.format(st.session_state.api_id, st.session_state.channel_name))
 
             with open(metadata_json_file, 'rb') as file:
                 data = json.load(file)
