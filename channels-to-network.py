@@ -26,6 +26,8 @@ import networkx as nx
 import community
 import matplotlib
 
+import matplotlib.pyplot as plt
+
 # import local modules
 from telegram_tracker.utils import (
 	normalize_values
@@ -137,7 +139,7 @@ pos = nx.spring_layout(G)
 cmap = matplotlib.cm.get_cmap('viridis', max(partition.values()) + 1)
 
 # plt fig size
-matplotlib.pyplot.figure(figsize=(16, 10), frameon=False)
+plt.figure(figsize=(16, 10), frameon=False)
 
 # Draw network
 nx.draw_networkx_edges(G, pos, alpha=0.3)
@@ -161,4 +163,4 @@ nx.draw_networkx_labels(
 )
 
 # Save image
-matplotlib.pyplot.savefig(f'{main_path}/network.png')
+plt.savefig(f'{main_path}/network.png')

@@ -599,8 +599,14 @@ def normalize_values(data):
 
 	data: a list of tuples -> based on G.degree
 	'''
+	if not data:
+		return []
+
 	max_v = max([v for i, v in data])
 	min_v = min([v for i, v in data])
+
+	if min_v == max_v:
+		return [0] * len(data)
 
 	return [
 		int((i - (min_v)) / (max_v - min_v) * 450) + 50
