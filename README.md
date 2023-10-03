@@ -41,16 +41,6 @@ The application is available on [Streamlit Community Cloud](https://telegramtrac
 
 - At each tracking the dataset are grouped in the same file to allow network analysis
 
-## Additional Information
-
-### Limitations
-
-- Only one channel per tracking
-
-### Design decisions
-
-Mostly limited to Streamlit options
-
 ## Development
 
 ### Requirements
