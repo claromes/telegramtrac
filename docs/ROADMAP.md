@@ -1,0 +1,38 @@
+# Roadmap
+
+- [x] Fix dataset tab
+- [x] Fix set credentials and code in restart flow
+- [x] Allow 2FA
+- [x] One session/sign_in file per user
+- [x] Generic error msgs
+- [x] Delete files after session finish
+- [x] Add download
+    - [x] `collected_chats.xlsx`
+    - [x] `user_exceptions.txt`
+- [x] Executable file
+- [x] Add message about output folder (Desktop)
+- [x] Keep *output_api_id* folder (Desktop)
+- [x] Metadata files with channel name
+- [x] Makefile to build/test
+- [x] Serverless App without Python installed
+- [x] Set up installer
+- [ ] Set `Download` dir as output dir
+- [ ] Inno Setup docs
+- [ ] Folder structure docs
+- [ ] Check login
+- [ ] Loading process explicit
+- [ ] Encrypt config file
+- [ ] Multiples channels
+- [ ] Network tab
+- [x] Submit typing Enter
+- [ ] Delete `subprocess.check_output`/ Update dir structure
+    - [ ] Use `trio` instead of `asyncIO`
+- [x] Splash screen (C compiler issue)
+- [ ] `DtypeWarning` (dataset)
+- [ ] Error msgs
+    - [ ] FloodWaitError
+    - [ ] Wrong password
+    - [ ] Channel not found
+- [ ] Build for Debian/Ubuntu/Mint
+- [ ] Logout users (via Telethon)
+- [ ] Option without API credentials
