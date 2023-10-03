@@ -6,6 +6,5 @@ networkx==3.0
 matplotlib==3.6.3
 python-louvain==0.16
 streamlit==1.27.1
-streamlit-extras==0.2.7
 pycryptodome==3.17
 psutil==5.9.5
