@@ -1,10 +1,10 @@
-telethon @ git+https://github.com/LonamiWebs/Telethon@releases/tag/v1.30.3
-pandas @ git+https://github.com/pandas-dev/pandas@releases/tag/v2.1.1
-openpyxl @ gith+https://github.com/theorchard/openpyxl@master
-tqdm @ git+https://github.com/tqdm/tqdm@releases/tag/v4.66.1
+telethon @ git+https://github.com/LonamiWebs/Telethon/releases/tag/v1.30.3
+pandas @ git+https://github.com/pandas-dev/pandas/releases/tag/v2.1.1
+openpyxl @ gith+https://github.com/theorchard/openpyxl/master
+tqdm @ git+https://github.com/tqdm/tqdm/releases/tag/v4.66.1
 networkx==3.0
 matplotlib==3.6.3
 python-louvain==0.16
 streamlit==1.27.1
-pycryptodome @ git+https://github.com/Legrandin/pycryptodome@releases/tag/v3.19.0
+pycryptodome @ git+https://github.com/Legrandin/pycryptodome/releases/tag/v3.19.0
 psutil==5.9.5
