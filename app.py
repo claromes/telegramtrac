@@ -62,7 +62,6 @@ form_component_channel = st.empty()
 center_running()
 
 trac = ''
-new_trac = ''
 error_connect = False
 
 # states
@@ -87,41 +86,36 @@ if 'api_hash' not in st.session_state:
 if 'phone' not in st.session_state:
     st.session_state['phone'] = ''
 
-if 'sfile' not in st.session_state:
-    st.session_state['sfile'] = ''
-
-if 'phone_code_hash' not in st.session_state:
-    st.session_state['phone_code_hash'] = ''
-
-if 'client' not in st.session_state:
-    st.session_state['client'] = ''
-
 if 'restart' not in st.session_state:
     st.session_state['restart'] = False
 
 def delete():
-    #delete this and add log_out https://docs.telethon.dev/en/stable/modules/client.html#telethon.client.auth.AuthMethods.log_out or ResetAuthorizationsRequest()
-    try:
-        os.remove(f'config/config_{st.session_state.api_id}.ini')
-        os.remove(f'sign_in/encrypted_code_{st.session_state.api_id}.bin')
-        os.remove(f'sign_in/encrypted_password_{st.session_state.api_id}.bin')
-        os.remove(f'session/session_file_{st.session_state.api_id}.session')
+    # delete this and add log_out https://docs.telethon.dev/en/stable/modules/client.html#telethon.client.auth.AuthMethods.log_out or ResetAuthorizationsRequest()
+    st.session_state.api_id = ''
+    st.session_state.api_hash = ''
+    st.session_state.phone = ''
+    st.session_state.code_value = ''
+    st.session_state.code_state = ''
+    st.session_state.password_value = ''
+    st.session_state.restart = False
 
-        file_path_session_journal = f'session/session_file_{st.session_state.api_id}.session-journal'
+    # try:
+    os.remove(f'config/config_{st.session_state.api_id}.ini')
+    os.remove(f'sign_in/encrypted_code_{st.session_state.api_id}.bin')
+    os.remove(f'sign_in/encrypted_password_{st.session_state.api_id}.bin')
+    os.remove(f'session/session_file_{st.session_state.api_id}.session')
 
-        if os.path.exists(file_path_session_journal):
-            os.remove(file_path_session_journal)
+    file_path_session_journal = f'session/session_file_{st.session_state.api_id}.session-journal'
+    if os.path.exists(file_path_session_journal):
+        os.remove(file_path_session_journal)
+    
+    dir_path_output_data = f'output_{st.session_state.api_id}'
+    if os.path.exists(dir_path_output_data):
+        os.rmdir(dir_path_output_data)
 
-        st.success('Session files deleted.')
-        st.session_state.api_id = ''
-        st.session_state.api_hash = ''
-        st.session_state.phone = ''
-        st.session_state.code_value = ''
-        st.session_state.password_value = ''
-        st.session_state.restart = False
-    except:
-        st.error('Missing files')
-        st.session_state.restart = False
+    st.success('Session files deleted.')
+    # except:
+    #     st.error('Missing files')
 
 # title
 title_component.title("""
@@ -169,7 +163,7 @@ if not st.session_state.restart:
         st.session_state.code_state = True
 
         try:
-            #avoid Streamlit Cloud ModuleNotFoundError
+            # avoid Streamlit Cloud ModuleNotFoundError
             # if st.get_option('server.port') == 8501:
             #     cmd_tele = "pip install telethon==1.26.1 --user"
             #     output = subprocess.check_output(cmd_tele.split())
@@ -186,7 +180,7 @@ if not st.session_state.restart:
             #     cmd_pycrypto = "pip install pycryptodome==3.17 --user"
             #     output = subprocess.check_output(cmd_pycrypto.split())
 
-            #connect to API
+            # connect to API
             print('python connect.py')
 
             cmd_connect = f'python connect.py --api_id {str(st.session_state.api_id)}'
@@ -249,19 +243,10 @@ else:
     sign_in_component.empty()
     channel_component.empty()
 
-    with form_component_channel.form(key='config_form_channel'):
-        # send same credentials, code and password
-        api_id = st.session_state.api_id
-        api_hash = st.session_state.api_hash
-        phone = st.session_state.phone
-        code = st.session_state.code_value
-        password = st.session_state.password_value
-
-        channel_name = st.text_area('channels (semicolon separated)', placeholder='channel_name_1;channel_name_2;channel_name_3;channel_name_4;...', disabled=False, key='channel_name_new_trac', help='t.me/channel_name')
-        new_trac = st.form_submit_button('new trac', disabled=False, type='primary')
+    st.button('delete session files', on_click=delete, type='secondary', use_container_width=True)
 
 # data
-if trac or new_trac:
+if trac or st.session_state.channel_name != '':
     center_running()
     form_component.empty()
     sign_in_component.empty()
@@ -269,8 +254,10 @@ if trac or new_trac:
     form_component_channel.empty()
     st.session_state.restart = True
 
+    channel_name = st.session_state.channel_name
     channels = channel_name.split(';')
     channels = [channel_name.strip() for channel_name in channels]
+    channels = list(filter(bool, channels))
 
     telegram_channel_args = ''
     for channel in channels:
@@ -307,9 +294,9 @@ if trac or new_trac:
         st.error('Something went wrong.')
 
     # tabs
-    tab1, tab2, tab3, tab4, tab5 = st.tabs(['messages', 'metadata', 'dataset', 'network', 'options'])
+    tab1, tab2, tab3, tab4, tab5 = st.tabs(['messages', 'metadata', 'network',  'dataset', 'options'])
 
-    #json - main file
+    # messages
     with tab1:
         try:
             for channel in channels:
@@ -328,7 +315,7 @@ if trac or new_trac:
         except:
             st.error('Something went wrong.')
 
-    #metadata
+    # metadata
     with tab2:
         try:
             for channel in channels:
@@ -396,8 +383,33 @@ if trac or new_trac:
         except:
             st.error('Something went wrong.')
 
-    # dataset
+    # network
     with tab3:
+        try:
+            network_image_file = f'output_{st.session_state.api_id}/network.png'
+            network_gexf_file = f'output_{st.session_state.api_id}/graph.gexf'
+
+            with open(network_image_file, 'rb') as img_file:
+                img_data = img_file.read()
+
+            b64 = base64.b64encode(img_data).decode()
+            href = f'data:image/png;base64,{b64}'
+
+            st.image(img_data)
+            st.markdown(f'<a href="{href}" download="network.png" title="Download network.png">network.png</a>', unsafe_allow_html=True)
+            
+            with open(network_gexf_file, 'rb') as gexf_file:
+                gexf_data = gexf_file.read()
+
+            b64 = base64.b64encode(gexf_data).decode()
+            href = f'data:application/gexf+xml;base64,{b64}'
+
+            st.markdown(f'<a href="{href}" download="graph.gexf" title="Download graph.gexf">graph.gexf</a>', unsafe_allow_html=True)
+        except:
+            st.error('Something went wrong.')
+
+    # dataset
+    with tab4:
         try:
             st.subheader('messages from all requested channels', anchor=False)
             dataset_csv_file = f'output_{st.session_state.api_id}/msgs_dataset.csv'
@@ -414,22 +426,7 @@ if trac or new_trac:
             st.dataframe(df)
         except:
             st.error('Something went wrong.')
-
-    # network
-    with tab4:
-        network_image_file = f'output_{st.session_state.api_id}/network.png'
-
-        with open(network_image_file, 'rb') as img_file:
-            img_data = img_file.read()
-
-        b64 = base64.b64encode(img_data).decode()
-        href = f'data:image/png;base64,{b64}'
-
-        st.image(img_data)
-        st.markdown(f'<a href="{href}" download="network.png" title="Download network.png">network.png</a>', unsafe_allow_html=True)
-
-    
-    # options - new trac or delete
+        
+    # options - delete session files
     with tab5:
-        st.button('new trac', type='primary', use_container_width=True)
         st.button('delete session files', on_click=delete, type='secondary', use_container_width=True)

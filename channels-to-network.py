@@ -103,16 +103,19 @@ for user, counter in channels:
 				net[i].extend(targets)
 
 # Create network data
-network_data = pd.concat(
-	[
-		pd.DataFrame(
-			{
-				'source': [k] * len(net[k]),
-				'target': net[k]
-			}
-		) for k in net.keys()
-	]
-)
+if net:
+	network_data = pd.concat(
+		[
+			pd.DataFrame(
+				{
+					'source': [k] * len(net[k]),
+					'target': net[k]
+				}
+			) for k in net.keys()
+		]
+	)
+else:
+    network_data = pd.DataFrame(columns=['source', 'target'])
 
 # Create graph
 G = nx.from_pandas_edgelist(
@@ -121,7 +124,7 @@ G = nx.from_pandas_edgelist(
 )
 
 # Save network data
-network_path = f'{main_path}/Graph.gexf'
+network_path = f'{main_path}/graph.gexf'
 nx.write_gexf(G, network_path)
 print ('Saved')
 
@@ -136,8 +139,11 @@ partition = community.community_louvain.best_partition(G_louvain)
 pos = nx.spring_layout(G)
 
 # Color the nodes according to their partition
-cmap = matplotlib.cm.get_cmap('viridis', max(partition.values()) + 1)
-
+if partition:
+    cmap = matplotlib.cm.get_cmap('viridis', max(partition.values()) + 1)
+else:
+    cmap = matplotlib.cm.get_cmap('viridis', 1)
+	
 # plt fig size
 plt.figure(figsize=(16, 10), frameon=False)
 
