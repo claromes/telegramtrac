@@ -127,7 +127,7 @@ Variables
 
 FILL API KEYS
 '''
-sfile = 'session/session_file_{}'.format(api_id_str)
+sfile = f'session/session_file_{api_id_str}'
 api_id = args['api_id']
 api_hash = args['api_hash']
 phone = args['phone']

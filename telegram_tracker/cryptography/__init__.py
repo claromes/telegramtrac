@@ -28,7 +28,7 @@ def crypt_code(code, api_id):
 
     ciphertext, tag = cipher.encrypt_and_digest(sign_in_code)
 
-    file_out = open('sign_in/encrypted_code_{}.bin'.format(api_id), 'wb')
+    file_out = open(f'sign_in/encrypted_code_{api_id}.bin', 'wb')
     for i in (key, cipher.nonce, tag, ciphertext):
         file_out.write(i)
     file_out.close()
@@ -43,13 +43,13 @@ def crypt_password(password, api_id):
 
     ciphertext, tag = cipher.encrypt_and_digest(sign_in_password)
 
-    file_out = open('sign_in/encrypted_password_{}.bin'.format(api_id), 'wb')
+    file_out = open(f'sign_in/encrypted_password_{api_id}.bin', 'wb')
     for i in (key, cipher.nonce, tag, ciphertext):
         file_out.write(i)
     file_out.close()
 
 def decrypt_code(api_id):
-    file_in = open('sign_in/encrypted_code_{}.bin'.format(api_id), 'rb')
+    file_in = open(f'sign_in/encrypted_code_{api_id}.bin', 'rb')
     key, nonce, tag, ciphertext = [ file_in.read(x) for x in (16, 16, 16, -1) ]
     file_in.close()
 
@@ -62,7 +62,7 @@ def decrypt_code(api_id):
     return sign_in_code_decode
 
 def decrypt_password(api_id):
-    file_in = open('sign_in/encrypted_password_{}.bin'.format(api_id), 'rb')
+    file_in = open(f'sign_in/encrypted_password_{api_id}.bin', 'rb')
     key, nonce, tag, ciphertext = [ file_in.read(x) for x in (16, 16, 16, -1) ]
     file_in.close()
 

@@ -43,7 +43,7 @@ args = {**config_attrs}
 api_id = args['api_id']
 api_hash = args['api_hash']
 phone = args['phone']
-sfile = 'session/session_file_{}'.format(api_id)
+sfile = f'session/session_file_{api_id}'
 
 loop = asyncio.get_event_loop()
 

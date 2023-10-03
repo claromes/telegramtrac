@@ -45,7 +45,7 @@ def get_api_id(output_folder):
 def get_config_attrs(api_id_str):
 	'''
 	'''
-	path = './config/config_{}.ini'.format(api_id_str)
+	path = f'./config/config_{api_id_str}.ini'
 
 	# config parser
 	config = ConfigParser()
