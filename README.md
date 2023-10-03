@@ -2,7 +2,7 @@
 
 [![Bellingcat Accessibility Hackathon](https://img.shields.io/badge/%C2%BF%20Bellingcat%20Hackathon-April%202023-%23ffca8e?style=flat)](https://www.bellingcat.com/resources/2023/06/16/third-hackathon-open-source-tools/) [![GitHub release (latest by date)](https://img.shields.io/github/v/release/claromes/telegramtrac?include_prereleases)](https://github.com/claromes/telegramtrac/releases)
 
-A browser interface to Telegram’s API. Provides modules for connecting, signing in and communicating via Telethon. Generates files containing messages and metadata. It also includes additional modules for generating datasets and network graphs. telegramtrac is a [Telegram Tracker](https://github.com/estebanpdl/telegram-tracker) fork.
+A browser interface to Telegram’s API. Provides modules for connecting, signing in and communicating via Telethon. Generates files containing messages and metadata. It also includes additional modules for data analysis. telegramtrac is a [Telegram Tracker](https://github.com/estebanpdl/telegram-tracker) fork.
 
 ## Serverless (Desktop App)
 
@@ -85,11 +85,11 @@ The application is also available on [Streamlit Community Cloud](https://telegra
 
 5. Switch tabs to preview or download the data
 
-6. To tracking another channel, switch to last tab (`trac`) and click `new trac`.
+6. To tracking another channel, switch to the last tab (`trac`) and click `new trac`.
 
     6.1. Enter the input `channel name` (*t.me/CHANNEL_NAME_IS_HERE*), then click on the `trac` button
 
-7. To finish and delete all credentials/session/code/password, click on the `log out` button
+7. To finish and delete all credentials/session files, click on the `log out` button
 
 - At each tracking the dataset are grouped in the same file to allow network analysis
 
@@ -167,7 +167,7 @@ References:
 ## Bugs
 
 - Serverless
-    - [ ] Warnings:
+    - [x] Warnings:
         - UserWarning: loaded more than 1 DLL from .libs
     - [x] Close console
 

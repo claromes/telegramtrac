@@ -30,13 +30,8 @@ onefile:
 	--include-package=matplotlib \
 	--include-package=psutil \
 	--include-package=Crypto \
-	--include-package=app.py \
-	--include-package=build-datasets.py \
-	--include-package=channels-to-network.py \
-	--include-package=connect.py \
-	--include-package=main.py \
-	--include-package=sign_in.py \
 	--include-package=telegram_tracker \
+	--include-data-files=app.py=app.py \
 	--include-data-dir=venv/Lib/site-packages/streamlit=streamlit \
 	--include-data-dir=venv/Lib/site-packages/streamlit_card=streamlit_card \
 	--include-data-dir=venv/Lib/site-packages/streamlit_image_coordinates=streamlit_image_coordinates \
@@ -76,13 +71,6 @@ standalone:
 	--include-package=matplotlib \
 	--include-package=psutil \
 	--include-package=Crypto \
-	--include-package=app.py \
-	--include-package=build-datasets.py \
-	--include-package=channels-to-network.py \
-	--include-package=connect.py \
-	--include-package=main.py \
-	--include-package=sign_in.py \
-	--include-package=telegram_tracker \
 	--include-data-dir=venv/Lib/site-packages/streamlit=streamlit \
 	--include-data-dir=venv/Lib/site-packages/streamlit_card=streamlit_card \
 	--include-data-dir=venv/Lib/site-packages/streamlit_image_coordinates=streamlit_image_coordinates \
