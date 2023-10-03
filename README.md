@@ -27,8 +27,6 @@ The application is available on [Streamlit Community Cloud](https://telegramtrac
 
 3. Enter the input `code` and `password` (optional), then click on the `sign in` button
 
-- A confirmation message will be send to your Telegram app
-
 4. Enter the input `channel name` (*t.me/CHANNEL_NAME_IS_HERE*), then click on the `trac` button
 
 - It may take a few minutes...

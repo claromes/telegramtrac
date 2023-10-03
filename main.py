@@ -44,7 +44,8 @@ parser.add_argument(
 	'--telegram-channel',
 	type=str,
 	required='--batch-file' not in sys.argv,
-	help='Specifies a Telegram Channel.'
+	help='Specifies a Telegram Channel.',
+	action='append'
 )
 parser.add_argument(
 	'--batch-file',
@@ -157,8 +158,6 @@ if req_type == 'batch':
 			req_input, encoding='utf-8', mode='r'
 		)
 	]
-else:
-	req_input = [req_input]
 
 # reading | Creating an output folder
 if args['output']:

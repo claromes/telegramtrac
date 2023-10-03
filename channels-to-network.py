@@ -158,7 +158,6 @@ nx.draw_networkx_labels(
 	G,
 	pos,
 	font_size=9,
-	font_family='georgia',
 	bbox={'facecolor':'white', 'alpha':0.5, 'edgecolor':'#373737'}
 )
 

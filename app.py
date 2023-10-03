@@ -236,12 +236,12 @@ if not st.session_state.restart:
 
     # channel name
     with channel_component.form(key='channel_form'):
-        if sign_in and st.session_state.code_state == True or st.session_state.channel_name != '':
-            channel_name = st.text_input('channel name', placeholder="https://t.me/CHANNEL_NAME_IS_HERE", disabled=False, key='channel_name')
+        if sign_in and st.session_state.code_state == True:
+            channel_name = st.text_area('channels (semicolon separated)', placeholder='channel_name_1;channel_name_2;channel_name_3;channel_name_4;...', disabled=False, key='channel_name', help='t.me/channel_name')
             trac = st.form_submit_button('trac', disabled=False, type='primary')
             send_credentials = True
         else:
-            channel_name = st.text_input('channel name', disabled=True)
+            channel_name = st.text_area('channels (semicolon separated)', disabled=True)
             trac = st.form_submit_button('trac', disabled=True, type='primary')
             send_credentials = True
 else:
@@ -257,25 +257,30 @@ else:
         code = st.session_state.code_value
         password = st.session_state.password_value
 
-        st.session_state.channel_name = st.text_input('channel name', placeholder='https://t.me/CHANNEL_NAME_IS_HERE', disabled=False, key='channel_name_new_trac')
+        channel_name = st.text_area('channels (semicolon separated)', placeholder='channel_name_1;channel_name_2;channel_name_3;channel_name_4;...', disabled=False, key='channel_name_new_trac', help='t.me/channel_name')
         new_trac = st.form_submit_button('new trac', disabled=False, type='primary')
 
-# data tabs
-if trac or new_trac and st.session_state.channel_name != '':
+# data
+if trac or new_trac:
     center_running()
-    tab1, tab2, tab3, tab4, tab5 = st.tabs(['messages', 'dataset', 'network', 'metadata', 'options'])
-
     form_component.empty()
     sign_in_component.empty()
     channel_component.empty()
     form_component_channel.empty()
     st.session_state.restart = True
 
+    channels = channel_name.split(';')
+    channels = [channel_name.strip() for channel_name in channels]
+
+    telegram_channel_args = ''
+    for channel in channels:
+        telegram_channel_args += f'--telegram-channel {channel} '
+
     try:
         output_folder = f'output_{st.session_state.api_id}/'
 
         print('python main.py --telegram-channel')
-        cmd_main = f'python main.py --telegram-channel {st.session_state.channel_name} --output {output_folder} --api_id {st.session_state.api_id}'
+        cmd_main = f'python main.py {telegram_channel_args} --output {output_folder} --api_id {st.session_state.api_id}'
         subprocess.check_output(cmd_main.split())
     except:
         st.error('Something went wrong.')
@@ -301,26 +306,98 @@ if trac or new_trac and st.session_state.channel_name != '':
     except:
         st.error('Something went wrong.')
 
+    # tabs
+    tab1, tab2, tab3, tab4, tab5 = st.tabs(['messages', 'metadata', 'dataset', 'network', 'options'])
+
     #json - main file
     with tab1:
         try:
-            st.subheader(f'{st.session_state.channel_name} messages', anchor=False)
-            json_file = f'output_{st.session_state.api_id}/{st.session_state.channel_name}/{st.session_state.channel_name}_messages.json'
+            for channel in channels:
+                st.subheader(f'{channel} messages', anchor=False)
+                json_file = f'output_{st.session_state.api_id}/{channel}/{channel}_messages.json'
 
-            with open(json_file, 'rb') as file:
-                data = json.load(file)
+                with open(json_file, 'rb') as file:
+                    data = json.load(file)
 
-            json_dump = json.dumps(data)
-            b64 = base64.b64encode(json_dump.encode()).decode()
-            href = f'data:file/json;base64,{b64}'
+                json_dump = json.dumps(data)
+                b64 = base64.b64encode(json_dump.encode()).decode()
+                href = f'data:file/json;base64,{b64}'
 
-            st.markdown(f'<a href="{href}" download="{st.session_state.channel_name}_messages.json" title="Download {st.session_state.channel_name}_messages.json">{st.session_state.channel_name}_messages.json</a>', unsafe_allow_html=True)
-            st.json(data, expanded=False)
+                st.markdown(f'<a href="{href}" download="{channel}_messages.json" title="Download {channel}_messages.json">{channel}_messages.json</a>', unsafe_allow_html=True)
+                st.json(data, expanded=False)
+        except:
+            st.error('Something went wrong.')
+
+    #metadata
+    with tab2:
+        try:
+            for channel in channels:
+                metadata_json_file = f'output_{st.session_state.api_id}/{channel}/{channel}.json'
+                metadata_txt_file = f'output_{st.session_state.api_id}/chats.txt'
+                metadata_chats_csv_file = f'output_{st.session_state.api_id}/collected_chats.csv'
+                metadata_chats_xlsx_file = f'output_{st.session_state.api_id}/collected_chats.xlsx'
+                metadata_counter_csv_file = f'output_{st.session_state.api_id}/counter.csv'
+                user_exceptions_txt_file = f'output_{st.session_state.api_id}/user_exceptions.txt'
+
+                st.subheader(f'{channel} metadata', anchor=False)
+
+                with open(metadata_json_file, 'rb') as file:
+                    data = json.load(file)
+
+                json_dump = json.dumps(data)
+
+                b64 = base64.b64encode(json_dump.encode()).decode()
+                href = f'data:file/json;base64,{b64}'
+
+                st.markdown(f'<a href="{href}" download="{channel}.json" title="Download {channel}.json">{channel}.json</a>', unsafe_allow_html=True)
+
+                with open(metadata_txt_file, 'rb') as file:
+                    txt = file.read().decode()
+
+                b64 = base64.b64encode(txt.encode()).decode()
+                href = f'data:file/txt;base64,{b64}'
+
+                st.markdown(f'<a href="{href}" download="chats.txt" title="Download chats.txt">chats.txt</a>', unsafe_allow_html=True)
+
+                with open(metadata_chats_csv_file, 'rb'):
+                    metadata_chats = read_csv(metadata_chats_csv_file)
+
+                csv = metadata_chats.to_csv(index=False)
+                b64 = base64.b64encode(csv.encode()).decode()
+
+                st.markdown(f'<a href="data:file/csv;base64,{b64}" download="collected_chats.csv" title="Download collected_chats.csv">collected_chats.csv</a>', unsafe_allow_html=True)
+
+                with open(metadata_chats_xlsx_file, 'rb'):
+                    metadata_chats_xlsx = read_excel(metadata_chats_xlsx_file)
+
+                xlsx = BytesIO()
+                metadata_chats_xlsx.to_excel(xlsx, index=False, engine='openpyxl')
+                xlsx.seek(0)
+                b64 = base64.b64encode(xlsx.read()).decode()
+
+                st.markdown(f'<a href="data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,{b64}" download="collected_chats.xlsx" title="Download collected_chats.xlsx">collected_chats.xlsx</a>', unsafe_allow_html=True)
+
+                with open(metadata_counter_csv_file, 'rb'):
+                    metadata_counter = read_csv(metadata_counter_csv_file)
+
+                csv = metadata_counter.to_csv(index=False)
+                b64 = base64.b64encode(csv.encode()).decode()
+
+                st.markdown(f'<a href="data:file/csv;base64,{b64}" download="counter.csv" title="Download counter.csv">counter.csv</a>', unsafe_allow_html=True)
+
+                if os.path.exists(user_exceptions_txt_file):
+                    with open(user_exceptions_txt_file, 'rb') as file:
+                        user_txt = file.read().decode()
+
+                    b64 = base64.b64encode(user_txt.encode()).decode()
+                    href = f'data:file/txt;base64,{b64}'
+
+                    st.markdown(f'<a href="{href}" download="user_exceptions.txt" title="Download user_exceptions.txt">user_exceptions.txt</a>', unsafe_allow_html=True)
         except:
             st.error('Something went wrong.')
 
     # dataset
-    with tab2:
+    with tab3:
         try:
             st.subheader('messages from all requested channels', anchor=False)
             dataset_csv_file = f'output_{st.session_state.api_id}/msgs_dataset.csv'
@@ -339,7 +416,7 @@ if trac or new_trac and st.session_state.channel_name != '':
             st.error('Something went wrong.')
 
     # network
-    with tab3:
+    with tab4:
         network_image_file = f'output_{st.session_state.api_id}/network.png'
 
         with open(network_image_file, 'rb') as img_file:
@@ -351,90 +428,8 @@ if trac or new_trac and st.session_state.channel_name != '':
         st.image(img_data)
         st.markdown(f'<a href="{href}" download="network.png" title="Download network.png">network.png</a>', unsafe_allow_html=True)
 
-    #metadata
-    with tab4:
-        try:
-            metadata_json_file = f'output_{st.session_state.api_id}/{st.session_state.channel_name}/{st.session_state.channel_name}.json'
-            metadata_txt_file = f'output_{st.session_state.api_id}/chats.txt'
-            metadata_chats_csv_file = f'output_{st.session_state.api_id}/collected_chats.csv'
-            metadata_chats_xlsx_file = f'output_{st.session_state.api_id}/collected_chats.xlsx'
-            metadata_counter_csv_file = f'output_{st.session_state.api_id}/counter.csv'
-            user_exceptions_txt_file = f'output_{st.session_state.api_id}/user_exceptions.txt'
-
-            st.subheader(f'{st.session_state.channel_name} metadata', anchor=False)
-
-            with open(metadata_json_file, 'rb') as file:
-                data = json.load(file)
-
-            json_dump = json.dumps(data)
-
-            b64 = base64.b64encode(json_dump.encode()).decode()
-            href = f'data:file/json;base64,{b64}'
-
-            st.markdown(f'<a href="{href}" download="{st.session_state.channel_name}.json" title="Download {st.session_state.channel_name}.json">{st.session_state.channel_name}.json</a>', unsafe_allow_html=True)
-
-            with open(metadata_txt_file, 'rb') as file:
-                txt = file.read().decode()
-
-            b64 = base64.b64encode(txt.encode()).decode()
-            href = f'data:file/txt;base64,{b64}'
-
-            st.markdown(f'<a href="{href}" download="chats.txt" title="Download chats.txt">chats.txt</a>', unsafe_allow_html=True)
-
-            with open(metadata_chats_csv_file, 'rb'):
-                metadata_chats = read_csv(metadata_chats_csv_file)
-
-            csv = metadata_chats.to_csv(index=False)
-            b64 = base64.b64encode(csv.encode()).decode()
-
-            st.markdown(f'<a href="data:file/csv;base64,{b64}" download="collected_chats.csv" title="Download collected_chats.csv">collected_chats.csv</a>', unsafe_allow_html=True)
-
-            with open(metadata_chats_xlsx_file, 'rb'):
-                metadata_chats_xlsx = read_excel(metadata_chats_xlsx_file)
-
-            xlsx = BytesIO()
-            metadata_chats_xlsx.to_excel(xlsx, index=False, engine='openpyxl')
-            xlsx.seek(0)
-            b64 = base64.b64encode(xlsx.read()).decode()
-
-            st.markdown(f'<a href="data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,{b64}" download="collected_chats.xlsx" title="Download collected_chats.xlsx">collected_chats.xlsx</a>', unsafe_allow_html=True)
-
-            with open(metadata_counter_csv_file, 'rb'):
-                metadata_counter = read_csv(metadata_counter_csv_file)
-
-            csv = metadata_counter.to_csv(index=False)
-            b64 = base64.b64encode(csv.encode()).decode()
-
-            st.markdown(f'<a href="data:file/csv;base64,{b64}" download="counter.csv" title="Download counter.csv">counter.csv</a>', unsafe_allow_html=True)
-
-            if os.path.exists(user_exceptions_txt_file):
-                with open(user_exceptions_txt_file, 'rb') as file:
-                    user_txt = file.read().decode()
-
-                b64 = base64.b64encode(user_txt.encode()).decode()
-                href = f'data:file/txt;base64,{b64}'
-
-                st.markdown(f'<a href="{href}" download="user_exceptions.txt" title="Download user_exceptions.txt">user_exceptions.txt</a>', unsafe_allow_html=True)
-        except:
-            st.error('Something went wrong.')
-
+    
     # options - new trac or delete
     with tab5:
         st.button('new trac', type='primary', use_container_width=True)
         st.button('delete session files', on_click=delete, type='secondary', use_container_width=True)
-
-    # duplicate files
-    # meta_files = [
-    #     metadata_txt_file,
-    #     metadata_chats_csv_file,
-    #     metadata_chats_xlsx_file,
-    #     metadata_counter_csv_file
-    # ]
-
-    # channel_dir = f'{output_folder}/{st.session_state.channel_name}'
-
-    # for f in meta_files:
-    #     new_f = f'{st.session_state.channel_name}_' + os.path.basename(f)
-
-    #     file_dir = os.path.join(channel_dir, new_f)
-    #     shutil.copy(f, file_dir)
