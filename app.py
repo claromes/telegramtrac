@@ -41,9 +41,11 @@ st.set_page_config(
         'About': '''
         ### 🟦 telegramtrac
 
+        [![GitHub release (latest by date including pre-releases](https://img.shields.io/github/v/release/claromes/telegramtrac?include_prereleases)](https://github.com/claromes/telegramtrac/releases) [![License](https://img.shields.io/github/license/claromes/telegramtrac)](https://github.com/claromes/telegramtrac/blob/main/LICENSE.txt)
+        
         A browser interface to Telegram's API. Provides modules for connecting, signing in and communicating via Telethon. Generates files containing messages and metadata. It also includes additional modules for generating datasets and network graphs.
 
-        [![GitHub release (latest by date including pre-releases](https://img.shields.io/github/v/release/claromes/telegramtrac?include_prereleases)](https://github.com/claromes/telegramtrac/releases) [![License](https://img.shields.io/github/license/claromes/telegramtrac)](https://github.com/claromes/telegramtrac/blob/main/LICENSE.txt)
+        Created and maintained by [@claromes](https://github.com/claromes).
 
         -------
         ''',
@@ -69,6 +71,7 @@ form_component = st.empty()
 sign_in_component = st.empty()
 channel_component = st.empty()
 form_component_channel = st.empty()
+info_component = st.empty()
 
 trac = ''
 error_connect = False
@@ -131,7 +134,7 @@ title_component.title("""
 telegramtrac
 
 Browser interface to Telegram's API with additional modules for generating datasets and network graphs
-""", help=f'{__version__} (not stable)', anchor=False)
+""", help=f'{__version__}', anchor=False)
 
 if not st.session_state.restart:
     # credentials
@@ -246,10 +249,14 @@ if not st.session_state.restart:
             channel_name = st.text_area('channels (semicolon separated)', disabled=True)
             trac = st.form_submit_button('trac', disabled=True, type='primary')
             send_credentials = True
+
+    # info
+    info_component.info('The application can be resource-intensive, and this free Streamlit Cloud Community option is not sufficient. Therefore, [setting up the development environment](https://github.com/claromes/telegramtrac/#development) and running locally may be more effective for Telegram channels with a lot of activity.', icon="💡")
 else:
     form_component.empty()
     sign_in_component.empty()
     channel_component.empty()
+    info_component.empty()
 
     st.button('delete session files', on_click=delete, type='secondary', use_container_width=True)
 
@@ -262,6 +269,8 @@ if trac or st.session_state.channel_name != '':
         sign_in_component.empty()
         channel_component.empty()
         form_component_channel.empty()
+        info_component.empty()
+
         st.session_state.restart = True
 
         channel_name = st.session_state.channel_name
