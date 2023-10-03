@@ -42,7 +42,7 @@ st.set_page_config(
         'About': '''
         ### 🟦 telegramtrac
 
-        A browser interface to Telegram's API
+        A browser interface to Telegram's API. Provides modules for connecting, signing in and communicating via Telethon. Generates files containing messages and metadata. It also includes additional modules for generating datasets and network graphs.
 
         [![GitHub release (latest by date including pre-releases](https://img.shields.io/github/v/release/claromes/telegramtrac?include_prereleases)](https://github.com/claromes/telegramtrac/releases) [![License](https://img.shields.io/github/license/claromes/telegramtrac)](https://github.com/claromes/telegramtrac/blob/main/LICENSE.txt)
 
@@ -124,20 +124,11 @@ def delete():
         st.session_state.restart = False
 
 # title
-if st.session_state.code_state == False:
-    title_component.title("""
-telegramtrac
-
-A browser interface to Telegram's API. Provides modules for connecting, signing in and communicating via Telethon. Generates files containing messages and metadata. It also includes additional modules for generating datasets and network graphs.
-
-*:blue[Create your API credentials [here](https://my.telegram.org/auth)]*
-""", help='{} (beta)'.format(__version__), anchor=False)
-else:
-    title_component.title("""
+title_component.title("""
 telegramtrac
 
 A browser interface to Telegram's API
-""", help='{} (beta)'.format(__version__), anchor=False)
+""", help='{} (not stable)'.format(__version__), anchor=False)
 
 if not st.session_state.restart:
     # credentials
@@ -155,7 +146,13 @@ if not st.session_state.restart:
         if st.session_state.api_id == '':
             st.session_state.api_id = api_id
 
-        send_credentials = st.form_submit_button('send credentials', type='primary')
+        # credentials options buttons
+        col1, col2, _ = st.columns([3, 4, 6])
+
+        with col1:
+            send_credentials = st.form_submit_button('send credentials', type='primary')
+        with col2:
+            st.link_button('create API credentials', 'https://my.telegram.org/auth')
 
     if send_credentials and (api_id == '' or api_hash == '' or phone == ''):
         st.error('Something went wrong.')
@@ -173,21 +170,21 @@ if not st.session_state.restart:
 
         try:
             #avoid Streamlit Cloud ModuleNotFoundError
-            if st.get_option('server.port') == 8501:
-                cmd_tele = "pip install telethon==1.26.1 --user"
-                output = subprocess.check_output(cmd_tele.split())
+            # if st.get_option('server.port') == 8501:
+            #     cmd_tele = "pip install telethon==1.26.1 --user"
+            #     output = subprocess.check_output(cmd_tele.split())
 
-                cmd_pd = "pip install pandas==1.5.3 --user"
-                output = subprocess.check_output(cmd_pd.split())
+            #     cmd_pd = "pip install pandas==1.5.3 --user"
+            #     output = subprocess.check_output(cmd_pd.split())
 
-                cmd_tqdm = "pip install tqdm==4.64.1 --user"
-                output = subprocess.check_output(cmd_tqdm.split())
+            #     cmd_tqdm = "pip install tqdm==4.64.1 --user"
+            #     output = subprocess.check_output(cmd_tqdm.split())
 
-                cmd_open = "pip install openpyxl==3.0.10 --user"
-                output = subprocess.check_output(cmd_open.split())
+            #     cmd_open = "pip install openpyxl==3.0.10 --user"
+            #     output = subprocess.check_output(cmd_open.split())
 
-                cmd_pycrypto = "pip install pycryptodome==3.17 --user"
-                output = subprocess.check_output(cmd_pycrypto.split())
+            #     cmd_pycrypto = "pip install pycryptodome==3.17 --user"
+            #     output = subprocess.check_output(cmd_pycrypto.split())
 
             #connect to API
             print('python connect.py')
@@ -318,8 +315,6 @@ if trac or new_trac and st.session_state.channel_name != '':
                 b64 = base64.b64encode(json_dump.encode()).decode()
                 href = 'data:file/json;base64,{}'.format(b64)
 
-                st.info('''**INFO**: In Serverless version this file is available in the *:blue[output_{}/{}/]* directory'''.format(st.session_state.api_id, st.session_state.channel_name))
-
                 st.markdown('<a href="{}" download="{}_messages.json" title="Download {}_messages.json">{}_messages.json</a>'.format(href, st.session_state.channel_name, st.session_state.channel_name, st.session_state.channel_name), unsafe_allow_html=True)
                 st.json(data, expanded=False)
         except:
@@ -336,8 +331,6 @@ if trac or new_trac and st.session_state.channel_name != '':
 
                 csv = df.to_csv(index=False)
                 b64 = base64.b64encode(csv.encode()).decode()
-
-                st.info('''**INFO**: In Serverless version this file is available in the *:blue[output_{}/]* directory'''.format(st.session_state.api_id))
 
                 st.markdown('<a href="data:file/csv;base64,{}" download="msgs_dataset.csv" title="Download msgs_dataset.csv">msgs_dataset.csv</a>'.format(b64), unsafe_allow_html=True)
 
@@ -360,7 +353,6 @@ if trac or new_trac and st.session_state.channel_name != '':
             user_exceptions_txt_file = 'output_{}/user_exceptions.txt'.format(st.session_state.api_id)
 
             st.subheader('{} metadata'.format(st.session_state.channel_name), anchor=False)
-            st.info('''**INFO**: In Serverless version this file is available in the *:blue[output_{}/{}/]* directory'''.format(st.session_state.api_id, st.session_state.channel_name))
 
             with open(metadata_json_file, 'rb') as file:
                 data = json.load(file)

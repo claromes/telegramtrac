@@ -1,9 +1,10 @@
 [theme]
-base="dark"
+base="light"
 primaryColor="rgb(46, 154, 255)"
-backgroundColor="rgb(25, 25, 30)"
-textColor="rgb(250, 250, 250)"
-font="monospace"
+backgroundColor="#eee"
+secondaryBackgroundColor="#ccc"
+textColor="#000"
+font="sans serif"
 
 [client]
 toolbarMode = "minimal"
