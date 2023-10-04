@@ -184,6 +184,9 @@ if not st.session_state.restart:
                     cmd_tqdm = "pip install tqdm==4.64.1 --user"
                     output = subprocess.check_output(cmd_tqdm.split())
 
+                    cmd_networkx = "pip install networkx==3.0 --user"
+                    output = subprocess.check_output(cmd_networkx.split())
+
                     cmd_open = "pip install openpyxl==3.0.10 --user"
                     output = subprocess.check_output(cmd_open.split())
 

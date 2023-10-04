@@ -27,19 +27,15 @@ The application is available on [Streamlit Community Cloud](https://telegramtrac
 
 3. Enter the input `code` and `password` (optional), then click on the `sign in` button
 
-4. Enter the input `channel name` (*t.me/CHANNEL_NAME_IS_HERE*), then click on the `trac` button
+- A confirmation message will be send to your Telegram app
+
+4. Enter the input `channels (semicolon separated)`, then click on the `trac` button
 
 - It may take a few minutes...
 
 5. Switch tabs to preview or download the data
 
-6. To tracking another channel, switch to the last tab (`trac`) and click `new trac`.
-
-    6.1. Enter the input `channel name` (*t.me/CHANNEL_NAME_IS_HERE*), then click on the `trac` button
-
-7. To finish and delete all credentials/session files, click on the `log out` button
-
-- At each tracking the dataset are grouped in the same file to allow network analysis
+7. To finish and delete all credentials/session files, click on the `delete session files` button
 
 ## Development
 
