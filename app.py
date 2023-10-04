@@ -264,7 +264,7 @@ else:
 
 # tabs
 if trac or st.session_state.channel_name != '':
-    tab1, tab2, tab3, tab4, tab5 = st.tabs(['messages', 'metadata', 'network',  'dataset', 'options'])   
+    tab1, tab2, tab3, tab4, tab5 = st.tabs(['messages', 'metadata', 'dataset', 'network', 'options'])   
     
     with st.spinner(text=''):
         form_component.empty()
