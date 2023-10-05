@@ -10,10 +10,7 @@
     - [x] `collected_chats.xlsx`
     - [x] `user_exceptions.txt`
 - [x] Metadata files with channel name
-- [x] Makefile to build/test
-- [x] Serverless App without Python installed
-- [x] Set up installer
-- [x] Check credentials to new trackings
+- [x] Check credentials after delete sessions
 - [ ] Loading process explicit
 - [ ] Encrypt config file
 - [x] Multiples channels
