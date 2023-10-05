@@ -24,7 +24,6 @@ from pandas import read_csv, read_excel
 import base64
 from io import BytesIO
 import os
-import asyncio
 import shutil
 
 from telegram_tracker import (api, cryptography)
@@ -187,8 +186,8 @@ if not st.session_state.restart:
                     cmd_networkx = "pip install networkx==3.0 --user"
                     output = subprocess.check_output(cmd_networkx.split())
 
-                    cmd_community = "pip install community==1.0.0b1 --user"
-                    output = subprocess.check_output(cmd_community.split())
+                    cmd_louvain = "pip install python-louvain==0.16 --user"
+                    output = subprocess.check_output(cmd_louvain.split())
 
                     cmd_matplotlib = "pip install matplotlib==3.6.3 --user"
                     output = subprocess.check_output(cmd_matplotlib.split())
