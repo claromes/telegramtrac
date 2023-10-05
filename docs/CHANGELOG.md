@@ -5,6 +5,7 @@
 - Delete "new trac" option
 - Add Network tab
 - Add loading spinner
+- Update theme
 - Change `.format()` into `f-strings`
 
 ## [v0.5.1](https://github.com/claromes/telegramtrac/releases/tag/v0.5.1) - 2023-06-19
