@@ -14,7 +14,7 @@
 - [x] Serverless App without Python installed
 - [x] Set up installer
 - [x] Check credentials to new trackings
-- [x] Loading process explicit
+- [ ] Loading process explicit
 - [ ] Encrypt config file
 - [x] Multiples channels
 - [x] Network tab
