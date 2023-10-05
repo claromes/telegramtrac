@@ -112,22 +112,22 @@ def delete():
         file_path_session_journal = f'session/session_file_{st.session_state.api_id}.session-journal'
         if os.path.exists(file_path_session_journal):
             os.remove(file_path_session_journal)
-        
-        dir_path_output_data = f'output_{st.session_state.api_id}'
-        if os.path.exists(dir_path_output_data):
-            os.rmdir(dir_path_output_data)
+
+        dir_path_output = f'output_{st.session_state.api_id}'
+        if os.path.exists(dir_path_output):
+            shutil.rmtree(dir_path_output)
 
         st.success('Session files deleted.')
+
+        st.session_state.api_id = ''
+        st.session_state.api_hash = ''
+        st.session_state.phone = ''
+        st.session_state.code_value = ''
+        st.session_state.code_state = ''
+        st.session_state.password_value = ''
+        st.session_state.restart = False
     except:
         st.error('Missing files')
-
-    st.session_state.api_id = ''
-    st.session_state.api_hash = ''
-    st.session_state.phone = ''
-    st.session_state.code_value = ''
-    st.session_state.code_state = ''
-    st.session_state.password_value = ''
-    st.session_state.restart = False
 
 # title
 title_component.title("""
@@ -186,6 +186,12 @@ if not st.session_state.restart:
 
                     cmd_networkx = "pip install networkx==3.0 --user"
                     output = subprocess.check_output(cmd_networkx.split())
+
+                    cmd_community = "pip install community==1.0.0b1 --user"
+                    output = subprocess.check_output(cmd_community.split())
+
+                    cmd_matplotlib = "pip install matplotlib==3.6.3 --user"
+                    output = subprocess.check_output(cmd_matplotlib.split())
 
                     cmd_open = "pip install openpyxl==3.0.10 --user"
                     output = subprocess.check_output(cmd_open.split())
