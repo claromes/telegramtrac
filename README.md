@@ -1,10 +1,10 @@
 # 🟦 telegramtrac
 
-[![Bellingcat Accessibility Hackathon](https://img.shields.io/badge/%C2%BF%20Bellingcat%20Hackathon-April%202023-%23ffca8e?style=flat)](https://www.bellingcat.com/resources/2023/06/16/third-hackathon-open-source-tools/) [![Open in Streamlit](https://img.shields.io/badge/Test%20in%20Cloud-fc7a7a?logo=streamlit&labelColor=eb4949&&logoColor=white)](https://telegramtrac.streamlit.app/) [![GitHub release (latest by date)](https://img.shields.io/github/v/release/claromes/telegramtrac?include_prereleases)](https://github.com/claromes/telegramtrac/releases)
+[![Bellingcat Accessibility Hackathon](https://img.shields.io/badge/%C2%BF%20Bellingcat%20Hackathon-April%202023-%23ffca8e?style=flat)](https://www.bellingcat.com/resources/2023/06/16/third-hackathon-open-source-tools/) [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_red.svg)](https://telegramtrac.streamlit.app/) [![GitHub release (latest by date)](https://img.shields.io/github/v/release/claromes/telegramtrac?include_prereleases)](https://github.com/claromes/telegramtrac/releases)
 
 A browser interface to Telegram’s API. Provides modules for connecting, signing in and communicating via Telethon. Generates files containing messages and metadata. It also includes additional modules for data analysis. telegramtrac is a fork of the Python package Telegram Tracker.
 
-The application is available on [Streamlit Community Cloud](https://telegramtrac.streamlit.app) with limited server resources.
+The application is available on Streamlit Community Cloud with limited server resources.
 
 > [!NOTE]
 > The application can be resource-intensive, and the free Streamlit Cloud Community option is not sufficient. Therefore, setting up the development environment and running locally may be more effective for Telegram channels with a lot of activity.
@@ -12,14 +12,6 @@ The application is available on [Streamlit Community Cloud](https://telegramtrac
 ## Usage
 
 1. Create your API credentials [here](https://my.telegram.org/auth)
-
-<p align="center">
-    <img src="assets/credentials_1.png" width="350">
-    <img src="assets/credentials_2.png" width="350">
-</p>
-<p align="center">
-
-</p>
 
 2. Enter the input `api_id`, `api_hash` and `phone` (e.g., +55912348765), then click on the `send credentials` button
 
@@ -60,7 +52,7 @@ Streamlit will be served at http://localhost:8501
 
 - Streamlit Cloud
     - [ ] "sqlite3.OperationalError: database is locked" issue on long-running requests
-        - Do not displays requested data and instead  "new trac" component
+        - Do not displays requested data
     - [ ] `requirements.txt` installation on Streamlit Cloud
 
 ## Docs
