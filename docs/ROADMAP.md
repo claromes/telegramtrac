@@ -22,5 +22,6 @@
     - [ ] FloodWaitError
     - [ ] Wrong password
     - [ ] Channel not found
+    - [ ] Private channel
 - [ ] Logout users (via Telethon)
 - [ ] Option without API credentials
